@@ -12,7 +12,7 @@ class User(db.Model):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     name: str = Column(String(100), nullable=False)
     email: str = Column(String(150), nullable=False)
-    birth_Date: str = Column(Date, nullable=False)
+    birth_date: str = Column(Date, nullable=False)
     password_hash = Column(String, nullable=False)
     gender = Column(String(50))
     sex = Column(String(50))
