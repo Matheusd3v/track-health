@@ -9,13 +9,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class User(db.Model):
     __tablename__ = "users"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    id: str = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     name: str = Column(String(100), nullable=False)
-    email: str = Column(String(150), nullable=False)
+    email: str = Column(String(150), nullable=False, unique=True)
     birth_date: str = Column(Date, nullable=False)
     password_hash = Column(String, nullable=False)
-    gender = Column(String(50))
-    sex = Column(String(50))
+    gender: str = Column(String(50))
+    sex: str = Column(String(50))
     image = Column(String)
 
     @property
