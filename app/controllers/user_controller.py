@@ -6,6 +6,8 @@ from sqlalchemy.orm import Session
 from werkzeug.exceptions import NotFound, Unauthorized
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
+from app.services.user_services import user_updated
+
 def create_user():
     session: Session = current_app.db.session
     data = request.get_json()
@@ -37,10 +39,37 @@ def get_user():
     session: Session = current_app.db.session
     user_jwt = get_jwt_identity()
 
-    user_bd = session.query(User).filter_by(email = user_jwt["email"]).first()
+    user_bd = session.query(User).get(user_jwt["id"])
 
     return jsonify(user_bd), HTTPStatus.OK
 
+@jwt_required()
+def update_user():
+    session: Session = current_app.db.session
+    data = request.get_json()
+
+    user_jwt = get_jwt_identity()
+
+    old_user = session.query(User).get(user_jwt["id"])
+
+    new_user = user_updated(data, old_user)
+
+    session.add(new_user)
+    session.commit()
+
+    return jsonify(new_user), HTTPStatus.OK
+
+@jwt_required()
+def delete_user():
+    session: Session = current_app.db.session
+    user_id = get_jwt_identity()["id"]
+
+    user = session.query(User).get(user_id)
+
+    session.delete(user)
+    session.commit()
+
+    return "", HTTPStatus.NO_CONTENT
 
 
 
