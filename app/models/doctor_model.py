@@ -5,7 +5,7 @@ from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 
 @dataclass
-class User(db.Model):
+class DoctorModel(db.Model):
     __tablename__ = "doctors"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -14,6 +14,6 @@ class User(db.Model):
     email: str = Column(String(50))
     telephone: str = Column(String(50))
 
-    user_id: int = Column(Integer, ForeignKey('users.id'), nullable = False)
+    # user_id: int = Column(Integer, ForeignKey('users.id'), nullable = False)
 
-    adress_id: int = Column(Integer, ForeignKey('adress.id'), nullable=False)
+    # adress_id: int = Column(Integer, ForeignKey('adress.id'), nullable=False)
