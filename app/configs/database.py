@@ -14,3 +14,4 @@ def init_app(app: Flask):
     app.db = db
 
     from app.models.doctor_model import DoctorModel
+    from app.models.user_model import User
