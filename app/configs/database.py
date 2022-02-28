@@ -16,5 +16,6 @@ def init_app(app: Flask):
     from app.models.doctor_model import DoctorModel
     from app.models.user_model import User
     from app.models.anamnesis_model import Anamnesis
+    from app.models.appointment_model import AppointmentModel
     from app.models.exam_model import Exam
     from app.models.exam_details_model import ExamDetails
