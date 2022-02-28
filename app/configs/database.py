@@ -19,3 +19,4 @@ def init_app(app: Flask):
     from app.models.appointment_model import AppointmentModel
     from app.models.exam_model import Exam
     from app.models.exam_details_model import ExamDetails
+    from app.models.adress_model import AdressModel

@@ -16,4 +16,4 @@ class DoctorModel(db.Model):
 
     user_id: str = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable = False)
 
-    # adress_id: int = Column(Integer, ForeignKey('adress.id'), nullable=False)
+    adress_id: str = Column(UUID(as_uuid=True), ForeignKey('adress.id'), nullable=False)
