@@ -5,7 +5,7 @@ from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 
 @dataclass
-class AdressModel(db.Model):
+class AddressModel(db.Model):
     
     __tablename__ = "adress"
 
@@ -15,5 +15,4 @@ class AdressModel(db.Model):
     district: str = Column(String(50))
     city: str = Column(String(50))
     complement: str = Column(String(200))
-
 
