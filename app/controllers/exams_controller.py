@@ -36,7 +36,9 @@ def create_user_exam():
         data = request.get_json()
         verify_user_exam_key(data)
         session: Session = current_app.db.session
-        exam = find_exam(data)[0]
+
+        exam = find_exam(data)
+        print(exam)
 
         user_id = get_jwt_identity()["id"]
         exam_datails = ExamDetails(user_id=user_id, date=data.get("date"))

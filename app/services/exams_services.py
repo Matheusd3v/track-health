@@ -16,7 +16,11 @@ def verify_exam_key(data: dict):
 def find_exam(data: dict):
     exam_name = data.get("name")
     session: Session = current_app.db.session
-    exam = session.query(Exam).filter_by(name=exam_name).all()
+    exam = session.query(Exam).filter_by(name=exam_name).first()
+    if not exam:
+        exam = Exam(name=exam_name)
+        session.add(exam)
+        session.commit()
     return exam
 
 
