@@ -1,12 +1,15 @@
 from dataclasses import dataclass
 from app.configs.database import db
-from sqlalchemy import Column, Boolean
+from sqlalchemy import Column, Boolean, ForeignKey
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 
  
 @dataclass
 class Anamnesis(db.Model):
+
+        __tablename__="anamnesis"
+
         id:str = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
         diseases:bool = Column(Boolean, nullable = False)
         allergy:bool = Column(Boolean, nullable = False)
@@ -19,3 +22,4 @@ class Anamnesis(db.Model):
         diabetes:bool = Column(Boolean, nullable = False)
         hipertension:bool = Column(Boolean, nullable = False)
 
+        user_id: str = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable = False)
