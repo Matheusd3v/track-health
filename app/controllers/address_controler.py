@@ -4,7 +4,7 @@ from app.services.address_services import check_data_keys,get_invalid_data
 from app.models.address_model import AddressModel
 from flask import current_app
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import ProgrammingError
+from sqlalchemy.exc import ProgrammingError,DataError
 
 
 def create_address():
@@ -35,6 +35,8 @@ def get_address():
          address : AddressModel = AddressModel.query.filter_by(id = data['address_id']).first()
     except ProgrammingError:
         return{"error": "address_id must be an UUID"},HTTPStatus.BAD_REQUEST
+    except DataError:
+        return {"error": "address id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not address:
         return {'Error': 'Invalid address_id'}, HTTPStatus.NOT_FOUND
@@ -56,7 +58,8 @@ def patch_address():
          address : AddressModel = AddressModel.query.filter_by(id = data['address_id']).first()
     except ProgrammingError:
         return{"error": "Address_id must be an UUID"},HTTPStatus.BAD_REQUEST
-
+    except DataError:
+        return {"error": "address id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not address:
         return {'Error': 'Invalid address_id'}, HTTPStatus.NOT_FOUND
@@ -82,7 +85,9 @@ def delete_address():
          address : AddressModel = AddressModel.query.filter_by(id = data['address_id']).first()
     except ProgrammingError:
         return{"error": "address_id must be an UUID"},HTTPStatus.BAD_REQUEST
-
+    except DataError:
+        return {"error": "address id is not valid"},HTTPStatus.BAD_REQUEST
+        
     if not address:
         return {'Error': 'Invalid address_id'}, HTTPStatus.NOT_FOUND
 
