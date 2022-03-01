@@ -4,7 +4,7 @@ from http import HTTPStatus
 import re
 
 def verify_fields_and_values(body: dict):
-    required_fields = [ "name", "type", "email", "phone", "user_id"]
+    required_fields = [ "name", "type", "email", "phone", "user_id", "address_id"]
 
     for key in body.keys():
         if not key in required_fields:
