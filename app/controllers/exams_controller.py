@@ -6,7 +6,7 @@ from app.models.exam_details_model import ExamDetails
 from app.models.exam_model import Exam
 from sqlalchemy.orm import Session
 from flask import request, jsonify, current_app
-from sqlalchemy.exc import IntegrityError, ProgrammingError
+from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
 from werkzeug.exceptions import BadRequest
 from app.models.user_exam_model import UserExam
 from app.services.exams_services import find_exam, join_user_exams, verify_exam_key, verify_update_types, verify_user_exam_key
@@ -34,18 +34,24 @@ def create_exams():
 def create_user_exam():
     try:
         data = request.get_json()
-        verify_user_exam_key(data)
+
         session: Session = current_app.db.session
 
-        exam = find_exam(data)
-        print(exam)
+        verify_user_exam_key(data)
 
+        exam = find_exam(data)
         user_id = get_jwt_identity()["id"]
-        exam_datails = ExamDetails(user_id=user_id, date=data.get("date"))
+
+        data["user_id"] = user_id
+
+        exam_datails = ExamDetails(**data)
+
         session.add(exam_datails)
         session.commit()
+
         user_exam = UserExam(user_id=user_id, exam_id=exam.id,
                              exam_details_id=exam_datails.id)
+
         session.add(user_exam)
         session.commit()
         return jsonify(user_exam), HTTPStatus.CREATED
@@ -74,18 +80,22 @@ def update_exam(exam_id):
         data = request.get_json()
         msg = verify_update_types(data)
         return jsonify({"Error": msg}), HTTPStatus.BAD_REQUEST
+    except DataError:
+        return {"Error": f"user_id {exam_id} is not valid"}
 
 
 @jwt_required()
 def delete_user_exam(exam_id):
-    session: Session = current_app.db.session
-    exam = UserExam.query.filter_by(
-        exam_id=exam_id).first()
-    print(exam)
-    session.delete(exam)
-    session.commit()
+    try:
+        session: Session = current_app.db.session
+        exam = UserExam.query.filter_by(
+            exam_id=exam_id).first()
 
-    return "", HTTPStatus.NO_CONTENT
+        session.delete(exam)
+        session.commit()
+        return "", HTTPStatus.NO_CONTENT
+    except DataError:
+        return {"Error": f"user_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
 @jwt_required()
