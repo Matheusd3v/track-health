@@ -21,4 +21,6 @@ def init_app(app: Flask):
     from app.models.exam_details_model import ExamDetails
     from app.models.address_model import AddressModel
     from app.models.user_exam_model import UserExam
+    from app.models.allergies_model import AllergyModel
+    from app.models.user_allergies_model import UserAllergyModel
 
