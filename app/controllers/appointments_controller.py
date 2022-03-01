@@ -89,3 +89,33 @@ def patch_appointment():
     session.commit()
 
     return jsonify(appointment)
+
+@jwt_required()
+def delete_appointment():
+    data = request.get_json()
+    user = get_jwt_identity()
+    session: Session = current_app.db.session
+
+
+    if list(data.keys()) != ['appointment_id']:
+        return{"error": "body must have only the appointment_id"},HTTPStatus.OK
+
+   
+    appointment_id = data['appointment_id']
+    try:
+        appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
+
+    except DataError:
+        return {"error": "address id is not valid"},HTTPStatus.BAD_REQUEST
+
+
+    if not appointment:
+        return {"error":"Appointment not found"}, HTTPStatus.NOT_FOUND
+    
+    if not check_appointment_id(appointment, user):
+        return {"error":"This appointment is not from your user"}, HTTPStatus.NOT_FOUND
+    
+    session.delete(appointment)
+    session.commit()
+
+    return '',HTTPStatus.NO_CONTENT
