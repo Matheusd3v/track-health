@@ -7,7 +7,7 @@ from app.models.exam_model import Exam
 from sqlalchemy.orm import Session
 from flask import request, jsonify, current_app
 from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest, NotFound
 from app.models.user_exam_model import UserExam
 from app.services.exams_services import find_exam, join_user_exams, verify_exam_key, verify_update_types, verify_user_exam_key
 
@@ -65,8 +65,7 @@ def update_exam(exam_id):
         session: Session = current_app.db.session
         data = request.get_json()
 
-        exam_details_id = UserExam.query.filter_by(
-            exam_id=exam_id).first().exam_details_id
+        exam_details_id = UserExam.query.get_or_404(exam_id).id
         exam_details = ExamDetails.query.filter_by(id=exam_details_id).first()
 
         for key, value in data.items():
@@ -80,7 +79,7 @@ def update_exam(exam_id):
         data = request.get_json()
         msg = verify_update_types(data)
         return jsonify({"Error": msg}), HTTPStatus.BAD_REQUEST
-    except DataError:
+    except (DataError, NotFound):
         return {"Error": f"user_id {exam_id} is not valid"}
 
 
