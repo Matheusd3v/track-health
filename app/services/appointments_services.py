@@ -20,4 +20,6 @@ def get_invalid_data(data):
 
 def check_appointment_id(appointment, user): 
 
-        return appointment['user_id'] == user['id']
+    appointment_id = str(appointment.user_id)
+    user_id = user["id"]
+    return  appointment_id == user_id
