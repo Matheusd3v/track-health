@@ -44,7 +44,8 @@ def create_user_exam():
 
         data["user_id"] = user_id
 
-        exam_datails = ExamDetails(**data)
+        exam_datails = ExamDetails(date=data.get("date"), user_id=data.get(
+            "user_id"), upload_img=data.get("upload_img"), description=data.get("description"))
 
         session.add(exam_datails)
         session.commit()
@@ -79,8 +80,13 @@ def update_exam(exam_id):
         data = request.get_json()
         msg = verify_update_types(data)
         return jsonify({"Error": msg}), HTTPStatus.BAD_REQUEST
+<<<<<<< HEAD
     except (DataError, NotFound):
         return {"Error": f"user_id {exam_id} is not valid"}
+=======
+    except DataError:
+        return {"Error": f"user_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
+>>>>>>> developer
 
 
 @jwt_required()

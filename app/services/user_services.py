@@ -4,9 +4,9 @@ from werkzeug.exceptions import NotFound, BadRequest, Unauthorized
 
 def verify_fields_and_values(body: dict):
     required_fields = [ "name", "email", "birth_date", "password"]
-
+    allowed_fields = ["sex", "gender", "image"]
     for key in body.keys():
-        if not key in required_fields:
+        if not key in required_fields and key not in allowed_fields:
             raise MissingKeysError(required_fields, list(body.keys()))
     
     verify_values(list(body.values()))
@@ -34,6 +34,7 @@ def user_updated(body: dict, old_user: User ) -> User:
     verify_values(list(body.values()))
 
     allowed_keys = list(old_user.__dict__.keys())
+    allowed_keys.append("password")
 
     for key, value in body.items():
         if key == "id":
