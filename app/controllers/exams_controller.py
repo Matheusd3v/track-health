@@ -81,7 +81,7 @@ def update_exam(exam_id):
         msg = verify_update_types(data)
         return jsonify({"Error": msg}), HTTPStatus.BAD_REQUEST
     except DataError:
-        return {"Error": f"user_id {exam_id} is not valid"}
+        return {"Error": f"user_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
 @jwt_required()
