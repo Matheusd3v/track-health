@@ -20,3 +20,12 @@ def validate_body_surgery_details(data):
             raise BadRequest
 
     return 'validate_body'
+
+
+def update_surgery(data, updated_surgery):
+
+    allowed_fields = ["date", "description"]
+
+    for key, value in data.items():
+        if key in allowed_fields:
+            setattr(updated_surgery, key, value)

@@ -1,14 +1,14 @@
 from http import HTTPStatus
 from sqlalchemy.exc import IntegrityError
-from flask import current_app, jsonify, request
+from flask import current_app, jsonify, request, session
 from app.models.surgery_details_model import SurgeryDetails
 from app.models.user_model import User
 from app.models.user_surgery_model import UserSurgery
-from app.services.surgery_services import validate_body_surgery, validate_body_surgery_details
+from app.services.surgery_services import update_surgery, validate_body_surgery, validate_body_surgery_details
 from werkzeug.exceptions import BadRequest
 from app.models.surgery_model import Surgery
 from flask_jwt_extended import jwt_required, get_jwt_identity
-
+from sqlalchemy.exc import DataError
 
 def create_surgery():
     try:
@@ -62,3 +62,25 @@ def create_surgery_user():
     except (BadRequest, TypeError, KeyError):
         return {"error":"These are required fields  ['name','date', 'description']"}, HTTPStatus.BAD_REQUEST
 
+
+
+@jwt_required()
+def update_user_surgery(id):
+    try:
+        session = current_app.db.session
+        data = request.get_json()
+        user_surgery = UserSurgery.query.filter_by(surgery_id=id).first()
+        
+        if not user_surgery:
+            return {"error":"This surgery doenst exists or dont belong to your user"}, HTTPStatus.NOT_FOUND
+
+        surgery_details = SurgeryDetails.query.filter_by(id=user_surgery.surgery_detail_id).first()
+        update_surgery(data, surgery_details)
+
+        
+        session.add(surgery_details)
+        session.commit()
+        return jsonify(surgery_details), HTTPStatus.OK
+    
+    except DataError:
+        return {"error":"A surgery with this id was not found"}, HTTPStatus.NOT_FOUND
