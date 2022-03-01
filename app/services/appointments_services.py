@@ -1,4 +1,4 @@
-def check_data_keys(data):
+def check_data_keys_get(data):
     valid_keys = ['name', 'date', 'description','doctor_id']
     return all(key in valid_keys for key in data)
 
@@ -23,3 +23,7 @@ def check_appointment_id(appointment, user):
     appointment_id = str(appointment.user_id)
     user_id = user["id"]
     return  appointment_id == user_id
+
+def check_data_keys_patch(data):
+    valid_keys = ['name', 'date', 'description','doctor_id','appointment_id']
+    return all(key in valid_keys for key in data)

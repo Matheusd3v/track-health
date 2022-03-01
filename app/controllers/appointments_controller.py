@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.appointment_model import AppointmentModel
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import DataError
-from app.services.appointments_services import check_data_keys, get_invalid_data, check_appointment_id
+from app.services.appointments_services import check_data_keys_patch, check_data_keys_get, get_invalid_data, check_appointment_id
 
 
 @jwt_required()
@@ -14,7 +14,7 @@ def create_controller():
     session: Session = current_app.db.session
 
    
-    if not check_data_keys(data):
+    if not check_data_keys_get(data):
         return {"error": "Invalid keys were found"},HTTPStatus.BAD_REQUEST
     
     invalid_data = get_invalid_data(data)
@@ -55,6 +55,7 @@ def get_appointment():
 
     return jsonify(appointment)
 
+
 @jwt_required()
 def patch_appointment():
     data = request.get_json()
@@ -64,8 +65,16 @@ def patch_appointment():
     if 'appointment_id' not in data.keys():
         return{"error": "body must have the appointment_id"},HTTPStatus.OK
 
+    if not check_data_keys_patch(data):
+        return {"error": "Invalid keys were found"}, HTTPStatus.BAD_REQUEST
+        
     appointment_id = data['appointment_id']
-    appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
+
+    try:
+        appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
+
+    except DataError:
+        return {"error": "address id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not appointment:
         return {"error":"Appointment not found"}, HTTPStatus.NOT_FOUND
@@ -73,3 +82,10 @@ def patch_appointment():
     if not check_appointment_id(appointment, user):
         return {"error":"This appointment is not from your user"}, HTTPStatus.NOT_FOUND
 
+    for key,value in data.items():
+        setattr(appointment,key,value)
+
+    session.add(appointment)
+    session.commit()
+
+    return jsonify(appointment)
