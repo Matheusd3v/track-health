@@ -1,9 +1,11 @@
-from enum import unique
-from sqlalchemy import Column, ForeignKey, String, Integer
+from sqlalchemy import Column, ForeignKey, String
 from app.configs.database import db
 from dataclasses import dataclass
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
+from app.models.address_model import AddressModel
+from sqlalchemy.orm import relationship
+
 
 @dataclass
 class DoctorModel(db.Model):
@@ -18,4 +20,7 @@ class DoctorModel(db.Model):
 
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable = False)
 
-    # adress_id: str = Column(UUID(as_uuid=True), ForeignKey('adress.id'), nullable=False)
+    address_id = Column(UUID(as_uuid=True), ForeignKey('address.id'), nullable=False)
+
+    adress: AddressModel = relationship("AddressModel", uselist=False, 
+        backref="doctor")

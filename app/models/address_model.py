@@ -7,7 +7,7 @@ from sqlalchemy.dialects.postgresql import UUID
 @dataclass
 class AddressModel(db.Model):
     
-    __tablename__ = "adress"
+    __tablename__ = "address"
 
     id: str = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     street: str = Column(String(100), nullable=False)
