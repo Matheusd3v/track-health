@@ -84,3 +84,27 @@ def update_user_surgery(id):
     
     except DataError:
         return {"error":"A surgery with this id was not found"}, HTTPStatus.NOT_FOUND
+
+
+@jwt_required()
+def delete_user_surgery(id):
+    try:
+        session = current_app.db.session
+        user_id = get_jwt_identity()["id"]
+        
+        user_surgery = UserSurgery.query.filter_by(surgery_id=id).first()
+
+        if user_surgery.user_id != user_id:
+            return {"msg":"You cant delete a surgery that its not yours"}, HTTPStatus.NOT_ACCEPTABLE
+        surgery_details = SurgeryDetails.query.filter_by(id = user_surgery.surgery_detail_id).first()
+
+        session.delete(user_surgery)
+        session.commit()
+
+        session.delete(surgery_details)
+
+        session.commit()
+        return '', HTTPStatus.NO_CONTENT
+
+    except DataError:
+        return {"error":"A surgery with this id was not found"}, HTTPStatus.NOT_FOUND
