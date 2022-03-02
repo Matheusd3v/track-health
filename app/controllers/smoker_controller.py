@@ -54,6 +54,8 @@ def get_data(smoker_id):
         return{"error": "that data is not from your user"}
     return jsonify(data), HTTPStatus.OK
 
+
+
 @jwt_required()
 def patch_data(smoker_id):
     user = get_jwt_identity()
@@ -92,3 +94,31 @@ def patch_data(smoker_id):
     session.add(user_smoker)
     session.commit()
     return jsonify(user_smoker), HTTPStatus.OK
+
+
+
+@jwt_required()
+def delete_data(smoker_id):
+    user = get_jwt_identity()
+    session:Session = current_app.db.session
+
+
+    if not smoker_id:
+        return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
+
+    try:
+        user_smoker = UserSmoker.query.filter_by(id=smoker_id).first()
+    except DataError:
+        return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
+
+    if not user_smoker:
+        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+
+
+    if not check_data_id(user_smoker,user):
+        return{"error": "that data is not from your user"}
+
+    session.delete(user_smoker)
+    session.commit()
+
+    return '', HTTPStatus.NO_CONTENT
