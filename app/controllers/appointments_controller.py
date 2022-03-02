@@ -44,7 +44,7 @@ def get_appointment():
         appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
 
     except DataError:
-        return {"error": "address id is not valid"},HTTPStatus.BAD_REQUEST
+        return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
 
     if not appointment:
