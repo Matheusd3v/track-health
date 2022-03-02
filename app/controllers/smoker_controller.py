@@ -3,13 +3,14 @@ from flask import current_app, jsonify, request
 from app.models.user_smoker_model import UserSmoker
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.services.user_smoker_services import check_data_keys, get_invalid_data
+from app.services.user_smoker_services import check_data_id, check_data_keys, get_invalid_data
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import DataError
 
 @jwt_required()
 def create_data():
     user = get_jwt_identity()
-    session = current_app.db.session
+    session:Session = current_app.db.session
 
     data = request.get_json()
     if not check_data_keys(data):
@@ -32,4 +33,23 @@ def create_data():
     session.add(new_data)
     session.commit()
 
-    return jsonify(new_data)
+    return jsonify(new_data), HTTPStatus.CREATED
+
+@jwt_required()
+def get_data(smoker_id):
+    user = get_jwt_identity()
+    if not smoker_id:
+        return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
+
+    try:
+        data = UserSmoker.query.filter_by(id=smoker_id).first()
+    except DataError:
+        return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
+
+    if not data:
+        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+
+
+    if not check_data_id(data,user):
+        return{"error": "that data is not from your user"}
+    return jsonify(data), HTTPStatus.OK

@@ -15,3 +15,9 @@ def get_invalid_data(data):
         if valid_types.get(key) != type(value):
             invalid_data.append(key)
     return invalid_data
+
+def check_data_id(data, user): 
+
+    data_id = str(data.user_id)
+    user_id = user["id"]
+    return  data_id == user_id
