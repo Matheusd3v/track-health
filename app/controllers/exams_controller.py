@@ -44,7 +44,8 @@ def create_user_exam():
 
         data["user_id"] = user_id
 
-        exam_datails = ExamDetails(**data)
+        exam_datails = ExamDetails(date=data.get("date"), user_id=data.get(
+            "user_id"), upload_img=data.get("upload_img"), description=data.get("description"))
 
         session.add(exam_datails)
         session.commit()
