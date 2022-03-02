@@ -7,7 +7,7 @@ from http import HTTPStatus
 from app.models.diseases_detail_model import DiseasesDetailModel
 from app.models.user_disease_model import UserDiseaseModel
 from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
-
+from sqlalchemy.orm.exc import UnmappedInstanceError
 from app.services.diseases_services import find_diseases, join_user_diseases, verify_update_types, verify_user_diseases_key
 
 
@@ -42,15 +42,15 @@ def create_user_diseases():
 
 
 @jwt_required()
-def update_diseases(diseases_id):
+def update_diseases(disease_id):
     try:
         session: Session = current_app.db.session
         data = request.get_json()
-
-        diseases_details_id = UserDiseaseModel.query.get_or_404(diseases_id).id
+        diseases_details_id = UserDiseaseModel.query.filter_by(
+            disease_id=disease_id).first()
 
         diseases_details = DiseasesDetailModel.query.filter_by(
-            id=diseases_details_id).first()
+            id=diseases_details_id.disease_detail_id).first()
 
         for key, value in data.items():
             setattr(diseases_details, key, value)
@@ -63,22 +63,23 @@ def update_diseases(diseases_id):
         data = request.get_json()
         msg = verify_update_types(data)
         return jsonify({"Error": msg}), HTTPStatus.BAD_REQUEST
-    except (DataError, NotFound):
-        return {"Error": f"user_id {diseases_id} is not valid"}
+
+    except (DataError, AttributeError):
+        return {"Error": f"user_id {disease_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
 @jwt_required()
-def delete_user_diseases(diseases_id):
+def delete_user_diseases(disease_id):
     try:
         session: Session = current_app.db.session
         diseases = UserDiseaseModel.query.filter_by(
-            disease_id=diseases_id).first()
+            disease_id=disease_id).first()
 
         session.delete(diseases)
         session.commit()
         return "", HTTPStatus.NO_CONTENT
-    except DataError:
-        return {"Error": f"user_id {diseases_id} is not valid"}, HTTPStatus.NOT_FOUND
+    except (DataError, UnmappedInstanceError):
+        return {"Error": f"user_id {disease_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
 @jwt_required()

@@ -27,6 +27,6 @@ bp_user.get("/diseases")(get_user_diseases)
 
 bp_user.post("/diseases")(create_user_diseases)
 
-bp_user.patch("/diseases/<diseases_id>")(update_diseases)
+bp_user.patch("/diseases/<disease_id>")(update_diseases)
 
-bp_user.delete("/diseases/<diseases_id>")(delete_user_diseases)
+bp_user.delete("/diseases/<disease_id>")(delete_user_diseases)
