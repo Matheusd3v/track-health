@@ -4,6 +4,7 @@ from app.routes.doctor_route import bp_doctor
 from app.routes.anamnesis_route import bp as bp_anamnesis
 from app.routes.address_route import bp_address
 from app.routes.exams_routes import bp_exam
+from app.routes.surgery_routes import bp as bp_surgery
 
 def init_app(app: Flask):
     app.register_blueprint(bp_user)
@@ -11,4 +12,4 @@ def init_app(app: Flask):
     app.register_blueprint(bp_exam)
     app.register_blueprint(bp_address)
     app.register_blueprint(bp_doctor)
-
+    app.register_blueprint(bp_surgery)
