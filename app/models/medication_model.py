@@ -1,8 +1,11 @@
+from dataclasses import dataclass
 from app.configs.database import db
 from sqlalchemy import Column,String
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 
+
+@dataclass
 class Medication(db.Model):
 
     __tablename__ = "medications"
