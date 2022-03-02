@@ -74,8 +74,12 @@ def delete_user_diseases(disease_id):
         session: Session = current_app.db.session
         diseases = UserDiseaseModel.query.filter_by(
             disease_id=disease_id).first()
+        diseases_datails = DiseasesDetailModel.query.filter_by(
+            id=diseases.disease_detail_id).first()
 
         session.delete(diseases)
+        session.commit()
+        session.delete(diseases_datails)
         session.commit()
         return "", HTTPStatus.NO_CONTENT
     except (DataError, UnmappedInstanceError):

@@ -92,8 +92,11 @@ def delete_user_exam(exam_id):
         session: Session = current_app.db.session
         exam = UserExam.query.filter_by(
             exam_id=exam_id).first()
-
+        exam_datails = ExamDetails.query.filter_by(
+            id=exam.exam_details_id).first()
         session.delete(exam)
+        session.commit()
+        session.delete(exam_datails)
         session.commit()
         return "", HTTPStatus.NO_CONTENT
     except (DataError, UnmappedInstanceError):
