@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.appointment_model import AppointmentModel
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import DataError
-from app.services.appointments_services import check_data_keys_patch, check_data_keys_get, get_invalid_data, check_appointment_id
+from app.services.appointments_services import check_data_keys, get_invalid_data, check_appointment_id
 
 
 @jwt_required()
@@ -14,7 +14,7 @@ def create_controller():
     session: Session = current_app.db.session
 
    
-    if not check_data_keys_get(data):
+    if not check_data_keys(data):
         return {"error": "Invalid keys were found"},HTTPStatus.BAD_REQUEST
     
     invalid_data = get_invalid_data(data)
@@ -30,16 +30,12 @@ def create_controller():
 
 
 @jwt_required()
-def get_appointment():
-    data = request.get_json()
+def get_appointment(appointment_id):
     user = get_jwt_identity()
 
+    if not appointment_id:
+        return{"error": "url must have the appointment_id"},HTTPStatus.OK
 
-    if list(data.keys()) != ['appointment_id']:
-        return{"error": "body must have only the appointment_id"},HTTPStatus.OK
-
-   
-    appointment_id = data['appointment_id']
     try:
         appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
 
@@ -65,7 +61,7 @@ def patch_appointment(appointment_id):
     if not appointment_id:
         return{"error": "url must have the appointment_id"},HTTPStatus.OK
 
-    if not check_data_keys_patch(data):
+    if not check_data_keys(data):
         return {"error": "Invalid keys were found"}, HTTPStatus.BAD_REQUEST
 
     try:
