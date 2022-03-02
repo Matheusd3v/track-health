@@ -85,17 +85,15 @@ def patch_appointment(appointment_id):
     return jsonify(appointment)
 
 @jwt_required()
-def delete_appointment():
-    data = request.get_json()
+def delete_appointment(appointment_id):
     user = get_jwt_identity()
     session: Session = current_app.db.session
 
 
-    if list(data.keys()) != ['appointment_id']:
-        return{"error": "body must have only the appointment_id"},HTTPStatus.OK
+    if not appointment_id:
+        return{"error": "url must have the appointment_id"},HTTPStatus.OK
 
    
-    appointment_id = data['appointment_id']
     try:
         appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
 
