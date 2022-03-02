@@ -74,7 +74,7 @@ def patch_appointment():
         appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
 
     except DataError:
-        return {"error": "address id is not valid"},HTTPStatus.BAD_REQUEST
+        return {"error": "appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not appointment:
         return {"error":"Appointment not found"}, HTTPStatus.NOT_FOUND
@@ -106,7 +106,7 @@ def delete_appointment():
         appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
 
     except DataError:
-        return {"error": "address id is not valid"},HTTPStatus.BAD_REQUEST
+        return {"error": "appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
 
     if not appointment:
