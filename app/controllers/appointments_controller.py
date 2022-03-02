@@ -57,18 +57,16 @@ def get_appointment():
 
 
 @jwt_required()
-def patch_appointment():
+def patch_appointment(appointment_id):
     data = request.get_json()
     user = get_jwt_identity()
     session: Session = current_app.db.session
 
-    if 'appointment_id' not in data.keys():
-        return{"error": "body must have the appointment_id"},HTTPStatus.OK
+    if not appointment_id:
+        return{"error": "url must have the appointment_id"},HTTPStatus.OK
 
     if not check_data_keys_patch(data):
         return {"error": "Invalid keys were found"}, HTTPStatus.BAD_REQUEST
-        
-    appointment_id = data['appointment_id']
 
     try:
         appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
