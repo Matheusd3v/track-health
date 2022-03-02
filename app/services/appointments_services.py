@@ -23,3 +23,7 @@ def check_appointment_id(appointment, user):
 def check_data_keys(data):
     valid_keys = ['name', 'date', 'description','doctor_id']
     return all(key in valid_keys for key in data)
+
+def check_not_nullable_keys(data):
+    not_nullable_keys = ['name','date']
+    return all(key in data for key in not_nullable_keys)

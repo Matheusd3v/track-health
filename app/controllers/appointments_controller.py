@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.appointment_model import AppointmentModel
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import DataError
-from app.services.appointments_services import check_data_keys, get_invalid_data, check_appointment_id
+from app.services.appointments_services import check_data_keys, check_not_nullable_keys, get_invalid_data, check_appointment_id
 
 
 @jwt_required()
@@ -13,7 +13,7 @@ def create_controller():
     user = get_jwt_identity()
     session: Session = current_app.db.session
 
-   
+     
     if not check_data_keys(data):
         return {"error": "Invalid keys were found"},HTTPStatus.BAD_REQUEST
     
@@ -21,6 +21,9 @@ def create_controller():
 
     if invalid_data:
         return {"invalid_keys": invalid_data},HTTPStatus.BAD_REQUEST
+
+    if not check_not_nullable_keys(data):
+        return {"error": "body have to has name and date keys"},HTTPStatus.BAD_REQUEST
 
     data['user_id'] = user['id']
     new_appointment = AppointmentModel(**data)
@@ -34,7 +37,7 @@ def get_appointment(appointment_id):
     user = get_jwt_identity()
 
     if not appointment_id:
-        return{"error": "url must have the appointment_id"},HTTPStatus.OK
+        return{"error": "url must have the appointment_id"},HTTPStatus.BAD_REQUEST
 
     try:
         appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
