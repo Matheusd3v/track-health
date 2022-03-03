@@ -17,5 +17,4 @@ class UserAlcoholic(db.Model):
     frequency:str = Column(String, nullable = False)
     description:str = Column(String)
 
-    User:User = relationship("User",
-        backref="users", uselist=False)    
+    User:User = relationship("User",backref="user_alcoholic", uselist=False)    

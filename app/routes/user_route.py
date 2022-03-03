@@ -1,4 +1,5 @@
 from flask import Blueprint
+from app.controllers.alcoholic_controller import create_alcoholic, delete_alcoholic, get_alcoholic, patch_alcoholic
 from app.controllers.exams_controller import create_user_exam, delete_user_exam, get_user_exams, update_exam
 from app.controllers.surgery_controller import create_surgery_user, delete_user_surgery, update_user_surgery
 from app.controllers.user_controller import create_user, delete_user, get_user, login, update_user
@@ -30,10 +31,18 @@ bp_user.patch("surgery/<id>")(update_user_surgery)
 
 bp_user.delete("surgery/<id>")(delete_user_surgery)
 
-bp_user.post("smoker")(create_data)
+bp_user.post("/smoker")(create_data)
 
-bp_user.get("smoker/<string:smoker_id>")(get_data)
+bp_user.get("/smoker/<string:smoker_id>")(get_data)
 
-bp_user.patch("smoker/<string:smoker_id>")(patch_data)
+bp_user.patch("/smoker/<string:smoker_id>")(patch_data)
 
-bp_user.delete("smoker/<string:smoker_id>")(delete_data)
+bp_user.delete("/smoker/<string:smoker_id>")(delete_data)
+
+bp_user.post('/alcoholic')(create_alcoholic)
+
+# bp_user.get("/alcoholic/<string:alcoholic_id>")(get_alcoholic)
+
+# bp_user.patch("/alcoholic/<string:alcoholic_id>")(patch_alcoholic)
+
+# bp_user.delete("/alcoholic/<string:alcoholic_id>")(delete_alcoholic)
