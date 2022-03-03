@@ -22,5 +22,5 @@ class DoctorModel(db.Model):
 
     address_id = Column(UUID(as_uuid=True), ForeignKey('address.id'), nullable=False)
 
-    adress: AddressModel = relationship("AddressModel", uselist=False, 
+    address: AddressModel = relationship("AddressModel", uselist=False, 
         backref="doctor")
