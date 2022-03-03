@@ -1,4 +1,5 @@
 from flask import Blueprint
+from app.controllers.diseases_controller import create_user_diseases, update_diseases, delete_user_diseases, get_user_diseases
 from app.controllers.exams_controller import create_user_exam, delete_user_exam, get_user_exams, update_exam
 from app.controllers.surgery_controller import create_surgery_user, delete_user_surgery, update_user_surgery
 from app.controllers.user_controller import create_user, delete_user, get_user, login, update_user
@@ -23,6 +24,14 @@ bp_user.post("/exam")(create_user_exam)
 bp_user.patch("/exam/<exam_id>")(update_exam)
 
 bp_user.delete("/exam/<exam_id>")(delete_user_exam)
+
+bp_user.get("/diseases")(get_user_diseases)
+
+bp_user.post("/diseases")(create_user_diseases)
+
+bp_user.patch("/diseases/<disease_id>")(update_diseases)
+
+bp_user.delete("/diseases/<disease_id>")(delete_user_diseases)
 
 bp_user.post("surgery")(create_surgery_user)
 
