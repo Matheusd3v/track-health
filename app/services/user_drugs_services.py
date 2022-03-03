@@ -1,6 +1,6 @@
 from app.exceptions.missing_keys import MissingKeysError
 from app.models.user_drug_model import UserDrugs
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import NotFound, Forbidden
 from app.services.user_services import verify_values
 
 def drug_data_updated(body: dict, old_data: UserDrugs) -> UserDrugs:
@@ -28,6 +28,11 @@ def verify_keys_and_values(body: dict):
 
     verify_values(list(body.values()))
 
-def verify_data(drug_data):
+def verify_data_and_id(drug_data: UserDrugs, id: str):
     if not drug_data:
         raise NotFound
+
+    if not drug_data.user_id == id:
+        message = {"Error": "Forbidden to change data of other users"}
+        raise Forbidden(description=message)
+

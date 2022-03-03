@@ -3,21 +3,21 @@ from app.exceptions.missing_keys import MissingKeysError
 from app.models.user_drug_model import UserDrugs
 from http import HTTPStatus
 from sqlalchemy.orm import Session
-from werkzeug.exceptions import BadRequest, NotFound
+from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import DataError
 from psycopg2.errors import InvalidTextRepresentation
-from app.services.user_drugs_services import drug_data_updated, verify_data, verify_keys_and_values
+from app.services.user_drugs_services import drug_data_updated, verify_data_and_id, verify_keys_and_values
 from app.services.user_services import verify_values
 
 @jwt_required()
 def get_user_drug(drug_id):
     try:
         session: Session = current_app.db.session
-
+        id = get_jwt_identity()["id"]
         drug_data = session.query(UserDrugs).get(drug_id)
 
-        verify_data(drug_data)
+        verify_data_and_id(drug_data, id)
 
         return jsonify(drug_data), HTTPStatus.OK
     
@@ -27,6 +27,9 @@ def get_user_drug(drug_id):
 
     except NotFound as e:
         return {"Error": f"Not fount id {drug_id}"}, e.code
+    
+    except Forbidden as e:
+        return e.description, e.code
 
 
 @jwt_required()
@@ -57,11 +60,14 @@ def create_drug_data():
 def update_user_drug_data(drug_id: str):
     try:
         session: Session = current_app.db.session
+        user_id = get_jwt_identity()["id"]
         data = request.get_json()
 
         verify_values(list(data.values()))
 
         old_data = session.query(UserDrugs).get(drug_id)
+
+        verify_data_and_id(old_data, user_id)
 
         new_data =  drug_data_updated(data, old_data)
 
@@ -79,15 +85,18 @@ def update_user_drug_data(drug_id: str):
 
     except NotFound as e:
         return e.description, e.code
+    
+    except Forbidden as e:
+        return e.description, e.code
 
 @jwt_required()
 def delete_drug_data(drug_id: str):
     try:
         session: Session = current_app.db.session
-
+        id = get_jwt_identity()["id"]
         drug_data = session.query(UserDrugs).get(drug_id)
 
-        verify_data(drug_data)
+        verify_data_and_id(drug_data, id)
 
         session.delete(drug_data)
         session.commit()
@@ -100,4 +109,7 @@ def delete_drug_data(drug_id: str):
 
     except NotFound as e:
         return {"Error": f"Not fount id {drug_id}"}, e.code
+    
+    except Forbidden as e:
+        return e.description, e.code
  
