@@ -8,6 +8,8 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
 
+from app.services.user_drugs_services import drug_data_updated
+
 @jwt_required()
 def get_user_drug():
     session: Session = current_app.db.session
@@ -30,3 +32,18 @@ def create_drug_data():
     return jsonify(data_drugs), HTTPStatus.CREATED
 
 
+@jwt_required()
+def update_user_drug_data(drug_id: str):
+    session: Session = current_app.db.session
+    data = request.get_json()
+
+    old_data = session.query(UserDrugs).get(drug_id)
+
+    new_data =  drug_data_updated(data, old_data)
+
+    session.add(new_data)
+    session.commit()
+
+    return jsonify(new_data), HTTPStatus.OK
+
+ 
