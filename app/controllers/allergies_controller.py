@@ -1,12 +1,11 @@
-from http.client import BAD_REQUEST
 from flask import request, jsonify, current_app
 from sqlalchemy.orm import Session
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from http import HTTPStatus
 from werkzeug.exceptions import NotFound
+from sqlalchemy.exc import DataError, IntegrityError
 from app.exceptions.missing_keys import MissingKeysError
 from werkzeug.exceptions import BadRequest
-
 
 from app.models.user_allergies_model import UserAllergyModel
 from app.models.allergies_model import AllergyModel
@@ -54,6 +53,9 @@ def create_allergies():
     except BadRequest as e:
         return e.description, HTTPStatus.BAD_REQUEST
 
+    except IntegrityError as e:
+        return {"error": "Allergy already created"}, HTTPStatus.CONFLICT
+
 
 @jwt_required()
 def get_allergies():
@@ -74,7 +76,7 @@ def update_allergy(allergy_id):
 
         verify_fields_and_values(data)
 
-        the_allergy = session.query(UserAllergyModel).get(allergy_id)
+        the_allergy = session.query(UserAllergyModel).get_or_404(allergy_id)
 
         if 'name' in data.keys():
             print('*' * 20)
@@ -101,8 +103,11 @@ def update_allergy(allergy_id):
 
         return jsonify(the_allergy), HTTPStatus.OK
     
+    except DataError as e:
+        return {"error": "wrong id"}, e.code
+    
     except NotFound as e:
-        return e.description, e.code
+        return {"error": f"{e.description}"}, e.code
 
     except MissingKeysError as e:
         return e.message(), e.status_code
@@ -115,12 +120,39 @@ def delete_allergy(allergy_id):
     try:
         session: Session = current_app.db.session
 
-        allergy = session.query(UserAllergyModel).get(allergy_id)
+        allergy = session.query(UserAllergyModel).get_or_404(allergy_id)
 
         session.delete(allergy)
         session.commit()
 
         return '', HTTPStatus.NO_CONTENT
+
+    except DataError as e:
+        return {"error": "wrong id"}, e.code
     
     except NotFound as e:
-        return e.description, e.code
+        return {"error": f"{e.description}"}, e.code
+
+
+def create_new_allergy():
+    try:
+        session: Session = current_app.db.session
+        data = request.get_json()
+
+        verify_fields_and_values(data)
+
+        allergy = AllergyModel(**data)
+
+        session.add(allergy)
+        session.commit()
+
+        return jsonify(allergy), HTTPStatus.CREATED
+
+    except MissingKeysError as e:
+        return e.message(), e.status_code
+
+    except BadRequest as e:
+        return e.description, HTTPStatus.BAD_REQUEST
+
+    except IntegrityError as e:
+        return {"error": "Allergy already created"}, HTTPStatus.CONFLICT

@@ -9,6 +9,10 @@ def verify_fields_and_values(body: dict):
         if not key in required_fields and key not in allowed_fields:
             raise MissingKeysError(required_fields, list(body.keys()))
 
+    for key in required_fields:
+        if not key in body.keys():
+            raise MissingKeysError(required_fields, list(body.keys()))
+
     verify_values(list(body.values()))
 
 
