@@ -2,6 +2,7 @@ from flask import Blueprint
 from app.controllers.exams_controller import create_user_exam, delete_user_exam, get_user_exams, update_exam
 from app.controllers.surgery_controller import create_surgery_user, delete_user_surgery, update_user_surgery
 from app.controllers.user_controller import create_user, delete_user, get_user, login, update_user
+from app.controllers.user_drug_controller import get_user_drug
 
 bp_user = Blueprint("bp_user", __name__, url_prefix="/user")
 
@@ -28,3 +29,5 @@ bp_user.post("surgery")(create_surgery_user)
 bp_user.patch("surgery/<id>")(update_user_surgery)
 
 bp_user.delete("surgery/<id>")(delete_user_surgery)
+
+bp_user.get("/drug")(get_user_drug)
