@@ -2,14 +2,11 @@ from app.exceptions.missing_keys import MissingKeysError
 from werkzeug.exceptions import BadRequest
 
 def verify_fields_and_values(body: dict):
-    required_fields = [ "name", "type", "email", "phone", "user_id", "address_id"]
+    required_fields = ["name"]
+    allowed_fields = ["description"]
 
     for key in body.keys():
-        if not key in required_fields:
-            raise MissingKeysError(required_fields, list(body.keys()))
-    
-    for key in required_fields:
-        if not key in body.keys():
+        if not key in required_fields and key not in allowed_fields:
             raise MissingKeysError(required_fields, list(body.keys()))
 
     verify_values(list(body.values()))
@@ -20,5 +17,4 @@ def verify_values(values: list):
         if not isinstance(value, str):
             message = {"Error": "All values must be string."}
             raise BadRequest(description=message)
-
 

@@ -4,6 +4,10 @@ from dataclasses import dataclass
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.orm import relationship
+
+from app.models.allergies_model import AllergyModel
+
 
 @dataclass
 class User(db.Model):
@@ -17,6 +21,10 @@ class User(db.Model):
     gender: str = Column(String(50))
     sex: str = Column(String(50))
     image = Column(String)
+
+    allergy:AllergyModel = relationship("AllergyModel",
+            secondary="user_allergies",
+            backref='user')
 
     @property
     def password(self):
