@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 
 from app.models.surgery_details_model import SurgeryDetails
+from app.models.user_smoker_model import UserSmoker
 from app.models.user_physical_activity_model import UserPhysicalActivity
 @dataclass
 class User(db.Model):
@@ -26,6 +27,7 @@ class User(db.Model):
             backref='user')    
 
 
+    smoker: UserSmoker = relationship("UserSmoker",backref = 'user_smoker', uselist = False) 
     physical_activity: UserPhysicalActivity = relationship("UserPhysicalActivity",backref = 'physical_activity', uselist = False) 
 
     @property
