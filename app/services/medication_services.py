@@ -23,11 +23,12 @@ def validate_update(data, medication_detail):
 def serializing_medications(user):
 
     user = user.asdict()
-
+    medications = []
     for medication  in user["medications"]:
-        
         medication_details =medication.pop("medication")    
         medication.pop("user_id")
         medication["name"] = medication_details["name"]
+        medications.append(medication)
 
-    return user
+        
+    return medications

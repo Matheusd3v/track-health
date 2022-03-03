@@ -58,7 +58,8 @@ def create_medication_user():
     except BadRequest as e:
         return e.description, e.code
 
-
+    except IntegrityError:
+        return {"error":"Missing 'name' field"}, HTTPStatus.BAD_REQUEST
 
 @jwt_required()
 def get_medications():
