@@ -1,11 +1,11 @@
 from sqlalchemy import Column, String, Date
 from app.configs.database import db
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
-
+from app.models.medication_model import Medication
 from app.models.surgery_details_model import SurgeryDetails
 from app.models.user_alcoholic_model import UserAlcoholic
 from app.models.user_smoker_model import UserSmoker
@@ -22,6 +22,8 @@ class User(db.Model):
     gender: str = Column(String(50))
     sex: str = Column(String(50))
     image = Column(String)
+
+    medications:Medication = relationship("UserMedication", backref="medication_user")
 
     surgerys:SurgeryDetails = relationship("SurgeryDetails",
             secondary="user_surgery",
@@ -44,3 +46,7 @@ class User(db.Model):
 
     def check_password(self, password_to_compare):
         return check_password_hash(self.password_hash, password_to_compare)
+
+    
+    def asdict(self):
+        return asdict(self)

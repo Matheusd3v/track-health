@@ -2,6 +2,7 @@ from flask import Blueprint
 from app.controllers.alcoholic_controller import create_alcoholic, delete_alcoholic, get_alcoholic, patch_alcoholic
 from app.controllers.diseases_controller import create_user_diseases, update_diseases, delete_user_diseases, get_user_diseases
 from app.controllers.exams_controller import create_user_exam, delete_user_exam, get_user_exams, update_exam
+from app.controllers.medication_controller import create_medication_user, delete_medication_user, get_medications, update_medication_user
 from app.controllers.surgery_controller import create_surgery_user, delete_user_surgery, update_user_surgery
 from app.controllers.user_controller import create_user, delete_user, get_user, login, update_user
 from app.controllers.user_drug_controller import create_drug_data, delete_drug_data, get_user_drug, update_user_drug_data
@@ -12,23 +13,22 @@ from app.controllers.smoker_controller import create_data, delete_data, get_data
 bp_user = Blueprint("bp_user", __name__, url_prefix="/user")
 
 bp_user.post("/register")(create_user)
-
 bp_user.post("/login")(login)
-
 bp_user.get("")(get_user)
-
 bp_user.patch("")(update_user)
-
 bp_user.delete("")(delete_user)
 
+
 bp_user.get("/exam")(get_user_exams)
-
 bp_user.post("/exam")(create_user_exam)
-
 bp_user.patch("/exam/<exam_id>")(update_exam)
-
 bp_user.delete("/exam/<exam_id>")(delete_user_exam)
 
+
+bp_user.post("/medication")(create_medication_user)
+bp_user.get("/medication")(get_medications)
+bp_user.patch("/medication/<medication_id>")(update_medication_user)
+bp_user.delete("/medication/<medication_id>")(delete_medication_user)
 bp_user.get("/diseases")(get_user_diseases)
 
 bp_user.post("/diseases")(create_user_diseases)
@@ -74,3 +74,4 @@ bp_user.get("/alcoholic/<string:alcoholic_id>")(get_alcoholic)
 bp_user.patch("/alcoholic/<string:alcoholic_id>")(patch_alcoholic)
 
 bp_user.delete("/alcoholic/<string:alcoholic_id>")(delete_alcoholic)
+
