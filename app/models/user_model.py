@@ -1,9 +1,13 @@
 from sqlalchemy import Column, String, Date
 from app.configs.database import db
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.orm import relationship
+
+from app.models.medication_model import Medication
+
 
 @dataclass
 class User(db.Model):
@@ -18,6 +22,9 @@ class User(db.Model):
     sex: str = Column(String(50))
     image = Column(String)
 
+    medications:Medication = relationship("UserMedication", backref="medication_user")
+
+    
     @property
     def password(self):
         raise AttributeError("Access not allowed for reading.")
@@ -28,3 +35,7 @@ class User(db.Model):
 
     def check_password(self, password_to_compare):
         return check_password_hash(self.password_hash, password_to_compare)
+
+    
+    def asdict(self):
+        return asdict(self)

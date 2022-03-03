@@ -5,7 +5,8 @@ from app.models.medication_model import Medication
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from werkzeug.exceptions import BadRequest
-from app.services.medication_services import validate_body
+from app.models.user_model import User
+from app.services.medication_services import serializing_medications, validate_body, validate_update
 from app.models.user_medication import UserMedication
 
 
@@ -50,9 +51,47 @@ def create_medication_user():
 
         user_medication_data = {"user_id": user["id"], "medication_id":medication.id, "description": data.get("description")}
         user_medication = UserMedication(**user_medication_data)
-        # session.add(user_medication)
-        # session.commit()
+        session.add(user_medication)
+        session.commit()
+        return jsonify(medication), HTTPStatus.CREATED
 
-        return jsonify(user_medication), HTTPStatus.CREATED
     except BadRequest as e:
         return e.description, e.code
+
+
+
+@jwt_required()
+def get_medications():
+    user_id= get_jwt_identity()["id"]
+    user = User.query.filter_by(id = user_id).first()
+    
+    return jsonify(serializing_medications(user)), HTTPStatus.OK
+
+
+
+@jwt_required()
+def update_medication_user(medication_id):
+    
+    session = current_app.db.session
+    data = request.get_json()
+    user_id= get_jwt_identity()["id"]
+
+    user_medication = UserMedication.query.filter_by(medication_id=medication_id).first()
+    
+    if str(user_medication.user_id)  != str(user_id):
+        return {"error":"You're not allowed to update this medication"}, HTTPStatus.NOT_ACCEPTABLE
+
+
+    validate_update(data, user_medication)
+
+    session.add(user_medication)
+    session.commit()
+    
+    medication = Medication.query.filter_by(id = user_medication.medication_id).first()
+
+    return jsonify({
+        "id":medication.id,
+        "name":medication.name,
+        "description":user_medication.description
+    }), HTTPStatus.OK
+
