@@ -27,8 +27,10 @@ class User(db.Model):
             backref='user')    
 
 
+    user_drug: str = relationship("UserDrugs", backref="user_drug", uselist=False, viewonly=True)
     smoker: UserSmoker = relationship("UserSmoker",backref = 'user_smoker', uselist = False) 
     physical_activity: UserPhysicalActivity = relationship("UserPhysicalActivity",backref = 'physical_activity', uselist = False) 
+
 
     @property
     def password(self):
