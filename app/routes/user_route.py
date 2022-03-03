@@ -24,7 +24,7 @@ bp_user.patch("/exam/<exam_id>")(update_exam)
 
 bp_user.delete("/exam/<exam_id>")(delete_user_exam)
 
-bp_user.post("")(create_allergies)
-bp_user.get("")(get_allergies)
-bp_user.patch("/<allergy_id>")(update_allergy)
-bp_user.delete("/<allergy_id>")(delete_allergy)
+bp_user.post("/allergy")(create_allergies)
+bp_user.get("/allergy")(get_allergies)
+bp_user.patch("/allergy/<allergy_id>")(update_allergy)
+bp_user.delete("/allergy/<allergy_id>")(delete_allergy)
