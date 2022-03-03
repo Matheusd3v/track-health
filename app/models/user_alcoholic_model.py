@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from sqlalchemy import Column, String, ForeignKey
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship
 
 
 @dataclass
