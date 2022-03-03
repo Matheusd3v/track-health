@@ -1,7 +1,7 @@
 class MissingKeysError(Exception):
     status_code = 400
 
-    def __init__(self, required_fields: list[str], received: list[str]) -> None:
+    def __init__(self, required_fields: list[str] = None, received: list[str] = None) -> None:
         self.requireds = required_fields
         self.received = received
 
