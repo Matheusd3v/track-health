@@ -8,6 +8,7 @@ from sqlalchemy.orm import relationship
 
 from app.models.surgery_details_model import SurgeryDetails
 from app.models.user_smoker_model import UserSmoker
+from app.models.user_physical_activity_model import UserPhysicalActivity
 @dataclass
 class User(db.Model):
     __tablename__ = "users"
@@ -27,6 +28,8 @@ class User(db.Model):
 
 
     smoker: UserSmoker = relationship("UserSmoker",backref = 'user_smoker', uselist = False) 
+    physical_activity: UserPhysicalActivity = relationship("UserPhysicalActivity",backref = 'physical_activity', uselist = False) 
+
     @property
     def password(self):
         raise AttributeError("Access not allowed for reading.")
