@@ -33,4 +33,4 @@ def init_app(app: Flask):
     from app.models.user_drug_model import UserDrugs
     from app.models.user_physical_activity_model import UserPhysicalActivity
     from app.models.user_smoker_model import UserSmoker
-
+    from app.models.user_alcoholic_model import UserAlcoholic
