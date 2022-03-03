@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from app.services.user_physical_activity_services import check_data_id, check_data_keys, get_invalid_data
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import DataError
+from sqlalchemy.exc import DataError,IntegrityError
 
 @jwt_required()
 def create_physical_activity():
@@ -31,7 +31,10 @@ def create_physical_activity():
     new_physical_activity = UserPhysicalActivity(**data)
 
     session.add(new_physical_activity)
-    session.commit()
+    try:
+        session.commit()
+    except IntegrityError:
+        return {"error": "you can only have one data of this type"}, HTTPStatus.CONFLICT
 
     return jsonify(new_physical_activity), HTTPStatus.CREATED
 
