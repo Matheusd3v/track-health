@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 
 from app.models.surgery_details_model import SurgeryDetails
+from app.models.user_alcoholic_model import UserAlcoholic
 @dataclass
 class User(db.Model):
     __tablename__ = "users"
@@ -23,6 +24,7 @@ class User(db.Model):
     surgerys:SurgeryDetails = relationship("SurgeryDetails",
             secondary="user_surgery",
             backref='user')    
+    alcohol: UserAlcoholic = relationship("UserAlcoholic",backref = 'user_alcoholic', uselist = False)
 
     @property
     def password(self):
