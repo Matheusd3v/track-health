@@ -5,9 +5,10 @@ from app.exceptions.missing_keys import MissingKeysError
 from app.models.exam_details_model import ExamDetails
 from app.models.exam_model import Exam
 from sqlalchemy.orm import Session
+from sqlalchemy.orm.exc import UnmappedInstanceError
 from flask import request, jsonify, current_app
 from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest, NotFound
 from app.models.user_exam_model import UserExam
 from app.services.exams_services import find_exam, join_user_exams, verify_exam_key, verify_update_types, verify_user_exam_key
 
@@ -66,9 +67,9 @@ def update_exam(exam_id):
         session: Session = current_app.db.session
         data = request.get_json()
 
-        exam_details_id = UserExam.query.filter_by(
-            exam_id=exam_id).first().exam_details_id
-        exam_details = ExamDetails.query.filter_by(id=exam_details_id).first()
+        exam_details_id = UserExam.query.filter_by(exam_id=exam_id).first()
+        exam_details = ExamDetails.query.filter_by(
+            id=exam_details_id.exam_details_id).first()
 
         for key, value in data.items():
             setattr(exam_details, key, value)
@@ -81,8 +82,8 @@ def update_exam(exam_id):
         data = request.get_json()
         msg = verify_update_types(data)
         return jsonify({"Error": msg}), HTTPStatus.BAD_REQUEST
-    except DataError:
-        return {"Error": f"user_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
+    except (DataError, AttributeError):
+        return {"Error": f"exam_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
 @jwt_required()
@@ -91,12 +92,15 @@ def delete_user_exam(exam_id):
         session: Session = current_app.db.session
         exam = UserExam.query.filter_by(
             exam_id=exam_id).first()
-
+        exam_datails = ExamDetails.query.filter_by(
+            id=exam.exam_details_id).first()
         session.delete(exam)
         session.commit()
+        session.delete(exam_datails)
+        session.commit()
         return "", HTTPStatus.NO_CONTENT
-    except DataError:
-        return {"Error": f"user_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
+    except (DataError, UnmappedInstanceError):
+        return {"Error": f"exam_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
 @jwt_required()

@@ -1,12 +1,17 @@
 from sqlalchemy import Column, String, Date
 from app.configs.database import db
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 
 from app.models.allergies_model import AllergyModel
+from app.models.medication_model import Medication
+from app.models.surgery_details_model import SurgeryDetails
+from app.models.user_alcoholic_model import UserAlcoholic
+from app.models.user_smoker_model import UserSmoker
+from app.models.user_physical_activity_model import UserPhysicalActivity
 
 
 @dataclass
@@ -25,6 +30,20 @@ class User(db.Model):
     allergy:AllergyModel = relationship("AllergyModel",
             secondary="user_allergies",
             backref='user')
+    medications:Medication = relationship("UserMedication", backref="medication_user")
+
+    surgerys:SurgeryDetails = relationship("SurgeryDetails",
+            secondary="user_surgery",
+            backref='user')    
+    alcohol: UserAlcoholic = relationship("UserAlcoholic",backref = 'user_alcoholic', uselist = False)
+
+
+    user_drug: str = relationship("UserDrugs", backref="user_drug", uselist=False, viewonly=True)
+      
+    smoker: UserSmoker = relationship("UserSmoker",backref = 'user_smoker', uselist = False) 
+      
+    physical_activity: UserPhysicalActivity = relationship("UserPhysicalActivity",backref = 'physical_activity', uselist = False) 
+
 
     @property
     def password(self):
@@ -36,3 +55,7 @@ class User(db.Model):
 
     def check_password(self, password_to_compare):
         return check_password_hash(self.password_hash, password_to_compare)
+
+    
+    def asdict(self):
+        return asdict(self)
