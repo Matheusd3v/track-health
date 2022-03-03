@@ -58,13 +58,13 @@ def get_physical_activity(physical_activity_id):
 
 
 @jwt_required()
-def patch_data(smoker_id):
+def patch_physical_activity(physical_activity_id):
     user = get_jwt_identity()
     data = request.get_json()
     session:Session = current_app.db.session
 
 
-    if not smoker_id:
+    if not physical_activity_id:
         return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
 
     if not check_data_keys(data):
@@ -78,23 +78,23 @@ def patch_data(smoker_id):
         return {"These keys are with an invalid data type": invalid_data}, HTTPStatus.BAD_REQUEST
 
     try:
-        user_smoker = UserSmoker.query.filter_by(id=smoker_id).first()
+        physical_activity = UserPhysicalActivity.query.filter_by(id=physical_activity_id).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
-    if not user_smoker:
+    if not physical_activity:
         return {"error": "data not found"}, HTTPStatus.NOT_FOUND
 
 
-    if not check_data_id(user_smoker,user):
+    if not check_data_id(physical_activity,user):
         return{"error": "that data is not from your user"}
 
     for key,value in data.items():
-        setattr(user_smoker,key,value)
+        setattr(physical_activity,key,value)
 
-    session.add(user_smoker)
+    session.add(physical_activity)
     session.commit()
-    return jsonify(user_smoker), HTTPStatus.OK
+    return jsonify(physical_activity), HTTPStatus.OK
 
 
 
