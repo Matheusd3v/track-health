@@ -18,7 +18,7 @@ def create_user():
 
         password_to_hash = data.pop("password")
 
-        data = data_normalized(data)
+        data = data_normalized(data=data)
 
         user = User(**data)
         user.password = password_to_hash
