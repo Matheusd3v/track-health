@@ -1,9 +1,6 @@
 from flask import Blueprint
-<<<<<<< HEAD
 from app.controllers.alcoholic_controller import create_alcoholic, delete_alcoholic, get_alcoholic, patch_alcoholic
-=======
 from app.controllers.diseases_controller import create_user_diseases, update_diseases, delete_user_diseases, get_user_diseases
->>>>>>> developer
 from app.controllers.exams_controller import create_user_exam, delete_user_exam, get_user_exams, update_exam
 from app.controllers.surgery_controller import create_surgery_user, delete_user_surgery, update_user_surgery
 from app.controllers.user_controller import create_user, delete_user, get_user, login, update_user
