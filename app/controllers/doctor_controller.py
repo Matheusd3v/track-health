@@ -2,18 +2,17 @@ from flask import request, jsonify, current_app
 from app.models.doctor_model import DoctorModel
 from http import HTTPStatus
 from sqlalchemy.orm import Session
-from werkzeug.exceptions import NotFound, Unauthorized, BadRequest
+from werkzeug.exceptions import NotFound, BadRequest
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.exceptions.missing_keys import MissingKeysError
-from sqlalchemy.exc import IntegrityError
-from psycopg2.errors import UniqueViolation
+from sqlalchemy.exc import DataError
 from app.services.doctor_service import verify_fields_and_values
 import re
 
 
 @jwt_required()
 def create_doctor():
-    # try:
+    try:
         session: Session = current_app.db.session
         data = request.get_json()
         user_jwt = get_jwt_identity()
@@ -21,7 +20,6 @@ def create_doctor():
         if not re.fullmatch("^\([1-9]{2}\)[0-9]{5}\-[0-9]{4}$",data["phone"]):
             return {"error":"invalid format phone. Must be (xx)xxxxx-xxxx "}, HTTPStatus.BAD_REQUEST
 
-        print(user_jwt['id'])
         data['user_id'] = user_jwt['id']
 
         verify_fields_and_values(data)
@@ -33,16 +31,14 @@ def create_doctor():
 
         return jsonify(doctor), HTTPStatus.CREATED
 
-    # except IntegrityError as e:
-        if isinstance(e.orig, UniqueViolation):
-            message = {"Error": "A doctor with this number already exists."}
-            return message, HTTPStatus.CONFLICT
-
-    # except MissingKeysError as e:
+    except MissingKeysError as e:
         return e.message(), e.status_code
     
-    # except BadRequest as e:
+    except BadRequest as e:
         return e.description, e.code
+
+    except DataError as e:
+        return {"error": "wrong address_id"}, HTTPStatus.BAD_REQUEST
 
 
 @jwt_required()
