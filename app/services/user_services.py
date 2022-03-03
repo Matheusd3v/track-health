@@ -44,3 +44,24 @@ def user_updated(body: dict, old_user: User ) -> User:
             setattr(old_user, key, value)
     
     return old_user
+
+def data_normalized(data: dict) -> dict:
+
+    for key, value in data.items():        
+        if key == "email":
+            new_value = remove_space_before_and_after(value)
+            new_value = new_value.lower()
+            data.update({key: new_value})
+
+        if key == "gender" or key == "sex" or key == "name":
+            new_value = remove_space_before_and_after(value)
+            new_value = new_value.title()
+            data.update({key: new_value})
+    
+    return data        
+
+
+def remove_space_before_and_after(text: str) -> str:
+    text_list = text.split()
+
+    return " ".join(text_list)
