@@ -21,3 +21,19 @@ def check_data_id(data, user):
     data_id = str(data.user_id)
     user_id = user["id"]
     return  data_id == user_id
+
+def remove_spaces(value: str) -> str:
+    value_list = value.split()
+    value_list[0] = value_list[0].capitalize()
+    new_value = " ".join(value_list)
+    
+    return new_value
+
+
+def normalized_data(data: dict) -> dict:
+
+    for key, value in data.items():    
+        new_value = remove_spaces(value)
+        data.update({key: new_value})
+
+    return data        
