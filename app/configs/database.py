@@ -25,3 +25,4 @@ def init_app(app: Flask):
     from app.models.surgery_details_model import SurgeryDetails
     from app.models.user_surgery_model import UserSurgery
     from app.models.user_smoker_model import UserSmoker
+    from app.models.user_alcoholic_model import UserAlcoholic
