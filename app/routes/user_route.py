@@ -45,4 +45,4 @@ bp_user.get("/alcoholic/<string:alcoholic_id>")(get_alcoholic)
 
 bp_user.patch("/alcoholic/<string:alcoholic_id>")(patch_alcoholic)
 
-# bp_user.delete("/alcoholic/<string:alcoholic_id>")(delete_alcoholic)
+bp_user.delete("/alcoholic/<string:alcoholic_id>")(delete_alcoholic)

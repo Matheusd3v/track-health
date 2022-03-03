@@ -95,3 +95,30 @@ def patch_alcoholic(alcoholic_id):
     session.commit()
     return jsonify(user_alcoholic), HTTPStatus.OK
 
+
+
+@jwt_required()
+def delete_alcoholic(alcoholic_id):
+    user = get_jwt_identity()
+    session:Session = current_app.db.session
+
+
+    if not alcoholic_id:
+        return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
+
+    try:
+        user_alcoholic = UserAlcoholic.query.filter_by(id=alcoholic_id).first()
+    except DataError:
+        return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
+
+    if not user_alcoholic:
+        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+
+
+    if not check_data_id(user_alcoholic,user):
+        return{"error": "that data is not from your user"}
+
+    session.delete(user_alcoholic)
+    session.commit()
+
+    return '', HTTPStatus.NO_CONTENT
