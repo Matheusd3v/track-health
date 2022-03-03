@@ -7,6 +7,8 @@ from app.services.user_physical_activity_services import check_data_id, check_da
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import DataError,IntegrityError
 
+from app.services.user_smoker_services import normalized_data, remove_spaces
+
 @jwt_required()
 def create_physical_activity():
     user = get_jwt_identity()
@@ -26,6 +28,7 @@ def create_physical_activity():
     if 'frequency' not in data.keys():
         return{'error': "frequency key must be in the body"}, HTTPStatus.BAD_REQUEST
 
+    data = normalized_data(data)
     data['user_id'] = user['id']
 
     new_physical_activity = UserPhysicalActivity(**data)
@@ -93,7 +96,7 @@ def patch_physical_activity(physical_activity_id):
         return{"error": "that data is not from your user"}
 
     for key,value in data.items():
-        setattr(physical_activity,key,value)
+        setattr(physical_activity,key,remove_spaces(value))
 
     session.add(physical_activity)
     session.commit()
