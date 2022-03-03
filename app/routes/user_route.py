@@ -32,4 +32,4 @@ bp_user.delete("surgery/<id>")(delete_user_surgery)
 
 bp_user.post("/physical_activity")(create_physical_activity)
 
-# bp_user.get("/physical_activity/<string:physical_activity_id>")(get_physical_activity)
+bp_user.get("/physical_activity/<string:physical_activity_id>")(get_physical_activity)
