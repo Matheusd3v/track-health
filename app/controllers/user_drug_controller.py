@@ -5,8 +5,8 @@ from http import HTTPStatus
 from sqlalchemy.orm import Session
 from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from sqlalchemy.exc import DataError
-from psycopg2.errors import InvalidTextRepresentation
+from sqlalchemy.exc import DataError, IntegrityError
+from psycopg2.errors import InvalidTextRepresentation, UniqueViolation
 from app.services.user_drugs_services import drug_data_updated, verify_data_and_id, verify_keys_and_values
 from app.services.user_services import verify_values
 
@@ -15,7 +15,7 @@ def get_user_drug():
     try:
         session: Session = current_app.db.session
         id = get_jwt_identity()["id"]
-        
+
         drug_data = session.query(UserDrugs).filter_by(user_id = id).first()
 
         return jsonify(drug_data), HTTPStatus.OK
@@ -38,6 +38,10 @@ def create_drug_data():
         session.commit()
 
         return jsonify(data_drugs), HTTPStatus.CREATED
+    
+    except IntegrityError as e:
+        if isinstance(e.orig, UniqueViolation):
+            return {"Error": "Drugs information already exists."}, HTTPStatus.CONFLICT
     
     except MissingKeysError as e:
         message = {"Error": f"Only keys {e.requireds} must be send."}

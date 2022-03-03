@@ -32,7 +32,7 @@ def verify_data_and_id(drug_data: UserDrugs, id: str):
     if not drug_data:
         raise NotFound
 
-    if not drug_data.user_id == id:
+    if not str(drug_data.user_id) == id:
         message = {"Error": "Forbidden to change data of other users"}
         raise Forbidden(description=message)
 
