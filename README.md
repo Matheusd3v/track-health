@@ -92,3 +92,85 @@ Exemplo de requisição:
 ## DELETE - user/diseases/<int:user_disease_id>
 
 Esta rota é para apagar um exame do usuário. Para realizar a deleção é somente necessário passar o disease_id por query params.
+
+
+
+
+
+# 
+
+# Surgerys
+
+
+## POST  - /surgery
+Esta rota é para a criação de cirurgias, estas cirurgias não terão nenhuma relação com o usuário. Só é necessário passar o campo "name" na requisição como mostrado no exemplo abaixo.
+
+```json
+	{
+		"name":"Cirurgia na visicula"
+	}
+```
+Caso a requisição tenha sucesso irá retornar a seguinte resposta com o status code de 201.
+
+```json
+
+{
+  "id": "ba1927e3-4d16-437c-8cc7-229d1bcf92e4",
+  "name":"Cirurgia na visicula"
+}
+
+```
+
+## POST - user/surgery
+Esta rota é para a criação de cirurgias relacionadas ao usuário. Para a realização desta requisição é necessário os campo "name" e "date", o campo "description" no exemplo abaixo é opcional.
+
+
+Authorization: ` Bearer Token`
+```json
+{
+	"name":"Cirurgia do apendice",
+	"description": "Realizei essa cirurgia há 2 anos atrás e não tive nenhuma complicação",
+	"date":"03/02/2020"
+}
+
+```
+Caso dê tudo certo irá retornar a seguinte resposta e código 201
+```json
+{
+	"id":"bf212d16-2681-4f0d-a6e4-0db2318305f1",
+	"name":"Cirurgia do apendice",
+	"description": "Realizei essa cirurgia há 2 anos atrás e não tive nenhuma complicação",
+	"date":"03/02/2020"
+}
+```
+
+## PATCH - /user/surgery/<surgery_id>
+Esta rota é para atualização de uma cirurgia, sendo possível atualizar apenas "date" e "description". Exemplo de requisição abaixo:
+
+Authorization: ` Bearer Token`
+
+```json
+{
+	"description":"Atualizando a descrição",
+	"date":"03/03/2022"
+}
+```
+
+Caso dê tudo certo a resposta será a seguinte
+
+```json
+{
+	"id": "9525ab67-d12c-42e8-83de-e98127565743",
+	"name": "Cirurgia do apendice",
+	"date": "Thu, 03 Mar 2022 00:00:00 GMT",
+  	"description": "Atualizando a descrição"
+}
+
+``` 
+
+
+
+## DELETE -  /user/surgery/<surgery_id>
+Esta rota é para deletar alguma cirurgia relacionada ao usuário, não é necessário nenhum corpo na requisição apenas a autenficação com token. Caso dê tudo certo irá retornar o código 204.
+
+Authorization: ` Bearer Token`
