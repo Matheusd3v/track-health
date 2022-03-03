@@ -75,7 +75,6 @@ def update_user_surgery(id):
         session = current_app.db.session
         data = request.get_json()
         user_surgery = UserSurgery.query.filter_by(surgery_id=id).first()
-        
         if not user_surgery:
             return {"error":"This surgery doenst exists or dont belong to your user"}, HTTPStatus.NOT_FOUND
 
