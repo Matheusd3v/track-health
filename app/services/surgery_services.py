@@ -33,3 +33,20 @@ def update_surgery(data, updated_surgery):
     for key, value in data.items():
         if key in allowed_fields:
             setattr(updated_surgery, key, value)
+
+
+
+def serializing_surgery(user):
+    surgerys = user["surgerys"]
+
+    all_surgerys = []
+    for surgery in surgerys:
+        surgery = {
+            "id":surgery["surgery_name"]["id"],
+            "name":surgery["surgery_name"]["name"],
+            "description":surgery["description"],
+            "date":surgery["date"]
+        }
+        all_surgerys.append(surgery)
+
+    return all_surgerys
