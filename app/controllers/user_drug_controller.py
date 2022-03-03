@@ -7,7 +7,7 @@ from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import DataError, IntegrityError
 from psycopg2.errors import InvalidTextRepresentation, UniqueViolation
-from app.services.user_drugs_services import drug_data_updated, verify_data_and_id, verify_keys_and_values
+from app.services.user_drugs_services import data_standardized, drug_data_updated, verify_data_and_id, verify_keys_and_values
 from app.services.user_services import verify_values
 
 @jwt_required()
@@ -31,6 +31,8 @@ def create_drug_data():
         data = request.get_json()
 
         verify_keys_and_values(data)
+
+        data = data_standardized(data=data)
 
         data_drugs = UserDrugs(**data, user_id=user_id)
 
