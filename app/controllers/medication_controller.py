@@ -78,6 +78,9 @@ def update_medication_user(medication_id):
 
     user_medication = UserMedication.query.filter_by(medication_id=medication_id).first()
     
+    if not user_medication:
+        return {"error":"A medication with this id was not found"}, HTTPStatus.NOT_FOUND
+        
     if str(user_medication.user_id)  != str(user_id):
         return {"error":"You're not allowed to update this medication"}, HTTPStatus.NOT_ACCEPTABLE
 
@@ -95,3 +98,22 @@ def update_medication_user(medication_id):
         "description":user_medication.description
     }), HTTPStatus.OK
 
+
+
+@jwt_required()
+def delete_medication_user(medication_id):
+    session = current_app.db.session
+
+    user_id= get_jwt_identity()["id"]
+    user_medication = UserMedication.query.filter_by(medication_id=medication_id).first()
+
+    if not user_medication:
+        return {"error":"A medication with this id was not found"}, HTTPStatus.NOT_FOUND
+
+    if str(user_medication.user_id)  != str(user_id):
+        return {"error":"You're not allowed to delete this medication"}, HTTPStatus.NOT_ACCEPTABLE
+
+    session.delete(user_medication)
+    session.commit()
+
+    return '', HTTPStatus.NO_CONTENT
