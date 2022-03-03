@@ -99,27 +99,27 @@ def patch_physical_activity(physical_activity_id):
 
 
 @jwt_required()
-def delete_data(smoker_id):
+def delete_physical_activity(physical_activity_id):
     user = get_jwt_identity()
     session:Session = current_app.db.session
 
 
-    if not smoker_id:
+    if not physical_activity_id:
         return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
 
     try:
-        user_smoker = UserSmoker.query.filter_by(id=smoker_id).first()
+        physical_activity = UserPhysicalActivity.query.filter_by(id=physical_activity_id).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
-    if not user_smoker:
+    if not physical_activity:
         return {"error": "data not found"}, HTTPStatus.NOT_FOUND
 
 
-    if not check_data_id(user_smoker,user):
+    if not check_data_id(physical_activity,user):
         return{"error": "that data is not from your user"}
 
-    session.delete(user_smoker)
+    session.delete(physical_activity)
     session.commit()
 
     return '', HTTPStatus.NO_CONTENT
