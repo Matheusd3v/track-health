@@ -1,14 +1,14 @@
 from http import HTTPStatus
 from flask import current_app, jsonify, request
-from app.models.user_smoker_model import UserSmoker
+from app.models.user_physical_activity_model import UserPhysicalActivity
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.services.user_smoker_services import check_data_id, check_data_keys, get_invalid_data
+from app.services.user_physical_activity_services import check_data_id, check_data_keys, get_invalid_data
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import DataError,IntegrityError
 
 @jwt_required()
-def create_data():
+def create_physical_activity():
     user = get_jwt_identity()
     session:Session = current_app.db.session
 
@@ -28,44 +28,46 @@ def create_data():
 
     data['user_id'] = user['id']
 
-    new_data = UserSmoker(**data)
+    new_physical_activity = UserPhysicalActivity(**data)
 
-    session.add(new_data)
+    session.add(new_physical_activity)
     try:
         session.commit()
     except IntegrityError:
         return {"error": "you can only have one data of this type"}, HTTPStatus.CONFLICT
-    return jsonify(new_data), HTTPStatus.CREATED
+
+    return jsonify(new_physical_activity), HTTPStatus.CREATED
+
 
 @jwt_required()
-def get_data(smoker_id):
+def get_physical_activity(physical_activity_id):
     user = get_jwt_identity()
-    if not smoker_id:
+    if not physical_activity_id:
         return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
 
     try:
-        data = UserSmoker.query.filter_by(id=smoker_id).first()
+        physical_activity = UserPhysicalActivity.query.filter_by(id=physical_activity_id).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
-    if not data:
+    if not physical_activity:
         return {"error": "data not found"}, HTTPStatus.NOT_FOUND
 
 
-    if not check_data_id(data,user):
+    if not check_data_id(physical_activity,user):
         return{"error": "that data is not from your user"}
-    return jsonify(data), HTTPStatus.OK
+    return jsonify(physical_activity), HTTPStatus.OK
 
 
 
 @jwt_required()
-def patch_data(smoker_id):
+def patch_physical_activity(physical_activity_id):
     user = get_jwt_identity()
     data = request.get_json()
     session:Session = current_app.db.session
 
 
-    if not smoker_id:
+    if not physical_activity_id:
         return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
 
     if not check_data_keys(data):
@@ -79,48 +81,48 @@ def patch_data(smoker_id):
         return {"These keys are with an invalid data type": invalid_data}, HTTPStatus.BAD_REQUEST
 
     try:
-        user_smoker = UserSmoker.query.filter_by(id=smoker_id).first()
+        physical_activity = UserPhysicalActivity.query.filter_by(id=physical_activity_id).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
-    if not user_smoker:
+    if not physical_activity:
         return {"error": "data not found"}, HTTPStatus.NOT_FOUND
 
 
-    if not check_data_id(user_smoker,user):
+    if not check_data_id(physical_activity,user):
         return{"error": "that data is not from your user"}
 
     for key,value in data.items():
-        setattr(user_smoker,key,value)
+        setattr(physical_activity,key,value)
 
-    session.add(user_smoker)
+    session.add(physical_activity)
     session.commit()
-    return jsonify(user_smoker), HTTPStatus.OK
+    return jsonify(physical_activity), HTTPStatus.OK
 
 
 
 @jwt_required()
-def delete_data(smoker_id):
+def delete_physical_activity(physical_activity_id):
     user = get_jwt_identity()
     session:Session = current_app.db.session
 
 
-    if not smoker_id:
+    if not physical_activity_id:
         return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
 
     try:
-        user_smoker = UserSmoker.query.filter_by(id=smoker_id).first()
+        physical_activity = UserPhysicalActivity.query.filter_by(id=physical_activity_id).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
-    if not user_smoker:
+    if not physical_activity:
         return {"error": "data not found"}, HTTPStatus.NOT_FOUND
 
 
-    if not check_data_id(user_smoker,user):
+    if not check_data_id(physical_activity,user):
         return{"error": "that data is not from your user"}
 
-    session.delete(user_smoker)
+    session.delete(physical_activity)
     session.commit()
 
     return '', HTTPStatus.NO_CONTENT
