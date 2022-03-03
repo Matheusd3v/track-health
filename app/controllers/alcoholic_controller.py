@@ -55,3 +55,43 @@ def get_alcoholic(alcoholic_id):
         return{"error": "that data is not from your user"}
     return jsonify(user_alcoholic), HTTPStatus.OK
 
+
+
+@jwt_required()
+def patch_alcoholic(alcoholic_id):
+    user = get_jwt_identity()
+    data = request.get_json()
+    session:Session = current_app.db.session
+
+
+    if not alcoholic_id:
+        return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
+
+    if not check_data_keys(data):
+        return {"error": "Invalid keys were found",
+                "valid keys": ['description','frequency']
+                 }, HTTPStatus.BAD_REQUEST
+
+
+    invalid_data = get_invalid_data(data)
+    if invalid_data:
+        return {"These keys are with an invalid data type": invalid_data}, HTTPStatus.BAD_REQUEST
+
+    try:
+        user_alcoholic = UserAlcoholic.query.filter_by(id=alcoholic_id).first()
+    except DataError:
+        return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
+
+    if not user_alcoholic:
+        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+
+    if not check_data_id(user_alcoholic,user):
+        return{"error": "that data is not from your user"}
+
+    for key,value in data.items():
+        setattr(user_alcoholic,key,value)
+
+    session.add(user_alcoholic)
+    session.commit()
+    return jsonify(user_alcoholic), HTTPStatus.OK
+
