@@ -14,6 +14,10 @@ def validate_body_surgery(data):
 def validate_body_surgery_details(data):
     
     valid_field = ["name","date", "description"]
+    required_field = ["name","date"]
+
+    if "name" not in data or "date" not in data:
+        raise BadRequest
 
     for key in data.keys():
         if key not in valid_field:

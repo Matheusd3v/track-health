@@ -12,3 +12,7 @@ class Surgery(db.Model):
     id: str = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     name:str = Column(String, nullable = False, unique = True)
 
+
+
+def asdict(self):
+    return asdict(self)
