@@ -17,6 +17,11 @@ def create_doctor():
         data = request.get_json()
         user_jwt = get_jwt_identity()
 
+        data['name'] = data['name'].title()
+        data['type'] = data['type'].title()
+        if data.get('email'):
+            data['email'] = data['email'].lower()
+
         if not re.fullmatch("^\([1-9]{2}\)[0-9]{5}\-[0-9]{4}$",data["phone"]):
             return {"error":"invalid format phone. Must be (xx)xxxxx-xxxx "}, HTTPStatus.BAD_REQUEST
 
@@ -58,8 +63,16 @@ def update_doctor(doctor_id):
 
         data = request.get_json()
 
-        if not re.fullmatch("^\([1-9]{2}\)[0-9]{5}\-[0-9]{4}$",data["phone"]):
-            return {"error":"invalid format phone. Must be (xx)xxxxx-xxxx "}, HTTPStatus.BAD_REQUEST
+        if data.get('name'):
+            data['name'] = data['name'].title()
+        if data.get('type'):
+            data['type'] = data['type'].title()
+        if data.get('email'):
+            data['email'] = data['email'].lower()
+
+        if data.get('phone'):
+            if not re.fullmatch("^\([1-9]{2}\)[0-9]{5}\-[0-9]{4}$",data["phone"]):
+                return {"error":"invalid format phone. Must be (xx)xxxxx-xxxx "}, HTTPStatus.BAD_REQUEST
 
         doctor = session.query(DoctorModel).get(doctor_id)
 
@@ -74,13 +87,19 @@ def update_doctor(doctor_id):
     except NotFound as e:
         return e.description, e.code
 
+    except AttributeError:
+        return {"error": "wrong id"}, HTTPStatus.BAD_REQUEST
+
+    except DataError as e:
+        return {"error": "wrong id"}, e.code
+
 
 @jwt_required()
 def delete_doctor(doctor_id):
     try:
         session: Session = current_app.db.session
 
-        doctor = session.query(DoctorModel).get(doctor_id)
+        doctor = session.query(DoctorModel).get_or_404(doctor_id)
 
         session.delete(doctor)
         session.commit()
@@ -89,3 +108,6 @@ def delete_doctor(doctor_id):
     
     except NotFound as e:
         return e.description, e.code
+
+    except DataError as e:
+        return {"error": "wrong id"}, HTTPStatus.BAD_REQUEST
