@@ -83,7 +83,7 @@ def update_exam(exam_id):
         msg = verify_update_types(data)
         return jsonify({"Error": msg}), HTTPStatus.BAD_REQUEST
     except (DataError, AttributeError):
-        return {"Error": f"user_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
+        return {"Error": f"exam_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
 @jwt_required()
@@ -100,7 +100,7 @@ def delete_user_exam(exam_id):
         session.commit()
         return "", HTTPStatus.NO_CONTENT
     except (DataError, UnmappedInstanceError):
-        return {"Error": f"user_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
+        return {"Error": f"exam_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
 @jwt_required()

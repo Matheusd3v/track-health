@@ -65,7 +65,7 @@ def update_diseases(disease_id):
         return jsonify({"Error": msg}), HTTPStatus.BAD_REQUEST
 
     except (DataError, AttributeError):
-        return {"Error": f"user_id {disease_id} is not valid"}, HTTPStatus.NOT_FOUND
+        return {"Error": f"disease_id {disease_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
 @jwt_required()
@@ -83,7 +83,7 @@ def delete_user_diseases(disease_id):
         session.commit()
         return "", HTTPStatus.NO_CONTENT
     except (DataError, UnmappedInstanceError):
-        return {"Error": f"user_id {disease_id} is not valid"}, HTTPStatus.NOT_FOUND
+        return {"Error": f"disease_id {disease_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
 @jwt_required()
