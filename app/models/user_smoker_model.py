@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from sqlalchemy import Column, String, Date, ForeignKey
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
-from app.models.user_model import User
 from sqlalchemy.orm import relationship
 
 
@@ -16,6 +15,3 @@ class UserSmoker(db.Model):
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable = False)
     frequency:str = Column(String, nullable = False)
     description:str = Column(String)
-
-    User:User = relationship("User",
-        backref="users", uselist=False)    

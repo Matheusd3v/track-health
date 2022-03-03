@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 
 from app.models.surgery_details_model import SurgeryDetails
+from app.models.user_smoker_model import UserSmoker
 @dataclass
 class User(db.Model):
     __tablename__ = "users"
@@ -24,6 +25,8 @@ class User(db.Model):
             secondary="user_surgery",
             backref='user')    
 
+
+    smoker: UserSmoker = relationship("UserSmoker",backref = 'user_smoker', uselist = False) 
     @property
     def password(self):
         raise AttributeError("Access not allowed for reading.")
