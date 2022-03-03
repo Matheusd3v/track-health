@@ -32,7 +32,7 @@ bp_user.delete("surgery/<id>")(delete_user_surgery)
 
 bp_user.post("/drug")(create_drug_data)
 
-bp_user.get("/drug/<drug_id>")(get_user_drug)
+bp_user.get("/drug")(get_user_drug)
 
 bp_user.patch("/drug/<drug_id>")(update_user_drug_data)
 

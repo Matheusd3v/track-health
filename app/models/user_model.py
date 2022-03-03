@@ -24,6 +24,8 @@ class User(db.Model):
             secondary="user_surgery",
             backref='user')    
 
+    user_drug: str = relationship("UserDrugs", backref="user_drug", uselist=False, viewonly=True)
+
     @property
     def password(self):
         raise AttributeError("Access not allowed for reading.")

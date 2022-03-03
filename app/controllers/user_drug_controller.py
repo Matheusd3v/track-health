@@ -11,26 +11,17 @@ from app.services.user_drugs_services import drug_data_updated, verify_data_and_
 from app.services.user_services import verify_values
 
 @jwt_required()
-def get_user_drug(drug_id):
+def get_user_drug():
     try:
         session: Session = current_app.db.session
         id = get_jwt_identity()["id"]
-        drug_data = session.query(UserDrugs).get(drug_id)
-
-        verify_data_and_id(drug_data, id)
+        
+        drug_data = session.query(UserDrugs).filter_by(user_id = id).first()
 
         return jsonify(drug_data), HTTPStatus.OK
-    
-    except DataError as e:
-        if isinstance(e.orig, InvalidTextRepresentation):
-            return {"Error": f"Not found id {drug_id}."}, HTTPStatus.NOT_FOUND
 
     except NotFound as e:
-        return {"Error": f"Not fount id {drug_id}"}, e.code
-    
-    except Forbidden as e:
-        return e.description, e.code
-
+        return {"Error": f"Not fount id "}, e.code
 
 @jwt_required()
 def create_drug_data():
