@@ -12,7 +12,7 @@ Authorization: ` Bearer Token`
 ```json
 
   {
-    "name": "hemograma",
+	"name": "hemograma",
 	"date": "22/02/2022",
   }
 
@@ -39,11 +39,12 @@ Esta rota é para a atualização dos exames do usuário, podendo atualizar some
 
 Exemplo de requisição:
 
+Authorization: ` Bearer Token`
 
 ```json
 
   {
-    "name": "hemograma",
+	"name": "hemograma",
 	"date": "22/02/2022",
 	"upload_img": "matheus_pic_profile.png",
 	"description": "Descrição maneira"
@@ -57,12 +58,17 @@ Exemplo de requisição:
 
 Esta rota é para apagar um exame do usuário. Para realizar a deleção é somente necessário passar o exam_id por query params.
 
+Authorization: ` Bearer Token`
+
 
 ## POST - user/diseases
 
 Esta rota é para o cadastro de doenças  relacionados ao usuário. Sendo obrigatório somente o campo “name”
 
-Exemplo de requisição abaixo:
+Exemplo de requisição:
+
+Authorization: ` Bearer Token`
+
 ```json
 {
 "name":"Gripe",
