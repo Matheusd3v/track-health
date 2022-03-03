@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 
 
 @dataclass
-class UserSmoker(db.Model):
+class UserPhysicalActivity(db.Model):
 
     __tablename__ = "user_physical_activity"
 
