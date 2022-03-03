@@ -46,4 +46,15 @@ def update_user_drug_data(drug_id: str):
 
     return jsonify(new_data), HTTPStatus.OK
 
+@jwt_required()
+def delete_drug_data(drug_id: str):
+    session: Session = current_app.db.session
+
+    drug_data = session.query(UserDrugs).get(drug_id)
+
+    session.delete(drug_data)
+    session.commit()
+
+    return "", HTTPStatus.NO_CONTENT
+
  
