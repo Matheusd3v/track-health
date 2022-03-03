@@ -2,12 +2,13 @@ from app.exceptions.missing_keys import MissingKeysError
 from werkzeug.exceptions import BadRequest
 
 def verify_fields_and_values(body: dict):
-    required_fields = [ "name", "type", "email", "phone", "user_id", "address_id"]
+    required_fields = [ "name", "type", "user_id", "phone", "address_id"]
+    allowed_fields = ["email"]
 
     for key in body.keys():
-        if not key in required_fields:
+        if not key in required_fields and key not in allowed_fields:
             raise MissingKeysError(required_fields, list(body.keys()))
-    
+
     for key in required_fields:
         if not key in body.keys():
             raise MissingKeysError(required_fields, list(body.keys()))
