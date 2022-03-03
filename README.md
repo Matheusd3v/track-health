@@ -14,7 +14,7 @@ Authorization: ` Bearer Token`
   "name": "hemograma",
   "date": "22/02/2022"
 }
-```
+
 
 Retorno esperado :
 
@@ -94,7 +94,7 @@ Authorization: ` Bearer Token`
 ## POST - /doctor
 
 Esta rota é para o cadastro de médicos relacionados ao usuário.
-Os campos obrigatórios são: “name”, “type”,"phone" e "address_id", ele cria um histórico dos médicos e ainda relacionando com o endereço deste.
+Os campos obrigatórios são: “name”, “type”, "phone" e "address_id", ele cria um histórico dos médicos e ainda relacionando com o endereço deste.
 
 Exemplo de requisição abaixo:
 
@@ -139,10 +139,28 @@ Authorization: ` Bearer Token`
 
 ```json
 {
-	"name": "Gustavo",
-	"type": "ginecologista",
-	"telephone": "(21)9"
+  "name": "John",
+  "type": "cardiologista"
 }
+```
+
+Retorno esperado :
+
+```json
+{
+  "id": "c1aaec1c-53b3-4f04-8e68-971141d283a5",
+  "name": "John",
+  "type": "cardiologista",
+  "email": null,
+  "phone": "(21)12345-6789",
+  "address": {
+    "id": "10cdd6a6-670b-4df9-9055-4ba711eadb3e",
+    "street": "rua x",
+    "number": 50,
+    "district": "A",
+    "city": "X",
+    "complement": "abc"
+  }
 }
 ```
 
@@ -152,9 +170,7 @@ Esta rota é para apagar um exame do usuário. Para realizar a deleção é some
 
 Authorization: ` Bearer Token`
 
-
 # Surgerys
-
 
 ## POST  - /surgery
 Esta rota é para a criação de cirurgias, estas cirurgias não terão nenhuma relação com o usuário. Só é necessário passar o campo "name" na requisição como mostrado no exemplo abaixo.
@@ -205,12 +221,14 @@ Authorization: ` Bearer Token`
 
 ```json
 {
+
 	"description":"Atualizando a descrição",
 	"date":"03/03/2022"
 }
 ```
 
 Caso dê tudo certo a resposta será a seguinte
+
 
 ```json
 {
@@ -221,7 +239,6 @@ Caso dê tudo certo a resposta será a seguinte
 }
 
 ``` 
-
 
 
 ## DELETE -  /user/surgery/<surgery_id>
