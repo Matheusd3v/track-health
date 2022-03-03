@@ -4,7 +4,7 @@ from flask import current_app, jsonify, request, session
 from app.models.surgery_details_model import SurgeryDetails
 from app.models.user_model import User
 from app.models.user_surgery_model import UserSurgery
-from app.services.surgery_services import update_surgery, validate_body_surgery, validate_body_surgery_details
+from app.services.surgery_services import serializing_surgery, update_surgery, validate_body_surgery, validate_body_surgery_details
 from werkzeug.exceptions import BadRequest
 from app.models.surgery_model import Surgery
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -56,8 +56,13 @@ def create_surgery_user():
         session.add(user_surgery)
         session.commit()
 
-        user = User.query.filter_by(id = user_id).first()
-        return jsonify(user), HTTPStatus.CREATED
+        surgery = {
+            "id":surgery.id,
+            "name":surgery.name,
+            "description":surgery_detail.description,
+            "date":surgery_detail.date
+        }
+        return jsonify(surgery), HTTPStatus.CREATED
 
     except (BadRequest, TypeError, KeyError):
         return {"error":"These are required fields  ['name','date', 'description']"}, HTTPStatus.BAD_REQUEST
@@ -77,10 +82,17 @@ def update_user_surgery(id):
         surgery_details = SurgeryDetails.query.filter_by(id=user_surgery.surgery_detail_id).first()
         update_surgery(data, surgery_details)
 
-        
         session.add(surgery_details)
         session.commit()
-        return jsonify(surgery_details), HTTPStatus.OK
+        surgery = Surgery.query.filter_by(id= surgery_details.surgery_name.id).first() 
+
+
+        return jsonify({
+            "id":surgery.id,
+            "name":surgery.name,
+            "description":surgery_details.description,
+            "date":surgery_details.date
+        }), HTTPStatus.OK
     
     except DataError:
         return {"error":"A surgery with this id was not found"}, HTTPStatus.NOT_FOUND
@@ -108,3 +120,17 @@ def delete_user_surgery(id):
 
     except DataError:
         return {"error":"A surgery with this id was not found"}, HTTPStatus.NOT_FOUND
+
+
+
+@jwt_required()
+
+
+def get_user_surgerys():
+    user_id = get_jwt_identity()["id"]
+
+    user = User.query.filter_by(id=user_id).first()
+    user = user.asdict()
+
+    all_surgerys =  serializing_surgery(user)
+    return jsonify(all_surgerys)

@@ -3,7 +3,7 @@ from app.controllers.alcoholic_controller import create_alcoholic, delete_alcoho
 from app.controllers.diseases_controller import create_user_diseases, update_diseases, delete_user_diseases, get_user_diseases
 from app.controllers.exams_controller import create_user_exam, delete_user_exam, get_user_exams, update_exam
 from app.controllers.medication_controller import create_medication_user, delete_medication_user, get_medications, update_medication_user
-from app.controllers.surgery_controller import create_surgery_user, delete_user_surgery, update_user_surgery
+from app.controllers.surgery_controller import create_surgery_user, delete_user_surgery, get_user_surgerys, update_user_surgery
 from app.controllers.user_controller import create_user, delete_user, get_user, login, update_user
 from app.controllers.allergies_controller import create_allergies, get_allergies, delete_allergy, update_allergy
 from app.controllers.user_drug_controller import create_drug_data, delete_drug_data, get_user_drug, update_user_drug_data
@@ -40,6 +40,7 @@ bp_user.post("/diseases")(create_user_diseases)
 bp_user.patch("/diseases/<disease_id>")(update_diseases)
 bp_user.delete("/diseases/<disease_id>")(delete_user_diseases)
 
+bp_user.get("/surgery")(get_user_surgerys)
 bp_user.post("surgery")(create_surgery_user)
 bp_user.patch("surgery/<id>")(update_user_surgery)
 bp_user.delete("surgery/<id>")(delete_user_surgery)
