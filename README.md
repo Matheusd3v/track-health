@@ -174,3 +174,77 @@ Caso dê tudo certo a resposta será a seguinte
 Esta rota é para deletar alguma cirurgia relacionada ao usuário, não é necessário nenhum corpo na requisição apenas a autenficação com token. Caso dê tudo certo irá retornar o código 204.
 
 Authorization: ` Bearer Token`
+
+
+
+## GET - /user/surgery
+Não é necessário nenhum corpo apenas a o token. Caso tudo dê certo irá retornar um dicionário com todas as cirurgias do usuários e um status code 200.
+
+#
+# Medication
+ 
+## POST - /medication 
+Esta rota é para criação de medicamentos sem relação com o usuário. Para a criação de um medicamento é necessário apenas o campo "name" como mostrado na requisição abaixo.
+
+```json
+{
+  "name": "Dramin"
+}
+``` 
+Caso dê tudo certo irá retornar o código 201 e seguinte json
+```json
+{
+  "id": "3f2a3954-b306-4573-8f80-de210f6aeda6",
+  "name": "Dramin"
+}
+
+```
+
+## POST - /user/medication
+Esta rota é para a criação de medicamentos relacionados ao usuário. Os campos obrigatórios são "name" e "description" como no exemplo abaixo:
+
+Authorization: ` Bearer Token`
+```json
+{
+	"name":"Insulina",
+	"description":"Teste de descricação"
+}
+
+```
+Caso dê tudo certo irá retornar 201
+```json
+{
+  	"id": "19ee0dda-da00-4018-90a1-6d72bbe35ec4",
+  	"name": "Insulina",
+ 	"description":"Teste de descricação"
+}
+
+```
+
+## PATCH - /user/medication/<medication_id>
+Esta rota é para atualização de uma medicação do usuário. O único campo que pode ser atualizado é "description" como mostrado abaixo.
+
+Authorization: ` Bearer Token`
+```json
+{
+	"description":"Mudando a descrição"
+}
+```
+Caso a requisição seja bem sucedida irá retornar o código 200 e o seguinte json
+
+```json
+{
+  "id": "788f12e6-c0b9-453c-aaeb-183b8e2d49f7",
+  "name": "Insulina",
+  "description": "Mudando a descrição"
+}
+```
+
+## DELETE - /user/medication/<medication_id>
+Esta rota é para deletar um medicamento sendo necessário apenas passar o medication_id via url. Caso dê tudo irá retornar 204.
+
+Authorization: ` Bearer Token`
+
+
+## GET - /user/medication
+Não é necessário nenhum corpo apenas a o token. Caso tudo dê certo irá retornar um dicionário com todos os medicamentos do usuários e um status code 200.
