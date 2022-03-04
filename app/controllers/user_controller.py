@@ -8,7 +8,7 @@ from werkzeug.exceptions import NotFound, Unauthorized, BadRequest
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError, DataError
 from psycopg2.errors import UniqueViolation, DatetimeFieldOverflow
-from app.services.user_services import data_normalized, user_updated, verify_fields_and_values, verify_user, verify_user_and_password
+from app.services.user_services import data_normalized, serializing_all_fields, user_updated, verify_fields_and_values, verify_user, verify_user_and_password
 
 def create_user():
     try:
@@ -73,9 +73,10 @@ def get_user():
         user_bd = session.query(User).get(user_jwt["id"])
 
         verify_user(user_bd)
-
-        return jsonify(user_bd), HTTPStatus.OK
-    
+        
+        # return jsonify(user_bd), HTTPStatus.OK
+        user = user_bd.asdict()
+        return jsonify(serializing_all_fields(user))
     except NotFound as e:
         return e.description, e.code
 

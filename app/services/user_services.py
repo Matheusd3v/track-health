@@ -84,6 +84,16 @@ def remove_space_before_and_after(text: str) -> str:
     return " ".join(text_list)
 
 
-def serializing_all_fields():
-    return ''
+def serializing_all_fields(user):
 
+    serializing_exams(user)
+    return user
+
+
+def serializing_exams(user):
+    exams = user["exams"]
+
+    for exam in exams:
+        exam_deleted = exam.pop("exam")
+        exam.pop("user_id")
+        exam["name"] = exam_deleted["name"]
