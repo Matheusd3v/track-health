@@ -66,3 +66,14 @@ def join_user_exams(exams_table):
             }
             output.append(appended_exam)
     return output
+
+
+def normalize_exam_keys(data: dict) -> dict:
+    if data.get("name"):
+        name = data.pop("name").title()
+        data["name"] = name
+    if data.get("description"):
+        description = data.pop("description").capitalize()
+        data["description"] = description
+
+    return data

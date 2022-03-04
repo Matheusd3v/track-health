@@ -151,7 +151,7 @@ Authorization: ` Bearer Token`
   "name": "hemograma",
   "date": "22/02/2022"
 }
-
+```
 
 Retorno esperado :
 
