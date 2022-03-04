@@ -73,10 +73,11 @@ def get_user():
         user_bd = session.query(User).get(user_jwt["id"])
 
         verify_user(user_bd)
-        
-        # return jsonify(user_bd), HTTPStatus.OK
+
         user = user_bd.asdict()
-        return jsonify(serializing_all_fields(user))
+
+        return jsonify(serializing_all_fields(user)), HTTPStatus.OK
+
     except NotFound as e:
         return e.description, e.code
 
