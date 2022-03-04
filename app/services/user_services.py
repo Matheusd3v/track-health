@@ -79,5 +79,6 @@ def data_normalized(data: dict = None, instance_value: str = None, instance_key:
 
 def remove_space_before_and_after(text: str) -> str:
     text_list = text.split()
+    text_list[0] = text_list[0].capitalize()
 
     return " ".join(text_list)
