@@ -13,6 +13,8 @@ from app.models.surgery_details_model import SurgeryDetails
 from app.models.user_alcoholic_model import UserAlcoholic
 from app.models.user_smoker_model import UserSmoker
 from app.models.user_physical_activity_model import UserPhysicalActivity
+# from app.models.user_disease_model import UserDiseaseModel
+from app.models.diseases_detail_model import DiseasesDetailModel
 
 
 @dataclass
@@ -36,7 +38,8 @@ class User(db.Model):
 
     surgerys:SurgeryDetails = relationship("SurgeryDetails",
             secondary="user_surgery",
-            backref='user')    
+            backref='user')
+
     alcohol: UserAlcoholic = relationship("UserAlcoholic",backref = 'user_alcoholic', uselist = False)
 
 
@@ -48,6 +51,10 @@ class User(db.Model):
 
 
     anamnesis:Anamnesis = relationship("Anamnesis", backref="anamnesis_user")
+
+    diseases:DiseasesDetailModel = relationship("DiseasesDetailModel",
+            secondary="user_diseases",
+            backref='user')
 
     @property
     def password(self):

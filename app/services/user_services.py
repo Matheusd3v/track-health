@@ -1,3 +1,4 @@
+from curses import keyname
 from app.exceptions.missing_keys import MissingKeysError
 from app.models.user_model import User
 from werkzeug.exceptions import NotFound, BadRequest, Unauthorized
@@ -84,6 +85,14 @@ def remove_space_before_and_after(text: str) -> str:
     return " ".join(text_list)
 
 
-def serializing_all_fields():
-    return ''
+def serializing_all_fields(user):
+    serialized = serializing_disease(user)
+    return user
 
+def serializing_disease(user):
+    diseases = user['diseases']
+    for disease in diseases:
+        name = disease['disease']['name']
+        disease['name'] = name
+        disease.pop('disease')
+    return diseases
