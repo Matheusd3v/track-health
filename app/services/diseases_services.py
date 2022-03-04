@@ -59,3 +59,16 @@ def join_user_diseases(diseases_table):
             }
             output.append(appended_diseases)
     return output
+
+
+def normalize_disease_keys(data: dict) -> dict:
+    if data.get("name"):
+        name = data.pop("name").title()
+        data["name"] = name
+    if data.get("description"):
+        description = data.pop("description").capitalize()
+        data["description"] = description
+    if data.get("medication"):
+        medication = data.pop("medication").title()
+        data["medication"] = medication
+    return data

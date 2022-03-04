@@ -1,3 +1,140 @@
+# Rotas Públicas
+
+# User
+
+## POST - user/register
+
+Essa rota é para o cadastro de usuário. Os campos obrigatórios são: name, email, birth_date e password. Passar os campos gender e sex é opcional. 
+
+Exemplo de requisição:
+
+```
+{
+	"name":"  matheus   teste",
+	"email":"matheus@email.com",
+	"birth_date": "27/12/20",
+	"password": "1234",
+	"gender": "hetero",
+	"sex": " masculino"	
+}
+```
+Exemplo de resposta, caso esta tudo correto o status retornado será 201  - CREATED:
+
+```
+{
+	"id": "1af610f7-291d-49a3-8967-f430bd755fcb",
+	"name": "Matheus Teste",
+	"email": "matheus@email.com",
+	"birth_date": "Sun, 27 Dec 2020 00:00:00 GMT",
+	"gender": "Hetero",
+	"sex": "Masculino",
+	"allergy": [],
+	"medications": [],
+	"surgerys": [],
+	"alcohol": null,
+	"user_drug": null,
+	"smoker": null,
+	"physical_activity": null
+}
+```
+
+## POST - user/login
+
+Essa rota é para o login do usuário. Os campos obrigatórios são: email e password. 
+
+Exemplo de requisição:
+
+```
+{
+	"email":"matheus@email.com",
+	"password": "1234"
+}
+```
+Exemplo de resposta, caso esteja tudo correto será retornado status 200 - OK:
+
+```
+{
+	"user_data": {
+		"id": "1af610f7-291d-49a3-8967-f430bd755fcb",
+		"name": "Matheus Teste",
+		"email": "matheus@email.com",
+		"birth_date": "Sun, 27 Dec 2020 00:00:00 GMT",
+		"gender": "Hetero",
+		"sex": "Masculino",
+		"allergy": [],
+		"medications": [],
+		"surgerys": [],
+		"alcohol": null,
+		"user_drug": null,
+		"smoker": null,
+		"physical_activity": null
+	},
+	"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NjM1MTkyNSwianRpIjoiMTQxMjRiNmMtNjNlYS00ZTUyLWE1NmYtZjJiYWRjMWYxYThhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJpZCI6IjFhZjYxMGY3LTI5MWQtNDlhMy04OTY3LWY0MzBiZDc1NWZjYiIsIm5hbWUiOiJNYXRoZXVzIFRlc3RlIiwiZW1haWwiOiJtYXRoZXVzQGVtYWlsLmNvbSIsImJpcnRoX2RhdGUiOiJTdW4sIDI3IERlYyAyMDIwIDAwOjAwOjAwIEdNVCIsImdlbmRlciI6IkhldGVybyIsInNleCI6Ik1hc2N1bGlubyIsImFsbGVyZ3kiOltdLCJtZWRpY2F0aW9ucyI6W10sInN1cmdlcnlzIjpbXSwiYWxjb2hvbCI6bnVsbCwidXNlcl9kcnVnIjpudWxsLCJzbW9rZXIiOm51bGwsInBoeXNpY2FsX2FjdGl2aXR5IjpudWxsfSwibmJmIjoxNjQ2MzUxOTI1LCJleHAiOjE2NDYzNjYzMjV9.ZXeFle8qve-GlIB_GYR7A7CwBYadAtUc1rErlEEL55k"
+}
+```
+
+# Rotas privadas
+
+Para acessar essas rotas é necessário o envio do jwt por bearer token.
+
+# User
+
+## GET - user
+
+Essa rota é para obter os dados do usuário. Deverá ser passado somente o jwt por bearer token, não havendo necessidade de corpo de requisição. 
+
+Exemplo de resposta:
+```
+{
+	"id": "1af610f7-291d-49a3-8967-f430bd755fcb",
+	"name": "Matheus Teste",
+	"email": "matheus@email.com",
+	"birth_date": "Sun, 27 Dec 2020 00:00:00 GMT",
+	"gender": "Hetero",
+	"sex": "Masculino",
+	"allergy": [],
+	"medications": [],
+	"surgerys": [],
+	"alcohol": null,
+	"user_drug": null,
+	"smoker": null,
+	"physical_activity": null
+}
+```
+
+## PATCH - user
+
+Essa rota é para atualização de cadastro do usuário. Os unicos campos que serão alterados, caso sejam passados, são: name, email, birth_date, password, sex e gender. Poderá ser passado somente um ou todos de uma vez. Qualquer campo extra, será ignorado. 
+
+Exemplo de requisição:
+```
+{
+	"name": " matheus gomes",
+	"campo_extra": "extra"
+}
+```
+Exemplo de resposta, retornando status 200 - OK se estiver tudo correto:
+```
+{
+	"id": "1af610f7-291d-49a3-8967-f430bd755fcb",
+	"name": "Matheus Gomes",
+	"email": "matheus@email.com",
+	"birth_date": "Sun, 27 Dec 2020 00:00:00 GMT",
+	"gender": "Hetero",
+	"sex": "Masculino",
+	"allergy": [],
+	"medications": [],
+	"surgerys": [],
+	"alcohol": null,
+	"user_drug": null,
+	"smoker": null,
+	"physical_activity": null
+}
+```
+
+## DELETE - user
+Essa rota é para deletar um usuário. Não necessita de corpo de requisição, somente o bearer token. Não é retornado corpo, somente status 204 caso tudo ocorra bem. 
+
 # Exams
 
 ## POST - user/exams
@@ -14,7 +151,7 @@ Authorization: ` Bearer Token`
   "name": "hemograma",
   "date": "22/02/2022"
 }
-
+```
 
 Retorno esperado :
 
@@ -319,3 +456,62 @@ Authorization: ` Bearer Token`
 
 ## GET - /user/medication
 Não é necessário nenhum corpo apenas a o token. Caso tudo dê certo irá retornar um dicionário com todos os medicamentos do usuários e um status code 200.
+
+# Drug
+
+## POST - user/drug
+
+Essa rota é para o cadastro de informação referente ao uso de drogas. É necessário enviar unicamente os campos: frequency e description. 
+
+Exemplo de requisição:
+```
+{
+	"frequency": "uma vez por semana",
+	"description": "tabaco orgânico"
+}
+```
+Exemplo de resposta, retornando status 201 - CREATED caso esteja tudo correto:
+```
+{
+	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
+	"frequency": "uma vez por semana",
+	"description": "tabaco orgânico"
+}
+```
+
+## PATCH - user/drug
+
+Essa rota é para alterar informações referente a uso de drogas. Será alterado somente os campos frequency e description, campos extras serão ignorados.
+
+Exemplo de requisição:
+```
+{
+	"frequency": "uma vez ao dia"
+}
+```
+
+Exemplo de resposta, retornando status 200 - OK caso tudo ocorra bem:
+```
+{
+	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
+	"frequency": "Uma vez ao dia",
+	"description": "tabaco orgânico"
+}
+```
+
+## GET - user/drug
+
+Essa rota é para obtenção das informações sobre dogras. Não é necessário enviar corpo de requisição, somente o token jwt. 
+
+Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
+```
+{
+	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
+	"frequency": "Uma vez ao dia",
+	"description": "tabaco orgânico"
+}
+```
+
+## DELETE user/drug
+
+Essa rota é para deletar as informações. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 se estiver tudo correto. 

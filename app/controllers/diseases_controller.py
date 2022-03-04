@@ -8,7 +8,7 @@ from app.models.diseases_detail_model import DiseasesDetailModel
 from app.models.user_disease_model import UserDiseaseModel
 from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
 from sqlalchemy.orm.exc import UnmappedInstanceError
-from app.services.diseases_services import find_diseases, join_user_diseases, verify_update_types, verify_user_diseases_key
+from app.services.diseases_services import find_diseases, join_user_diseases, verify_update_types, verify_user_diseases_key, normalize_disease_keys
 
 
 @jwt_required()
@@ -19,7 +19,7 @@ def create_user_diseases():
         session: Session = current_app.db.session
 
         verify_user_diseases_key(data)
-
+        data = normalize_disease_keys(data)
         diseases = find_diseases(data)
         user_id = get_jwt_identity()["id"]
 

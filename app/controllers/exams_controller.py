@@ -10,7 +10,7 @@ from flask import request, jsonify, current_app
 from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
 from werkzeug.exceptions import BadRequest, NotFound
 from app.models.user_exam_model import UserExam
-from app.services.exams_services import find_exam, join_user_exams, verify_exam_key, verify_update_types, verify_user_exam_key
+from app.services.exams_services import find_exam, join_user_exams, verify_exam_key, verify_update_types, verify_user_exam_key, normalize_exam_keys
 
 
 @jwt_required()
@@ -18,7 +18,7 @@ def create_exams():
     try:
         data = request.get_json()
         verify_exam_key(data)
-
+        data = normalize_exam_keys(data)
         session: Session = current_app.db.session
         exam = Exam(**data)
         session.add(exam)
@@ -39,7 +39,7 @@ def create_user_exam():
         session: Session = current_app.db.session
 
         verify_user_exam_key(data)
-
+        data = normalize_exam_keys(data)
         exam = find_exam(data)
         user_id = get_jwt_identity()["id"]
 

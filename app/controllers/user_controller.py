@@ -8,7 +8,7 @@ from werkzeug.exceptions import NotFound, Unauthorized, BadRequest
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
-from app.services.user_services import user_updated, verify_fields_and_values, verify_user, verify_user_and_password
+from app.services.user_services import data_normalized, user_updated, verify_fields_and_values, verify_user, verify_user_and_password
 
 def create_user():
     try:
@@ -17,6 +17,8 @@ def create_user():
         verify_fields_and_values(data)
 
         password_to_hash = data.pop("password")
+
+        data = data_normalized(data=data)
 
         user = User(**data)
         user.password = password_to_hash

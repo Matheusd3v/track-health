@@ -3,7 +3,7 @@ from flask import current_app, jsonify, request
 from app.models.user_smoker_model import UserSmoker
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.services.user_smoker_services import check_data_id, check_data_keys, get_invalid_data
+from app.services.user_smoker_services import check_data_id, check_data_keys, get_invalid_data, normalized_data, remove_spaces
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import DataError,IntegrityError
 
@@ -26,6 +26,7 @@ def create_data():
     if 'frequency' not in data.keys():
         return{'error': "frequency key must be in the body"}, HTTPStatus.BAD_REQUEST
 
+    data = normalized_data(data)
     data['user_id'] = user['id']
 
     new_data = UserSmoker(**data)
@@ -91,7 +92,7 @@ def patch_data(smoker_id):
         return{"error": "that data is not from your user"}
 
     for key,value in data.items():
-        setattr(user_smoker,key,value)
+        setattr(user_smoker,key,remove_spaces(value))
 
     session.add(user_smoker)
     session.commit()

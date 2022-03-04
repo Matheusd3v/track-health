@@ -33,14 +33,52 @@ def user_updated(body: dict, old_user: User ) -> User:
     verify_user(old_user)
     verify_values(list(body.values()))
 
-    allowed_keys = list(old_user.__dict__.keys())
-    allowed_keys.append("password")
+    allowed_keys = [
+        "name",	"email", "birth_date", "password", "gender", "sex", "password"
+    ]
 
     for key, value in body.items():
         if key == "id":
             continue
 
         if key in allowed_keys:
-            setattr(old_user, key, value)
+            setattr(old_user, key, data_normalized(instance_key=key, instance_value=value))
     
     return old_user
+
+def data_normalized(data: dict = None, instance_value: str = None, instance_key: str = None) -> dict:
+    standard_keys = ["name", "sex", "gender"]
+
+    if data:
+        for key, value in data.items():        
+            if key == "email":
+                new_value = remove_space_before_and_after(value)
+                new_value = new_value.lower()
+                data.update({key: new_value})
+
+            if key == "gender" or key == "sex" or key == "name":
+                new_value = remove_space_before_and_after(value)
+                new_value = new_value.title()
+                data.update({key: new_value})
+        
+        return data        
+
+    if instance_key in standard_keys:
+        new_value = remove_space_before_and_after(instance_value)
+        new_value = new_value.title()
+
+        return new_value
+
+    if instance_key == "email":
+        new_value = remove_space_before_and_after(instance_value)
+        new_value = new_value.lower()
+
+        return new_value
+    
+    return instance_value
+
+def remove_space_before_and_after(text: str) -> str:
+    text_list = text.split()
+    text_list[0] = text_list[0].capitalize()
+
+    return " ".join(text_list)
