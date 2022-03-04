@@ -7,6 +7,8 @@ from app.services.user_alcoholic_services import check_data_id, check_data_keys,
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import DataError,IntegrityError
 
+from app.services.user_smoker_services import normalized_data, remove_spaces
+
 @jwt_required()
 def create_alcoholic():
     user = get_jwt_identity()
@@ -26,6 +28,7 @@ def create_alcoholic():
     if 'frequency' not in data.keys():
         return{'error': "frequency key must be in the body"}, HTTPStatus.BAD_REQUEST
 
+    data = normalized_data(data)
     data['user_id'] = user['id']
 
     user_alcoholic = UserAlcoholic(**data)
@@ -91,7 +94,7 @@ def patch_alcoholic(alcoholic_id):
         return{"error": "that data is not from your user"}
 
     for key,value in data.items():
-        setattr(user_alcoholic,key,value)
+        setattr(user_alcoholic,key,remove_spaces(value))
 
     session.add(user_alcoholic)
     session.commit()
