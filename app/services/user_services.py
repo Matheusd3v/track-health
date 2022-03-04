@@ -82,3 +82,8 @@ def remove_space_before_and_after(text: str) -> str:
     text_list[0] = text_list[0].capitalize()
 
     return " ".join(text_list)
+
+
+def serializing_all_fields():
+    ...    
+
