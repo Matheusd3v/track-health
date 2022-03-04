@@ -478,3 +478,40 @@ Exemplo de resposta, retornando status 201 - CREATED caso esteja tudo correto:
 	"description": "tabaco orgânico"
 }
 ```
+
+## PATCH - user/drug
+
+Essa rota é para alterar informações referente a uso de drogas. Será alterado somente os campos frequency e description, campos extras serão ignorados.
+
+Exemplo de requisição:
+```
+{
+	"frequency": "uma vez ao dia"
+}
+```
+
+Exemplo de resposta, retornando status 200 - OK caso tudo ocorra bem:
+```
+{
+	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
+	"frequency": "Uma vez ao dia",
+	"description": "tabaco orgânico"
+}
+```
+
+## GET - user/drug
+
+Essa rota é para obtenção das informações sobre dogras. Não é necessário enviar corpo de requisição, somente o token jwt. 
+
+Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
+```
+{
+	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
+	"frequency": "Uma vez ao dia",
+	"description": "tabaco orgânico"
+}
+```
+
+## DELETE user/drug
+
+Essa rota é para deletar as informações. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 se estiver tudo correto. 
