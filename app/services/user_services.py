@@ -85,5 +85,5 @@ def remove_space_before_and_after(text: str) -> str:
 
 
 def serializing_all_fields():
-    ...    
+    return ''
 
