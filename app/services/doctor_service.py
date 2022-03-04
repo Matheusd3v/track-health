@@ -23,3 +23,9 @@ def verify_values(values: list):
             raise BadRequest(description=message)
 
 
+def remove_spaces(value: str) -> str:
+    value_list = value.split()
+    value_list[0] = value_list[0].capitalize()
+    new_value = " ".join(value_list)
+    
+    return new_value

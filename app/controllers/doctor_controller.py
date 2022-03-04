@@ -21,6 +21,8 @@ def create_doctor():
         data['type'] = data['type'].title()
         if data.get('email'):
             data['email'] = data['email'].lower()
+            if not(re.fullmatch(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', data['email'])):
+                return {"error": "invalid email"}, HTTPStatus.BAD_REQUEST
 
         if not re.fullmatch("^\([1-9]{2}\)[0-9]{5}\-[0-9]{4}$",data["phone"]):
             return {"error":"invalid format phone. Must be (xx)xxxxx-xxxx "}, HTTPStatus.BAD_REQUEST
@@ -69,6 +71,8 @@ def update_doctor(doctor_id):
             data['type'] = data['type'].title()
         if data.get('email'):
             data['email'] = data['email'].lower()
+            if not re.fullmatch(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', data['email']):
+                return {"error": "invalid email"}, HTTPStatus.BAD_REQUEST
 
         if data.get('phone'):
             if not re.fullmatch("^\([1-9]{2}\)[0-9]{5}\-[0-9]{4}$",data["phone"]):
