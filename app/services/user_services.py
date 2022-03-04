@@ -33,8 +33,9 @@ def user_updated(body: dict, old_user: User ) -> User:
     verify_user(old_user)
     verify_values(list(body.values()))
 
-    allowed_keys = list(old_user.__dict__.keys())
-    allowed_keys.append("password")
+    allowed_keys = [
+        "name",	"email", "birth_date", "password", "gender", "sex", "password"
+    ]
 
     for key, value in body.items():
         if key == "id":
@@ -78,5 +79,6 @@ def data_normalized(data: dict = None, instance_value: str = None, instance_key:
 
 def remove_space_before_and_after(text: str) -> str:
     text_list = text.split()
+    text_list[0] = text_list[0].capitalize()
 
     return " ".join(text_list)
