@@ -47,8 +47,8 @@ bp_user.delete("surgery/<id>")(delete_user_surgery)
 
 bp_user.post("/drug")(create_drug_data)
 bp_user.get("/drug")(get_user_drug)
-bp_user.patch("/drug/<drug_id>")(update_user_drug_data)
-bp_user.delete("/drug/<drug_id>")(delete_drug_data)
+bp_user.patch("/drug")(update_user_drug_data)
+bp_user.delete("/drug")(delete_drug_data)
 
 bp_user.post("/physical_activity")(create_physical_activity)
 bp_user.get("/physical_activity/<string:physical_activity_id>")(get_physical_activity)

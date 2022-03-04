@@ -54,7 +54,7 @@ def create_drug_data():
 
 
 @jwt_required()
-def update_user_drug_data(drug_id: str):
+def update_user_drug_data():
     try:
         session: Session = current_app.db.session
         user_id = get_jwt_identity()["id"]
@@ -62,7 +62,7 @@ def update_user_drug_data(drug_id: str):
 
         verify_values(list(data.values()))
 
-        old_data = session.query(UserDrugs).get(drug_id)
+        old_data = session.query(UserDrugs).filter_by(user_id = user_id).first()
 
         verify_data_and_id(old_data, user_id)
 
@@ -87,11 +87,11 @@ def update_user_drug_data(drug_id: str):
         return e.description, e.code
 
 @jwt_required()
-def delete_drug_data(drug_id: str):
+def delete_drug_data():
     try:
         session: Session = current_app.db.session
         id = get_jwt_identity()["id"]
-        drug_data = session.query(UserDrugs).get(drug_id)
+        drug_data = session.query(UserDrugs).filter_by(user_id = id).first()
 
         verify_data_and_id(drug_data, id)
 
