@@ -121,6 +121,9 @@ def update_allergy(allergy_id):
     except BadRequest as e:
         return e.description, HTTPStatus.BAD_REQUEST
 
+    except IntegrityError as e:
+        return {"error": "Allergy already created"}, HTTPStatus.CONFLICT
+
 @jwt_required()
 def delete_allergy(allergy_id):
     try:

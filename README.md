@@ -4,7 +4,7 @@
 
 ## POST - user/register
 
-Essa rota é para o cadastro de usuário. Os campos obrigatórios são: name, email, birth_date e password. Passar os campos gender e sex é opcional. 
+Essa rota é para o cadastro de usuário. Os campos obrigatórios são: name, email, birth_date e password. Passar os campos gender e sex é opcional.
 
 Exemplo de requisição:
 
@@ -15,10 +15,11 @@ Exemplo de requisição:
 	"birth_date": "27/12/20",
 	"password": "1234",
 	"gender": "hetero",
-	"sex": " masculino"	
+	"sex": " masculino"
 }
 ```
-Exemplo de resposta, caso esta tudo correto o status retornado será 201  - CREATED:
+
+Exemplo de resposta, caso esta tudo correto o status retornado será 201 - CREATED:
 
 ```
 {
@@ -40,7 +41,7 @@ Exemplo de resposta, caso esta tudo correto o status retornado será 201  - CREA
 
 ## POST - user/login
 
-Essa rota é para o login do usuário. Os campos obrigatórios são: email e password. 
+Essa rota é para o login do usuário. Os campos obrigatórios são: email e password.
 
 Exemplo de requisição:
 
@@ -50,6 +51,7 @@ Exemplo de requisição:
 	"password": "1234"
 }
 ```
+
 Exemplo de resposta, caso esteja tudo correto será retornado status 200 - OK:
 
 ```
@@ -81,9 +83,10 @@ Para acessar essas rotas é necessário o envio do jwt por bearer token.
 
 ## GET - user
 
-Essa rota é para obter os dados do usuário. Deverá ser passado somente o jwt por bearer token, não havendo necessidade de corpo de requisição. 
+Essa rota é para obter os dados do usuário. Deverá ser passado somente o jwt por bearer token, não havendo necessidade de corpo de requisição.
 
 Exemplo de resposta:
+
 ```
 {
 	"id": "1af610f7-291d-49a3-8967-f430bd755fcb",
@@ -104,16 +107,19 @@ Exemplo de resposta:
 
 ## PATCH - user
 
-Essa rota é para atualização de cadastro do usuário. Os unicos campos que serão alterados, caso sejam passados, são: name, email, birth_date, password, sex e gender. Poderá ser passado somente um ou todos de uma vez. Qualquer campo extra, será ignorado. 
+Essa rota é para atualização de cadastro do usuário. Os unicos campos que serão alterados, caso sejam passados, são: name, email, birth_date, password, sex e gender. Poderá ser passado somente um ou todos de uma vez. Qualquer campo extra, será ignorado.
 
 Exemplo de requisição:
+
 ```
 {
 	"name": " matheus gomes",
 	"campo_extra": "extra"
 }
 ```
+
 Exemplo de resposta, retornando status 200 - OK se estiver tudo correto:
+
 ```
 {
 	"id": "1af610f7-291d-49a3-8967-f430bd755fcb",
@@ -133,7 +139,8 @@ Exemplo de resposta, retornando status 200 - OK se estiver tudo correto:
 ```
 
 ## DELETE - user
-Essa rota é para deletar um usuário. Não necessita de corpo de requisição, somente o bearer token. Não é retornado corpo, somente status 204 caso tudo ocorra bem. 
+
+Essa rota é para deletar um usuário. Não necessita de corpo de requisição, somente o bearer token. Não é retornado corpo, somente status 204 caso tudo ocorra bem.
 
 # Exams
 
@@ -186,6 +193,8 @@ Authorization: ` Bearer Token`
 Esta rota é para apagar um exame do usuário. Para realizar a deleção é somente necessário passar o exam_id por query params.
 
 Authorization: ` Bearer Token`
+
+# DISEASE
 
 ## POST - user/diseases
 
@@ -266,7 +275,7 @@ Retorno esperado :
 }
 ```
 
-## PATCH - /doctor/<int:exam_id>
+## PATCH - /doctor/<int:doctor_id>
 
 Esta rota é para a atualização dos dados de um dos médicos do usuário, podendo atualizar “name”, “type”,"phone", "address_id" e "email".
 
@@ -301,143 +310,150 @@ Retorno esperado :
 }
 ```
 
-## DELETE - user/exams/<int:exam_id
+## DELETE - /doctor/<int:doctor_id
 
-Esta rota é para apagar um exame do usuário. Para realizar a deleção é somente necessário passar o exam_id por query params.
+Esta rota é para deletar um dos médicos do usuário. Para realizar a deleção é somente necessário passar o doctor_id por query params.
 
 Authorization: ` Bearer Token`
 
 # Surgerys
 
-## POST  - /surgery
+## POST - /surgery
+
 Esta rota é para a criação de cirurgias, estas cirurgias não terão nenhuma relação com o usuário. Só é necessário passar o campo "name" na requisição como mostrado no exemplo abaixo.
 
 ```json
-	{
-		"name":"Cirurgia na visicula"
-	}
+{
+  "name": "Cirurgia na visicula"
+}
 ```
+
 Caso a requisição tenha sucesso irá retornar a seguinte resposta com o status code de 201.
 
 ```json
-
 {
   "id": "ba1927e3-4d16-437c-8cc7-229d1bcf92e4",
-  "name":"Cirurgia na visicula"
+  "name": "Cirurgia na visicula"
 }
-
 ```
 
 ## POST - user/surgery
+
 Esta rota é para a criação de cirurgias relacionadas ao usuário. Para a realização desta requisição é necessário os campo "name" e "date", o campo "description" no exemplo abaixo é opcional.
 
-
 Authorization: ` Bearer Token`
-```json
-{
-	"name":"Cirurgia do apendice",
-	"description": "Realizei essa cirurgia há 2 anos atrás e não tive nenhuma complicação",
-	"date":"03/02/2020"
-}
 
-```
-Caso dê tudo certo irá retornar a seguinte resposta e código 201
 ```json
 {
-	"id":"bf212d16-2681-4f0d-a6e4-0db2318305f1",
-	"name":"Cirurgia do apendice",
-	"description": "Realizei essa cirurgia há 2 anos atrás e não tive nenhuma complicação",
-	"date":"03/02/2020"
+  "name": "Cirurgia do apendice",
+  "description": "Realizei essa cirurgia há 2 anos atrás e não tive nenhuma complicação",
+  "date": "03/02/2020"
+}
+```
+
+Caso dê tudo certo irá retornar a seguinte resposta e código 201
+
+```json
+{
+  "id": "bf212d16-2681-4f0d-a6e4-0db2318305f1",
+  "name": "Cirurgia do apendice",
+  "description": "Realizei essa cirurgia há 2 anos atrás e não tive nenhuma complicação",
+  "date": "03/02/2020"
 }
 ```
 
 ## PATCH - /user/surgery/<surgery_id>
+
 Esta rota é para atualização de uma cirurgia, sendo possível atualizar apenas "date" e "description". Exemplo de requisição abaixo:
 
 Authorization: ` Bearer Token`
 
 ```json
 {
-
-	"description":"Atualizando a descrição",
-	"date":"03/03/2022"
+  "description": "Atualizando a descrição",
+  "date": "03/03/2022"
 }
 ```
 
 Caso dê tudo certo a resposta será a seguinte
 
-
 ```json
 {
-	"id": "9525ab67-d12c-42e8-83de-e98127565743",
-	"name": "Cirurgia do apendice",
-	"date": "Thu, 03 Mar 2022 00:00:00 GMT",
-  	"description": "Atualizando a descrição"
+  "id": "9525ab67-d12c-42e8-83de-e98127565743",
+  "name": "Cirurgia do apendice",
+  "date": "Thu, 03 Mar 2022 00:00:00 GMT",
+  "description": "Atualizando a descrição"
 }
+```
 
-``` 
+## DELETE - /user/surgery/<surgery_id>
 
-
-## DELETE -  /user/surgery/<surgery_id>
 Esta rota é para deletar alguma cirurgia relacionada ao usuário, não é necessário nenhum corpo na requisição apenas a autenficação com token. Caso dê tudo certo irá retornar o código 204.
 
 Authorization: ` Bearer Token`
 
-
-
 ## GET - /user/surgery
+
 Não é necessário nenhum corpo apenas a o token. Caso tudo dê certo irá retornar um dicionário com todas as cirurgias do usuários e um status code 200.
 
 #
+
 # Medication
- 
-## POST - /medication 
+
+## POST - /medication
+
 Esta rota é para criação de medicamentos sem relação com o usuário. Para a criação de um medicamento é necessário apenas o campo "name" como mostrado na requisição abaixo.
 
 ```json
 {
   "name": "Dramin"
 }
-``` 
+```
+
 Caso dê tudo certo irá retornar o código 201 e seguinte json
+
 ```json
 {
   "id": "3f2a3954-b306-4573-8f80-de210f6aeda6",
   "name": "Dramin"
 }
-
 ```
 
 ## POST - /user/medication
+
 Esta rota é para a criação de medicamentos relacionados ao usuário. Os campos obrigatórios são "name" e "description" como no exemplo abaixo:
 
 Authorization: ` Bearer Token`
+
 ```json
 {
-	"name":"Insulina",
-	"description":"Teste de descricação"
+  "name": "Insulina",
+  "description": "Teste de descricação"
 }
-
 ```
+
 Caso dê tudo certo irá retornar 201
+
 ```json
 {
-  	"id": "19ee0dda-da00-4018-90a1-6d72bbe35ec4",
-  	"name": "Insulina",
- 	"description":"Teste de descricação"
+  "id": "19ee0dda-da00-4018-90a1-6d72bbe35ec4",
+  "name": "Insulina",
+  "description": "Teste de descricação"
 }
-
 ```
 
 ## PATCH - /user/medication/<medication_id>
+
 Esta rota é para atualização de uma medicação do usuário. O único campo que pode ser atualizado é "description" como mostrado abaixo.
 
 Authorization: ` Bearer Token`
+
 ```json
 {
-	"description":"Mudando a descrição"
+  "description": "Mudando a descrição"
 }
 ```
+
 Caso a requisição seja bem sucedida irá retornar o código 200 e o seguinte json
 
 ```json
@@ -449,28 +465,32 @@ Caso a requisição seja bem sucedida irá retornar o código 200 e o seguinte j
 ```
 
 ## DELETE - /user/medication/<medication_id>
+
 Esta rota é para deletar um medicamento sendo necessário apenas passar o medication_id via url. Caso dê tudo irá retornar 204.
 
 Authorization: ` Bearer Token`
 
-
 ## GET - /user/medication
+
 Não é necessário nenhum corpo apenas a o token. Caso tudo dê certo irá retornar um dicionário com todos os medicamentos do usuários e um status code 200.
 
 # Drug
 
 ## POST - user/drug
 
-Essa rota é para o cadastro de informação referente ao uso de drogas. É necessário enviar unicamente os campos: frequency e description. 
+Essa rota é para o cadastro de informação referente ao uso de drogas. É necessário enviar unicamente os campos: frequency e description.
 
 Exemplo de requisição:
+
 ```
 {
 	"frequency": "uma vez por semana",
 	"description": "tabaco orgânico"
 }
 ```
+
 Exemplo de resposta, retornando status 201 - CREATED caso esteja tudo correto:
+
 ```
 {
 	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
@@ -484,6 +504,7 @@ Exemplo de resposta, retornando status 201 - CREATED caso esteja tudo correto:
 Essa rota é para alterar informações referente a uso de drogas. Será alterado somente os campos frequency e description, campos extras serão ignorados.
 
 Exemplo de requisição:
+
 ```
 {
 	"frequency": "uma vez ao dia"
@@ -491,6 +512,7 @@ Exemplo de requisição:
 ```
 
 Exemplo de resposta, retornando status 200 - OK caso tudo ocorra bem:
+
 ```
 {
 	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
@@ -501,9 +523,10 @@ Exemplo de resposta, retornando status 200 - OK caso tudo ocorra bem:
 
 ## GET - user/drug
 
-Essa rota é para obtenção das informações sobre dogras. Não é necessário enviar corpo de requisição, somente o token jwt. 
+Essa rota é para obtenção das informações sobre dogras. Não é necessário enviar corpo de requisição, somente o token jwt.
 
 Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
+
 ```
 {
 	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
@@ -514,4 +537,97 @@ Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
 
 ## DELETE user/drug
 
-Essa rota é para deletar as informações. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 se estiver tudo correto. 
+Essa rota é para deletar as informações. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 se estiver tudo correto.
+
+# ALLERGY
+
+## POST - /allergy
+
+Esta rota é para adicionar uma alergia na tabela de alergias. Campo obrigatório é apenas o "name".
+
+Authorization: ` Bearer Token`
+
+```json
+{
+  "name": "camarão"
+}
+```
+
+Retorno esperado :
+
+```json
+{
+  "id": "df85ee37-0766-4c7c-bd78-0489596e398d",
+  "name": "camarão"
+}
+```
+
+## GET - /user/allergy
+
+Esta rota é para pegar todas as alergias do usuário, não sendo necessário passar nenhum body.
+
+Authorization: ` Bearer Token`
+
+## POST - /user/allergy
+
+Esta rota é para o cadastro das alergias de um usuário, caso a alergia não exista na tabela ela a cria.
+Os campos obrigatórios são: “name”, "description" sendo facultativo.
+
+Exemplo de requisição abaixo:
+
+Authorization: ` Bearer Token`
+
+```json
+{
+  "name": "frutos do mar",
+  "description": "alergia grave a frutos do mar"
+}
+```
+
+Retorno esperado :
+
+```json
+{
+  "id": "0d3316dd-bd68-4e27-984c-98b40b2fbb76",
+  "description": "Alergia grave a frutos do mar",
+  "allergy": {
+    "id": "83cbe018-eaff-4fc2-87f7-f1cbdc7773a6",
+    "name": "Frutos Do Mar"
+  }
+}
+```
+
+## PATCH - /user/allergy/<int:allergy_id>
+
+Esta rota é para a atualização dos dados de uma das alergias do usuário, podendo atualizar “name” e “description".
+Para realizar a atualização é somente necessário passar o id da alergia do usuário por query params.
+
+Exemplo de requisição:
+
+Authorization: ` Bearer Token`
+
+```json
+{
+  "name": "camarão",
+  "description": "Alergia grave a camarão"
+}
+```
+
+Retorno esperado :
+
+```json
+{
+  "id": "f3498206-47cd-4eca-acf7-03617dd31670",
+  "description": "Alergia grave a pelo de cachorro",
+  "allergy": {
+    "id": "205d4f8e-a236-4410-8faf-559ac69244f3",
+    "name": "Cachorro"
+  }
+}
+```
+
+## DELETE - /user/allergy/<int:allergy_id
+
+Esta rota é para deletar uma das alergias do usuário. Para realizar a deleção é somente necessário passar o id da alergia do usuário por query params.
+
+Authorization: ` Bearer Token`
