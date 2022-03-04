@@ -89,6 +89,7 @@ def serializing_all_fields(user):
     serializing_exams(user)
     serializing_disease(user)
     serializing_surgery(user)
+    serializing_medications(user)
  
     return user
 
@@ -118,3 +119,15 @@ def serializing_surgery(user):
         surgery_detail = surgery.pop("surgery_name")
         surgery["id"] = surgery_detail["id"]
         surgery["name"] = surgery_detail["name"]
+
+def serializing_medications(user):
+    for medication in user["medications"]:
+        medication.pop("id")
+        medication.pop("user_id")
+        medication.pop("medication_id")
+        
+        medication_details = medication.pop("medication")
+        medication["name"] = medication_details["name"]
+        medication["id"] = medication_details["id"]
+    
+
