@@ -47,7 +47,7 @@ class User(db.Model):
     physical_activity: UserPhysicalActivity = relationship("UserPhysicalActivity",backref = 'physical_activity', uselist = False) 
 
 
-    anamnesis:Anamnesis = relationship("Anamnesis", backref="anamnesis_user")
+    anamnesis:Anamnesis = relationship("Anamnesis", backref="anamnesis_user", uselist=False)
 
     @property
     def password(self):
