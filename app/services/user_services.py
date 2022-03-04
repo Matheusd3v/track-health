@@ -86,8 +86,21 @@ def remove_space_before_and_after(text: str) -> str:
 
 
 def serializing_all_fields(user):
-    serialized = serializing_disease(user)
+    serializing_exams(user)
+    serializing_disease(user)
+    serializing_surgery(user)
+ 
     return user
+
+
+def serializing_exams(user):
+    exams = user["exams"]
+
+    for exam in exams:
+        exam_deleted = exam.pop("exam")
+        exam.pop("user_id")
+        exam["name"] = exam_deleted["name"]
+        
 
 def serializing_disease(user):
     diseases = user['diseases']
@@ -96,3 +109,12 @@ def serializing_disease(user):
         disease['name'] = name
         disease.pop('disease')
     return diseases
+
+def serializing_surgery(user):
+    surgerys = user["surgerys"]
+
+    for surgery in surgerys:
+        surgery.pop("id")
+        surgery_detail = surgery.pop("surgery_name")
+        surgery["id"] = surgery_detail["id"]
+        surgery["name"] = surgery_detail["name"]

@@ -3,7 +3,9 @@ from app.configs.database import db
 from sqlalchemy import Column, String, Date, ForeignKey
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 
+from app.models.exam_model import Exam
 
 
 @dataclass
@@ -17,3 +19,4 @@ class ExamDetails(db.Model):
     description:str = Column(String) 
         
     user_id: str = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable = False)
+    exam:Exam = relationship("Exam", secondary="user_exam", backref="exams", uselist=False)
