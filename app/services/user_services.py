@@ -109,7 +109,6 @@ def serializing_disease(user):
         name = disease['disease']['name']
         disease['name'] = name
         disease.pop('disease')
-    return diseases
 
 def serializing_surgery(user):
     surgerys = user["surgerys"]

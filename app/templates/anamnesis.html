@@ -9,6 +9,45 @@
 <body>
     <h1> {{name}}  -  Anamnesis</h1>
 
+
+    <h2>Atividade fisica</h2>
+    {% if user.physical_activity %}
+        <p>Pratico atividade fisica regularmente</p>
+    {% endif %}
+
+    {% if not user.physical_activity %}
+        <p>Não pratico atividade fisica regularmente</p>
+    {% endif %}
+
+
+    <h2>Alcoolátra</h2>
+    {% if user.alcohol %}
+        <p>Sim</p>
+    {% endif %}
+
+    {% if not user.alcohol %}
+        <p>Não</p>
+    {% endif %}
+
+
+    <h2>Fumante</h2>
+    {% if user.smoker %}
+        <p>Sim</p>
+    {% endif %}
+
+    {% if not user.smoker %}
+        <p>Não</p>
+    {% endif %}
+
+    <h2>Usuário de drogas</h2>
+    {% if user.user_drug %}
+        <p>Sim</p>
+    {% endif %}
+
+    {% if not user.user_drug %}
+        <p>Não</p>
+    {% endif %}
+
     {% if  anamnesis.allergy %}
         <h2>Alergias</h2>
         <ul>
@@ -18,15 +57,57 @@
         </ul>
     {% endif %}
 
+
     {% if  anamnesis.continous_medication %}
     <h2>Medicações continuas</h2>
     <ul>
         {% for medication in user.medications %}
         <li>{{medication.name}}</li>
+        {% if medication.description %}
+            <p style="margin-left: 5px;">{{medication.description}}</p>
+        {% endif%}
         {% endfor %}
     </ul>
     {% endif %}
 
+
+    {% if anamnesis.surgery %}
+    <h2>Cirurgias</h2>
+    <ul>
+        {% for surgery in user.surgerys %}
+        <li>{{surgery.name}}</li>
+        {% if surgery.description %}
+            <p style="margin-left: 5px;">{{surgery.description}}</p>
+        {% endif%}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    
+    {% if anamnesis.diseases %}
+    <h2>Doenças recentes</h2>
+    <ul>
+        {% for disease in user.diseases %}
+        <li>{{disease.name}}</li>
+        {% if disease.description %}
+            <p style="margin-left: 5px;">{{disease.description}}</p>
+        {% endif%}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    {% if user.exams %}
+    <h2>Exames recentes</h2>
+    <ul>
+        {% for exams in user.exams %}
+        <li>{{exams.name}}</li>
+        {% if exams.description %}
+            <p style="margin-left: 5px;">{{exams.description}}</p>
+        {% endif%}
+        {% endfor %}
+    </ul>
+    {% endif %}
 
 </body>
 </body>

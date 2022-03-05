@@ -4,12 +4,13 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.user_model import User
 
 from app.services.pdf_anamnesis_services import get_anamnesis
+from app.services.user_services import serializing_all_fields
 
 @jwt_required()
 def create_pdf():
     user = get_jwt_identity()
     user = User.query.filter_by(id = user["id"]).first()
-    user = user.asdict()
+    user = serializing_all_fields(user.asdict()) 
 
     anamnesis = get_anamnesis(user["id"])
 
@@ -22,6 +23,5 @@ def create_pdf():
 
 
 
-    print(anamnesis)
     return response
     # return jsonify(anamnesis)
