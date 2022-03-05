@@ -7,7 +7,7 @@ from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import DataError, IntegrityError
 from psycopg2.errors import InvalidTextRepresentation, UniqueViolation
-from app.services.user_drugs_services import drug_data_updated, verify_data_and_id, verify_keys_and_values
+from app.services.user_drugs_services import data_standardized, drug_data_updated, verify_data_and_id, verify_keys_and_values
 from app.services.user_services import verify_values
 
 @jwt_required()
@@ -32,6 +32,8 @@ def create_drug_data():
 
         verify_keys_and_values(data)
 
+        data = data_standardized(data=data)
+
         data_drugs = UserDrugs(**data, user_id=user_id)
 
         session.add(data_drugs)
@@ -52,7 +54,7 @@ def create_drug_data():
 
 
 @jwt_required()
-def update_user_drug_data(drug_id: str):
+def update_user_drug_data():
     try:
         session: Session = current_app.db.session
         user_id = get_jwt_identity()["id"]
@@ -60,7 +62,7 @@ def update_user_drug_data(drug_id: str):
 
         verify_values(list(data.values()))
 
-        old_data = session.query(UserDrugs).get(drug_id)
+        old_data = session.query(UserDrugs).filter_by(user_id = user_id).first()
 
         verify_data_and_id(old_data, user_id)
 
@@ -85,11 +87,11 @@ def update_user_drug_data(drug_id: str):
         return e.description, e.code
 
 @jwt_required()
-def delete_drug_data(drug_id: str):
+def delete_drug_data():
     try:
         session: Session = current_app.db.session
         id = get_jwt_identity()["id"]
-        drug_data = session.query(UserDrugs).get(drug_id)
+        drug_data = session.query(UserDrugs).filter_by(user_id = id).first()
 
         verify_data_and_id(drug_data, id)
 

@@ -8,7 +8,8 @@ from app.models.diseases_detail_model import DiseasesDetailModel
 from app.models.user_disease_model import UserDiseaseModel
 from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
 from sqlalchemy.orm.exc import UnmappedInstanceError
-from app.services.diseases_services import find_diseases, join_user_diseases, verify_update_types, verify_user_diseases_key
+from app.services.diseases_services import find_diseases, serializing_all_fields, verify_update_types, verify_user_diseases_key, normalize_disease_keys
+from app.models.user_model import User
 
 
 @jwt_required()
@@ -19,7 +20,7 @@ def create_user_diseases():
         session: Session = current_app.db.session
 
         verify_user_diseases_key(data)
-
+        data = normalize_disease_keys(data)
         diseases = find_diseases(data)
         user_id = get_jwt_identity()["id"]
 
@@ -32,11 +33,15 @@ def create_user_diseases():
         session.commit()
 
         user_diseases = UserDiseaseModel(user_id=user_id, disease_id=diseases.id,
-                                         disease_detail_id=diseases_datails.id)
+            disease_detail_id=diseases_datails.id)
 
         session.add(user_diseases)
         session.commit()
-        return jsonify(user_diseases), HTTPStatus.CREATED
+
+        
+
+        return jsonify(serializing_all_fields(user_diseases.asdict())), HTTPStatus.CREATED
+
     except BadRequest:
         return jsonify({"Error": "The keyword 'name' does not exit"}), HTTPStatus.BAD_REQUEST
 
@@ -46,6 +51,7 @@ def update_diseases(disease_id):
     try:
         session: Session = current_app.db.session
         data = request.get_json()
+
         diseases_details_id = UserDiseaseModel.query.filter_by(
             disease_id=disease_id).first()
 
@@ -59,6 +65,7 @@ def update_diseases(disease_id):
         session.commit()
 
         return jsonify(diseases_details), HTTPStatus.OK
+
     except ProgrammingError:
         data = request.get_json()
         msg = verify_update_types(data)
@@ -91,9 +98,10 @@ def get_user_diseases():
 
     user_identity = get_jwt_identity()
 
-    diseases_table = UserDiseaseModel.query.filter_by(
-        user_id=user_identity.get("id")).all()
+    user = User.query.get(user_identity['id'])
 
-    output = join_user_diseases(diseases_table)
+    user = user.asdict()
 
-    return jsonify(output), HTTPStatus.OK
+    user_disease = serializing_all_fields(user)
+
+    return jsonify(user_disease['diseases']), HTTPStatus.OK
