@@ -8,7 +8,6 @@ from psycopg2.errors import UniqueViolation
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from botocore.exceptions import NoCredentialsError, ClientError
 from app.services.profile_image_services import delete_object_from_cloud, upload_and_get_url, verify_names
-import logging
 
 @jwt_required()
 def upload_image():
@@ -39,9 +38,8 @@ def upload_image():
         return {"Error": e.fmt}, HTTPStatus.INTERNAL_SERVER_ERROR
 
     except ClientError as e:
-        logging.error(e)
-        message = {"Error": ""}
-        return e.MSG_TEMPLATE, HTTPStatus.BAD_REQUEST
+        message = {"ClientError": e.response["Error"]["Code"]}
+        return message, HTTPStatus.BAD_REQUEST
         
     except BadRequest as e:
         return e.description, e.code

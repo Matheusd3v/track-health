@@ -2,6 +2,7 @@ from flask import Blueprint
 from app.controllers.alcoholic_controller import create_alcoholic, delete_alcoholic, get_alcoholic, patch_alcoholic
 from app.controllers.anamnesis_controller import create_anamnesis, get_anamnesis, update_anamnesis
 from app.controllers.diseases_controller import create_user_diseases, update_diseases, delete_user_diseases, get_user_diseases
+from app.controllers.exam_files_controller import delete_exam_file, upload_exam_file
 from app.controllers.exams_controller import create_user_exam, delete_user_exam, get_user_exams, update_exam
 from app.controllers.medication_controller import create_medication_user, delete_medication_user, get_medications, update_medication_user
 from app.controllers.surgery_controller import create_surgery_user, delete_user_surgery, get_user_surgerys, update_user_surgery
@@ -26,6 +27,8 @@ bp_user.get("/exam")(get_user_exams)
 bp_user.post("/exam")(create_user_exam)
 bp_user.patch("/exam/<exam_id>")(update_exam)
 bp_user.delete("/exam/<exam_id>")(delete_user_exam)
+bp_user.post("exam/file/<exam_id>")(upload_exam_file)
+bp_user.delete("exam/file/<exam_id>")(delete_exam_file)
 
 bp_user.post("/allergy")(create_allergies)
 bp_user.get("/allergy")(get_allergies)
