@@ -16,7 +16,7 @@ class DoctorModel(db.Model):
     name: str = Column(String(100), nullable=False)
     type: str = Column(String(50), nullable=False)
     email: str = Column(String(50))
-    phone: str = Column(String(50), unique=True)
+    phone: str = Column(String(50), nullable=True)
 
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable = False)
 
