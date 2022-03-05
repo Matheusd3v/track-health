@@ -7,81 +7,26 @@
     <title>Document</title>
 </head>
 <body>
-    <h1 style="color:'red'"> {{name}}  -  Anamnesis</h1>
-
-    {% if  anamnesis.diseases %}
-        <p>Doença: Sim</p>
-    {% endif %}
-    {% if not anamnesis.diseases %}
-        <p>Doença: Não</p>
-    {% endif %}
-
-
+    <h1> {{name}}  -  Anamnesis</h1>
 
     {% if  anamnesis.allergy %}
-        <p>Alergia: Sim</p>
+        <h2>Alergias</h2>
+        <ul>
+            {% for allergie in user.allergy %}
+            <li>{{allergie.name}}</li>
+            {% endfor %}
+        </ul>
     {% endif %}
-    {% if not anamnesis.allergy %}
-        <p>Alergia: Não</p>
-    {% endif %}
-
 
     {% if  anamnesis.continous_medication %}
-        <p>Medicação continua: Sim</p>
-    {% endif %}
-    {% if not anamnesis.continous_medication %}
-        <p>Medicação continua: Não</p>
-    {% endif %}
-
-    {% if  anamnesis.surgery %}
-        <p>Já fez cirurgia: Sim</p>
-    {% endif %}
-    {% if not anamnesis.surgery %}
-        <p>Já fez cirurgia: Não</p>
-    {% endif %}
-    
-    {% if  anamnesis.alcoholic %}
-        <p>Alcoolatra: Sim</p>
-    {% endif %}
-    {% if not anamnesis.alcoholic %}
-        <p>Alcoolatra: Não</p>
+    <h2>Medicações continuas</h2>
+    <ul>
+        {% for medication in user.medications %}
+        <li>{{medication.name}}</li>
+        {% endfor %}
+    </ul>
     {% endif %}
 
-    {% if  anamnesis.drug_user %}
-        <p>Usuário de drogas: Sim</p>
-    {% endif %}
-    {% if not anamnesis.drug_user %}
-        <p>Usuário de drogas: Não</p>
-    {% endif %}
-    
-    {% if  anamnesis.smoker %}
-        <p>Fumante: Sim</p>
-    {% endif %}
-    {% if not anamnesis.smoker %}
-        <p>Fumante: Não</p>
-    {% endif %}
-
-    {% if  anamnesis.physical_activity %}
-        <p>Pratica atividades fisicas: Sim</p>
-    {% endif %}
-    {% if not anamnesis.physical_activity %}
-        <p>Pratica atividades fisicas: Não</p>
-    {% endif %}
-
-    {% if  anamnesis.diabetes %}
-        <p>Diabetes: Sim</p>
-    {% endif %}
-    {% if not anamnesis.diabetes %}
-        <p>Diabetes: Não</p>
-    {% endif %}
-
-    {% if  anamnesis.hipertension %}
-    <p>Hipertensão: Sim</p>
-    {% endif %}
-    {% if not anamnesis.hipertension %}
-        <p>Hipertensão: Não</p>
-    {% endif %}
-        
 
 </body>
 </body>
