@@ -39,6 +39,7 @@
         <p>Não</p>
     {% endif %}
 
+    
     <h2>Usuário de drogas</h2>
     {% if user.user_drug %}
         <p>Sim</p>
@@ -53,6 +54,9 @@
         <ul>
             {% for allergie in user.allergy %}
             <li>{{allergie.name}}</li>
+            {% if allergie.description %}
+                <p style="margin-left: 5px;">{{allergie.description}}</p>
+            {% endif%}
             {% endfor %}
         </ul>
     {% endif %}
@@ -89,7 +93,7 @@
     <ul>
         {% for disease in user.diseases %}
         <li>{{disease.name}}</li>
-        {% if disease.description %}
+        {% if disease.description %} 
             <p style="margin-left: 5px;">{{disease.description}}</p>
         {% endif%}
         {% endfor %}

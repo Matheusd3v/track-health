@@ -24,4 +24,3 @@ def create_pdf():
 
 
     return response
-    # return jsonify(anamnesis)
