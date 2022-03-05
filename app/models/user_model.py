@@ -11,6 +11,7 @@ from app.models.anamnesis_model import Anamnesis
 from app.models.exam_details_model import ExamDetails
 from app.models.exam_model import Exam
 from app.models.medication_model import Medication
+from app.models.profile_image_model import ProfileImageModel
 from app.models.surgery_details_model import SurgeryDetails
 from app.models.user_alcoholic_model import UserAlcoholic
 from app.models.user_smoker_model import UserSmoker
@@ -29,37 +30,60 @@ class User(db.Model):
     password_hash = Column(String, nullable=False)
     gender: str = Column(String(50))
     sex: str = Column(String(50))
-    image = Column(String)
 
     allergy: AllergyModel = relationship("AllergyModel",
-            secondary="user_allergies",
-            backref='user',
-            viewonly=True)
+            secondary = "user_allergies",
+            backref = 'user',
+            viewonly = True)
 
-    medications: Medication = relationship("UserMedication", backref="medication_user", viewonly=True)
+    medications: Medication = relationship("UserMedication", 
+            backref = "medication_user", 
+            viewonly = True)
 
     surgerys: SurgeryDetails = relationship("SurgeryDetails",
-            secondary="user_surgery",
-            backref='user',
-            viewonly=True) 
+            secondary = "user_surgery",
+            backref = 'user',
+            viewonly = True) 
 
-    alcohol: UserAlcoholic = relationship("UserAlcoholic",backref = 'user_alcoholic', uselist = False, viewonly=True)
+    alcohol: UserAlcoholic = relationship("UserAlcoholic",
+            backref = 'user_alcoholic', 
+            uselist = False, 
+            viewonly = True)
 
-    user_drug: str = relationship("UserDrugs", backref="user_drug", uselist=False, viewonly=True)
+    user_drug: str = relationship("UserDrugs", 
+            backref = "user_drug", 
+            uselist = False, 
+            viewonly = True)
       
-    smoker: UserSmoker = relationship("UserSmoker",backref = 'user_smoker', uselist = False, viewonly=True) 
+    smoker: UserSmoker = relationship("UserSmoker",
+            backref = 'user_smoker', 
+            uselist = False, 
+            viewonly = True) 
       
-    physical_activity: UserPhysicalActivity = relationship("UserPhysicalActivity",backref = 'physical_activity', uselist = False, viewonly=True) 
+    physical_activity: UserPhysicalActivity = relationship("UserPhysicalActivity",
+            backref = 'physical_activity', 
+            uselist = False, 
+            viewonly = True) 
 
 
-    anamnesis:Anamnesis = relationship("Anamnesis", backref="anamnesis_user", viewonly=True)
+    anamnesis:Anamnesis = relationship("Anamnesis", 
+            backref = "anamnesis_user", 
+            viewonly = True)
 
     diseases:DiseasesDetailModel = relationship("DiseasesDetailModel",
-            secondary="user_diseases",
-            backref='user', 
-            viewonly=True)
+            secondary = "user_diseases",
+            backref = 'user', 
+            viewonly = True)
       
-    exams:ExamDetails = relationship("ExamDetails", secondary="user_exam", backref="exams_user", viewonly=True)
+    exams:ExamDetails = relationship("ExamDetails", 
+            secondary = "user_exam", 
+            backref = "exams_user", 
+            viewonly = True)
+
+    image: ProfileImageModel = relationship("ProfileImageModel", 
+            backref="image", 
+            viewonly=True, 
+            uselist=False)
 
     @property
     def password(self):
