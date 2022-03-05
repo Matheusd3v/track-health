@@ -56,7 +56,13 @@ def create_user_exam():
 
         session.add(user_exam)
         session.commit()
-        return jsonify(user_exam), HTTPStatus.CREATED
+        return jsonify({
+            "id":exam_datails.id,
+            "name":exam.name,
+            "date":exam_datails.date,
+            "description":exam_datails.description,
+            "upload_img":exam_datails.upload_img
+        }), HTTPStatus.CREATED
     except BadRequest:
         return jsonify({"Error": "The keyword 'name' or 'date' does not exit"}), HTTPStatus.BAD_REQUEST
 
