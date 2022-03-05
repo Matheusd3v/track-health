@@ -44,7 +44,6 @@ class User(db.Model):
             viewonly=True) 
 
     alcohol: UserAlcoholic = relationship("UserAlcoholic",backref = 'user_alcoholic', uselist = False, viewonly=True)
-            backref='user', viewonly=True)
 
     user_drug: str = relationship("UserDrugs", backref="user_drug", uselist=False, viewonly=True)
       
