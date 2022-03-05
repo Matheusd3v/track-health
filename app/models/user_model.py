@@ -80,7 +80,10 @@ class User(db.Model):
             backref = "exams_user", 
             viewonly = True)
 
-    image: ProfileImageModel = relationship("ProfileImageModel", backref="image", viewonly=True, uselist=False)
+    image: ProfileImageModel = relationship("ProfileImageModel", 
+            backref="image", 
+            viewonly=True, 
+            uselist=False)
 
     @property
     def password(self):

@@ -188,11 +188,13 @@ Authorization: ` Bearer Token`
 }
 ```
 
-## DELETE - user/exams/<int:exam_id
+## DELETE - user/exams/<int:exam_id>
 
 Esta rota é para apagar um exame do usuário. Para realizar a deleção é somente necessário passar o exam_id por query params.
 
 Authorization: ` Bearer Token`
+
+# DISEASE
 
 ## POST - user/diseases
 
@@ -223,7 +225,9 @@ Retorno esperado :
 
 ## PATCH - user/diseases/<int:user_disease_id>
 
-Esta rota é para a atualização das doenças do usuário, podendo atualizar somente a “description” e ”medication”
+Esta rota é para a atualização das doenças do usuário, podendo atualizar somente a “description” e ”medication”.
+
+Authorization: ` Bearer Token`
 
 Exemplo de requisição:
 
@@ -247,7 +251,7 @@ Retorno esperado :
 
 ## DELETE - user/diseases/<int:user_disease_id>
 
-Esta rota é para apagar um exame do usuário. Para realizar a deleção é somente necessário passar o disease_id por query params.
+Esta rota é para apagar um doença do usuário. Para realizar a deleção é somente necessário passar o user_disease_id por query params.
 
 # DOCTOR
 
@@ -295,7 +299,7 @@ Retorno esperado :
 }
 ```
 
-## PATCH - /doctor/<int:exam_id>
+## PATCH - /doctor/<int:doctor_id>
 
 Esta rota é para a atualização dos dados de um dos médicos do usuário, podendo atualizar “name”, “type”,"phone", "address_id" e "email".
 
@@ -330,9 +334,9 @@ Retorno esperado :
 }
 ```
 
-## DELETE - user/exams/<int:exam_id
+## DELETE - user/doctor/<int:doctor_id
 
-Esta rota é para apagar um exame do usuário. Para realizar a deleção é somente necessário passar o exam_id por query params.
+Esta rota é para apagar um médico do usuário. Para realizar a deleção é somente necessário passar o doctor_id por query params.
 
 Authorization: ` Bearer Token`
 
@@ -502,20 +506,20 @@ Essa rota é para o cadastro de informação referente ao uso de drogas. É nece
 
 Exemplo de requisição:
 
-```
+```json
 {
-	"frequency": "uma vez por semana",
-	"description": "tabaco orgânico"
+  "frequency": "uma vez por semana",
+  "description": "tabaco orgânico"
 }
 ```
 
 Exemplo de resposta, retornando status 201 - CREATED caso esteja tudo correto:
 
-```
+```json
 {
-	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
-	"frequency": "uma vez por semana",
-	"description": "tabaco orgânico"
+  "id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
+  "frequency": "uma vez por semana",
+  "description": "tabaco orgânico"
 }
 ```
 
@@ -525,19 +529,19 @@ Essa rota é para alterar informações referente a uso de drogas. Será alterad
 
 Exemplo de requisição:
 
-```
+```json
 {
-	"frequency": "uma vez ao dia"
+  "frequency": "uma vez ao dia"
 }
 ```
 
 Exemplo de resposta, retornando status 200 - OK caso tudo ocorra bem:
 
-```
+```json
 {
-	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
-	"frequency": "Uma vez ao dia",
-	"description": "tabaco orgânico"
+  "id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
+  "frequency": "Uma vez ao dia",
+  "description": "tabaco orgânico"
 }
 ```
 
@@ -547,14 +551,96 @@ Essa rota é para obtenção das informações sobre dogras. Não é necessário
 
 Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
 
-```
+```json
 {
-	"id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
-	"frequency": "Uma vez ao dia",
-	"description": "tabaco orgânico"
+  "id": "4807bb8c-2dd1-4236-8f96-eae16df96b0b",
+  "frequency": "Uma vez ao dia",
+  "description": "tabaco orgânico"
 }
 ```
 
 ## DELETE user/drug
 
 Essa rota é para deletar as informações. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 se estiver tudo correto.
+
+# Address
+
+## POST - address
+
+Esta rota é para o cadastro do consultório do médico.
+Os campos obrigatórios são: “street”, “number”, campos facultativos: "disctrict", "city", "complement"
+
+Exemplo de requisição abaixo:
+
+Authorization: ` Bearer Token`
+
+```json
+{
+  "street": "rua blah",
+  "number": 25,
+  "district": "madureira",
+  "city": "rio   de janeiro",
+  "complement": "do lado do posto de gasolina"
+}
+```
+
+Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
+
+```json
+{
+  "id": "71d9b03b-a27f-4f97-9145-8785b04bbb08",
+  "street": "Rua Blah",
+  "number": 25,
+  "district": "Madureira",
+  "city": "Rio De Janeiro",
+  "complement": "Do lado do posto de gasolina"
+}
+```
+
+## PATCH - address
+
+Esta rota é para a atualização do consultório de um médico, podendo atualizar todos os dados
+
+Exemplo de requisição:
+
+Authorization: ` Bearer Token`
+
+```json
+{
+  "address_id": "71d9b03b-a27f-4f97-9145-8785b04bbb08",
+  "street": "Rua Bler",
+  "number": 50,
+  "district": "barra da tijuca",
+  "city": "rio de janeiro",
+  "complement": "De frente pra praia"
+}
+```
+
+Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
+
+```json
+{
+  "id": "71d9b03b-a27f-4f97-9145-8785b04bbb08",
+  "street": "Rua Bler",
+  "number": 50,
+  "district": "barra da tijuca",
+  "city": "rio de janeiro",
+  "complement": "De frente pra praia"
+}
+```
+
+## DELETE - address
+
+Esta rota é para apagar consultório existente.
+
+Exemplo de requisição:
+
+Authorization: ` Bearer Token`
+
+```json
+{
+  "address_id": "71d9b03b-a27f-4f97-9145-8785b04bbb08"
+}
+```
+
+Exemplo de resposta, com status 204 - OK caso esteja tudo correto.
