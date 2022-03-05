@@ -15,7 +15,6 @@ from app.models.surgery_details_model import SurgeryDetails
 from app.models.user_alcoholic_model import UserAlcoholic
 from app.models.user_smoker_model import UserSmoker
 from app.models.user_physical_activity_model import UserPhysicalActivity
-# from app.models.user_disease_model import UserDiseaseModel
 from app.models.diseases_detail_model import DiseasesDetailModel
 
 
@@ -32,33 +31,36 @@ class User(db.Model):
     sex: str = Column(String(50))
     image = Column(String)
 
-    allergy:AllergyModel = relationship("AllergyModel",
+    allergy: AllergyModel = relationship("AllergyModel",
             secondary="user_allergies",
-            backref='user')
+            backref='user',
+            viewonly=True)
 
-    medications:Medication = relationship("UserMedication", backref="medication_user")
+    medications: Medication = relationship("UserMedication", backref="medication_user", viewonly=True)
 
-    surgerys:SurgeryDetails = relationship("SurgeryDetails",
+    surgerys: SurgeryDetails = relationship("SurgeryDetails",
             secondary="user_surgery",
-            backref='user')
+            backref='user',
+            viewonly=True) 
 
-    alcohol: UserAlcoholic = relationship("UserAlcoholic",backref = 'user_alcoholic', uselist = False)
-
+    alcohol: UserAlcoholic = relationship("UserAlcoholic",backref = 'user_alcoholic', uselist = False, viewonly=True)
+            backref='user', viewonly=True)
 
     user_drug: str = relationship("UserDrugs", backref="user_drug", uselist=False, viewonly=True)
       
-    smoker: UserSmoker = relationship("UserSmoker",backref = 'user_smoker', uselist = False) 
+    smoker: UserSmoker = relationship("UserSmoker",backref = 'user_smoker', uselist = False, viewonly=True) 
       
-    physical_activity: UserPhysicalActivity = relationship("UserPhysicalActivity",backref = 'physical_activity', uselist = False) 
+    physical_activity: UserPhysicalActivity = relationship("UserPhysicalActivity",backref = 'physical_activity', uselist = False, viewonly=True) 
 
 
-    anamnesis:Anamnesis = relationship("Anamnesis", backref="anamnesis_user")
+    anamnesis:Anamnesis = relationship("Anamnesis", backref="anamnesis_user", viewonly=True)
 
     diseases:DiseasesDetailModel = relationship("DiseasesDetailModel",
             secondary="user_diseases",
-            backref='user')
+            backref='user', 
+            viewonly=True)
       
-    exams:ExamDetails = relationship("ExamDetails", secondary="user_exam", backref="exams_user")
+    exams:ExamDetails = relationship("ExamDetails", secondary="user_exam", backref="exams_user", viewonly=True)
 
     @property
     def password(self):
