@@ -8,6 +8,7 @@ from app.controllers.surgery_controller import create_surgery_user, delete_user_
 from app.controllers.user_controller import create_user, delete_user, get_user, login, update_user
 from app.controllers.allergies_controller import create_allergies, get_allergies, delete_allergy, update_allergy
 from app.controllers.user_drug_controller import create_drug_data, delete_drug_data, get_user_drug, update_user_drug_data
+from app.controllers.profile_image_controller import delete_image_profile, upload_image
 from app.controllers.user_physical_activity_controller import create_physical_activity, delete_physical_activity, get_physical_activity, patch_physical_activity
 from app.controllers.smoker_controller import create_data, delete_data, get_data, patch_data
 
@@ -69,3 +70,7 @@ bp_user.delete("/alcoholic/<string:alcoholic_id>")(delete_alcoholic)
 bp_user.post("/anamnesis")(create_anamnesis)
 bp_user.patch("/anamnesis")(update_anamnesis)
 bp_user.get("/anamnesis")(get_anamnesis)
+
+bp_user.post("/image/upload")(upload_image)
+bp_user.delete("/image/delete")(delete_image_profile)
+

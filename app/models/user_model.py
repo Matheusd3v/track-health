@@ -11,6 +11,7 @@ from app.models.anamnesis_model import Anamnesis
 from app.models.exam_details_model import ExamDetails
 from app.models.exam_model import Exam
 from app.models.medication_model import Medication
+from app.models.profile_image_model import ProfileImageModel
 from app.models.surgery_details_model import SurgeryDetails
 from app.models.user_alcoholic_model import UserAlcoholic
 from app.models.user_smoker_model import UserSmoker
@@ -30,7 +31,6 @@ class User(db.Model):
     password_hash = Column(String, nullable=False)
     gender: str = Column(String(50))
     sex: str = Column(String(50))
-    image = Column(String)
 
     allergy:AllergyModel = relationship("AllergyModel",
             secondary="user_allergies",
@@ -59,6 +59,8 @@ class User(db.Model):
             backref='user')
       
     exams:ExamDetails = relationship("ExamDetails", secondary="user_exam", backref="exams_user")
+
+    image: ProfileImageModel = relationship("ProfileImageModel", backref="image", viewonly=True, uselist=False)
 
     @property
     def password(self):
