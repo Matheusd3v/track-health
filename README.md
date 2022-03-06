@@ -674,7 +674,7 @@ Exemplo de resposta, retornando status 201-CREATED caso tudo ocorra de forma cor
 {
 	"id": "ir_pp-kL_730S2jwzk-n3hu_4VFIT_PAXjrpw5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA",
 	"name": "Frutas",
-	"url": "https://my_bucket.s3.sa-west-09.amazonaws.com/ir_pp-kL_730S2jwzk-n3hu_4EuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA"
+	"url": "https://my_bucket.s3.nu-rtrg9.amazonaws.com/ir_pp-kL_730S2jwzk-n3hu_4EuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA"
 }
 ```
 
@@ -688,7 +688,7 @@ Exemplo de resposta, retornando status 200 - OK caso tudo ocorra bem:
 {
 	"id": "ir_pp-kL_730S2jwzk-n3hu_4VFIT_PAXjrpw5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA",
 	"name": "Frutas",
-	"url": "https://my-bucket.s3.saaffs.amazonaws.com/5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA"
+	"url": "https://my-bucket.s3.wyaffs.amazonaws.com/5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA"
 }
 ```
 
@@ -702,14 +702,19 @@ Caso tudo ocorra bem, será retornado status 204 - NO CONTENT.
 
 ## POST - user/exam/file/exam_id
 
-Essa rota é para upload e cadastro do documento exame. É aceito somente imagens(png, jpg e jpeg) e pdf. Deverá ser enviado por formulário multipart/form-data com o campo name preenchido.
+Essa rota é para upload e cadastro do documento de exame. É necessário passar o id do exame no final da rota. É aceito somente imagens(png, jpg e jpeg) e pdf. Deverá ser enviado por formulário multipart/form-data com o campo name preenchido.
 
 Exemplo de resposta, retornando status 201 - CREATED caso tudo ocorra bem:
 
 ```json
-
+{
+	"success": "https://my-bucket.s3.wdsvvc.amazonaws.com/fE45VCFnI4sB8l4vsVh1ffXiVwAng9UkqwoiETodwCxJ0Drml9KMGS5FznSJ55aaHZ"
+}
 ```
 
+## DELETE - user/exam/file/exam_id
+
+Essa rota é para deletar o documento. É necessário passar somente o id do exame que contém o documento no final da rota e o token. Será retornado status 204 - NO CONTENT caso tudo ocorra bem.
 
 
 
