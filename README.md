@@ -633,6 +633,68 @@ Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
 
 Essa rota é para deletar as informações. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 se estiver tudo correto.
 
+# User Smoker
+
+## POST - user/smoker
+
+Essa rota é para que o fumante possa decrever seus hábitos com mais detalhes se quiser. Os campos requeridos são frequency e description, sendo description opcional. 
+
+Exemplo de requisição:
+
+```json
+{
+	"frequency": "Duas vezes ao dias.",
+	"description": "Cigarro de palha com cravo."
+}
+```
+Exemplo de resposta, , retornando status 201 - CREATED caso tudo seja passado corretamente:
+
+```json
+{
+	"id": "51ff0f8d-e7ff-4f72-8cd2-0f67201c8292",
+	"frequency": "Duas vezes ao dias.",
+	"description": "Cigarro de palha com cravo."
+}
+```
+## PATCH - user/smoker
+
+Essa rota é para atualizar os dados referentes as informações do usuário fumante. Deverá ser passado unicamente os campos frequency e description, não necessáriamente os dois ao mesmo tempo. 
+
+Exemplo de requisição:
+
+```json
+{
+	"frequency": "5 vezes ao dias"
+}
+```
+
+Exemplo de resposta - status 200 - OK
+```json
+{
+	"id": "096c21f2-4181-49c4-a279-9de9b3d88f66",
+	"frequency": "5 vezes ao dias",
+	"description": "Cigarro de palha com cravo."
+}
+```
+
+## GET - user/smoker
+
+Essa rota é para visualizar as informações sobre os detalhes cadastrado na tabela smoker. Não é necessario corpo de requisição. Somente o token.
+
+Exemplo de resposta, status 200 - OK:
+
+```json
+{
+	"id": "096c21f2-4181-49c4-a279-9de9b3d88f66",
+	"frequency": "5 vezes ao dias",
+	"description": "Cigarro de palha com cravo."
+}
+```
+
+## DELETE - user/smoker
+
+Essa rota é para deletar as informações cadastradas na tabela smoker. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 - CONTENT
+
 # Address
 
 ## POST - address
