@@ -39,13 +39,12 @@ def create_data():
     return jsonify(new_data), HTTPStatus.CREATED
 
 @jwt_required()
-def get_data(smoker_id):
+def get_data():
     user = get_jwt_identity()
-    if not smoker_id:
-        return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
+    id_user = user["id"]
 
     try:
-        data = UserSmoker.query.filter_by(id=smoker_id).first()
+        data = UserSmoker.query.filter_by(user_id=id_user).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
@@ -60,14 +59,12 @@ def get_data(smoker_id):
 
 
 @jwt_required()
-def patch_data(smoker_id):
+def patch_data():
     user = get_jwt_identity()
+    id_user = user["id"]
     data = request.get_json()
     session:Session = current_app.db.session
 
-
-    if not smoker_id:
-        return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
 
     if not check_data_keys(data):
         return {"error": "Invalid keys were found",
@@ -80,7 +77,7 @@ def patch_data(smoker_id):
         return {"These keys are with an invalid data type": invalid_data}, HTTPStatus.BAD_REQUEST
 
     try:
-        user_smoker = UserSmoker.query.filter_by(id=smoker_id).first()
+        user_smoker = UserSmoker.query.filter_by(user_id=id_user).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
@@ -101,16 +98,13 @@ def patch_data(smoker_id):
 
 
 @jwt_required()
-def delete_data(smoker_id):
+def delete_data():
     user = get_jwt_identity()
+    id_user = user["id"]
     session:Session = current_app.db.session
 
-
-    if not smoker_id:
-        return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
-
     try:
-        user_smoker = UserSmoker.query.filter_by(id=smoker_id).first()
+        user_smoker = UserSmoker.query.filter_by(user_id=id_user).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
