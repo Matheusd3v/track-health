@@ -1,3 +1,4 @@
+import json
 from flask import request, jsonify, current_app
 from sqlalchemy.orm import Session
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -45,10 +46,15 @@ def create_allergies():
 
         allergy = UserAllergyModel(**data)
 
+        allergy = allergy.asdict()
+
         session.add(allergy)
         session.commit()
 
-        return jsonify(allergy), HTTPStatus.CREATED
+        return {"id":allergy.id,
+                "name": allergy.allergy.id,
+                "description": allergy.description
+        }, HTTPStatus.CREATED
 
     except MissingKeysError as e:
         return e.message(), e.status_code
