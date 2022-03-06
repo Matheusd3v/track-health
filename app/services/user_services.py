@@ -100,7 +100,6 @@ def serializing_exams(user):
 
     for exam in exams:
         exam_deleted = exam.pop("exam")
-        exam.pop("user_id")
         exam["name"] = exam_deleted["name"]
         
 
