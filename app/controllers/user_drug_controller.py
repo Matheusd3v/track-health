@@ -5,8 +5,8 @@ from http import HTTPStatus
 from sqlalchemy.orm import Session
 from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from sqlalchemy.exc import DataError, IntegrityError
-from psycopg2.errors import InvalidTextRepresentation, UniqueViolation
+from sqlalchemy.exc import IntegrityError
+from psycopg2.errors import UniqueViolation
 from app.services.user_drugs_services import data_standardized, drug_data_updated, verify_data_and_id, verify_keys_and_values
 from app.services.user_services import verify_values
 
@@ -75,10 +75,6 @@ def update_user_drug_data():
     
     except BadRequest as e:
         return e.description, e.code
-    
-    except DataError as e:
-        if isinstance(e.orig, InvalidTextRepresentation):
-            return {"Error": f"Not found id {drug_id}."}, HTTPStatus.NOT_FOUND
 
     except NotFound as e:
         return e.description, e.code
@@ -100,12 +96,8 @@ def delete_drug_data():
 
         return "", HTTPStatus.NO_CONTENT
 
-    except DataError as e:
-        if isinstance(e.orig, InvalidTextRepresentation):
-            return {"Error": f"Not found id {drug_id}."}, HTTPStatus.NOT_FOUND
-
     except NotFound as e:
-        return {"Error": f"Not fount id {drug_id}"}, e.code
+        return {"Error": f"Not found id"}, e.code
     
     except Forbidden as e:
         return e.description, e.code
