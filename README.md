@@ -8,25 +8,27 @@ Essa rota é para o cadastro de usuário. Os campos obrigatórios são: name, em
 
 Exemplo de requisição:
 
-```
+```json
+
 {
-	"name":"  matheus   teste",
-	"email":"matheus@email.com",
-	"birth_date": "27/12/20",
+	"name":"malaquias brandão",
+	"email":"malaquias@email.com",
+	"birth_date": "25/12/25",
 	"password": "1234",
 	"gender": "hetero",
-	"sex": " masculino"
+	"sex": " masculino"	
 }
+
 ```
 
 Exemplo de resposta, caso esta tudo correto o status retornado será 201 - CREATED:
 
-```
+```json
 {
-	"id": "1af610f7-291d-49a3-8967-f430bd755fcb",
-	"name": "Matheus Teste",
-	"email": "matheus@email.com",
-	"birth_date": "Sun, 27 Dec 2020 00:00:00 GMT",
+	"id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
+	"name": "Malaquias Brandão",
+	"email": "malaquias@email.com",
+	"birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
 	"gender": "Hetero",
 	"sex": "Masculino",
 	"allergy": [],
@@ -35,7 +37,11 @@ Exemplo de resposta, caso esta tudo correto o status retornado será 201 - CREAT
 	"alcohol": null,
 	"user_drug": null,
 	"smoker": null,
-	"physical_activity": null
+	"physical_activity": null,
+	"anamnesis": [],
+	"diseases": [],
+	"exams": [],
+	"image_profile": null
 }
 ```
 
@@ -45,22 +51,22 @@ Essa rota é para o login do usuário. Os campos obrigatórios são: email e pas
 
 Exemplo de requisição:
 
-```
+```json
 {
-	"email":"matheus@email.com",
+	"email":"malaquias@email.com",
 	"password": "1234"
 }
 ```
 
 Exemplo de resposta, caso esteja tudo correto será retornado status 200 - OK:
 
-```
+```json
 {
 	"user_data": {
-		"id": "1af610f7-291d-49a3-8967-f430bd755fcb",
-		"name": "Matheus Teste",
-		"email": "matheus@email.com",
-		"birth_date": "Sun, 27 Dec 2020 00:00:00 GMT",
+		"id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
+		"name": "Malaquias Brandão",
+		"email": "malaquias@email.com",
+		"birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
 		"gender": "Hetero",
 		"sex": "Masculino",
 		"allergy": [],
@@ -69,9 +75,13 @@ Exemplo de resposta, caso esteja tudo correto será retornado status 200 - OK:
 		"alcohol": null,
 		"user_drug": null,
 		"smoker": null,
-		"physical_activity": null
+		"physical_activity": null,
+		"anamnesis": [],
+		"diseases": [],
+		"exams": [],
+		"image_profile": null
 	},
-	"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NjM1MTkyNSwianRpIjoiMTQxMjRiNmMtNjNlYS00ZTUyLWE1NmYtZjJiYWRjMWYxYThhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJpZCI6IjFhZjYxMGY3LTI5MWQtNDlhMy04OTY3LWY0MzBiZDc1NWZjYiIsIm5hbWUiOiJNYXRoZXVzIFRlc3RlIiwiZW1haWwiOiJtYXRoZXVzQGVtYWlsLmNvbSIsImJpcnRoX2RhdGUiOiJTdW4sIDI3IERlYyAyMDIwIDAwOjAwOjAwIEdNVCIsImdlbmRlciI6IkhldGVybyIsInNleCI6Ik1hc2N1bGlubyIsImFsbGVyZ3kiOltdLCJtZWRpY2F0aW9ucyI6W10sInN1cmdlcnlzIjpbXSwiYWxjb2hvbCI6bnVsbCwidXNlcl9kcnVnIjpudWxsLCJzbW9rZXIiOm51bGwsInBoeXNpY2FsX2FjdGl2aXR5IjpudWxsfSwibmJmIjoxNjQ2MzUxOTI1LCJleHAiOjE2NDYzNjYzMjV9.ZXeFle8qve-GlIB_GYR7A7CwBYadAtUc1rErlEEL55k"
+	"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NjU4NTQwOSwianRpIjoiYmE5Zjk4YzctY2MwNi00MTFkLWFhYWQtNGVmZjM3ZWM0YTgxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJpZCI6IjhhMDY3Mzc4LWVkNTItNGQ2Ny04NWNhLTBkYWE4Y2YwMDBiNCIsIm5hbWUiOiJNYWxhcXVpYXMgQnJhbmRcdTAwZTNvIiwiZW1haWwiOiJtYWxhcXVpYXNAZW1haWwuY29tIiwiYmlydGhfZGF0ZSI6IlRodSwgMjUgRGVjIDIwMjUgMDA6MDA6MDAgR01UIiwiZ2VuZGVyIjoiSGV0ZXJvIiwic2V4IjoiTWFzY3VsaW5vIiwiYWxsZXJneSI6W10sIm1lZGljYXRpb25zIjpbXSwic3VyZ2VyeXMiOltdLCJhbGNvaG9sIjpudWxsLCJ1c2VyX2RydWciOm51bGwsInNtb2tlciI6bnVsbCwicGh5c2ljYWxfYWN0aXZpdHkiOm51bGwsImFuYW1uZXNpcyI6W10sImRpc2Vhc2VzIjpbXSwiZXhhbXMiOltdLCJpbWFnZV9wcm9maWxlIjpudWxsfSwibmJmIjoxNjQ2NTg1NDA5LCJleHAiOjE2NDY1OTk4MDl9.YsGTH2X1lajdn-MfC42kkd4HIwPGvsxiW5QZXFNqV90"
 }
 ```
 
@@ -87,12 +97,12 @@ Essa rota é para obter os dados do usuário. Deverá ser passado somente o jwt 
 
 Exemplo de resposta:
 
-```
+```json
 {
-	"id": "1af610f7-291d-49a3-8967-f430bd755fcb",
-	"name": "Matheus Teste",
-	"email": "matheus@email.com",
-	"birth_date": "Sun, 27 Dec 2020 00:00:00 GMT",
+	"id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
+	"name": "Malaquias Brandão",
+	"email": "malaquias@email.com",
+	"birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
 	"gender": "Hetero",
 	"sex": "Masculino",
 	"allergy": [],
@@ -101,7 +111,11 @@ Exemplo de resposta:
 	"alcohol": null,
 	"user_drug": null,
 	"smoker": null,
-	"physical_activity": null
+	"physical_activity": null,
+	"anamnesis": [],
+	"diseases": [],
+	"exams": [],
+	"image_profile": null
 }
 ```
 
@@ -111,7 +125,7 @@ Essa rota é para atualização de cadastro do usuário. Os unicos campos que se
 
 Exemplo de requisição:
 
-```
+```json
 {
 	"name": " matheus gomes",
 	"campo_extra": "extra"
@@ -120,12 +134,12 @@ Exemplo de requisição:
 
 Exemplo de resposta, retornando status 200 - OK se estiver tudo correto:
 
-```
+```json
 {
-	"id": "1af610f7-291d-49a3-8967-f430bd755fcb",
+	"id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
 	"name": "Matheus Gomes",
-	"email": "matheus@email.com",
-	"birth_date": "Sun, 27 Dec 2020 00:00:00 GMT",
+	"email": "malaquias@email.com",
+	"birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
 	"gender": "Hetero",
 	"sex": "Masculino",
 	"allergy": [],
@@ -134,7 +148,11 @@ Exemplo de resposta, retornando status 200 - OK se estiver tudo correto:
 	"alcohol": null,
 	"user_drug": null,
 	"smoker": null,
-	"physical_activity": null
+	"physical_activity": null,
+	"anamnesis": [],
+	"diseases": [],
+	"exams": [],
+	"image_profile": null
 }
 ```
 
@@ -644,3 +662,57 @@ Authorization: ` Bearer Token`
 ```
 
 Exemplo de resposta, com status 204 - OK caso esteja tudo correto.
+
+# Profile image
+
+## POST user/image-profile
+Essa rota é para cadastro e upload da imagem de perfil do usuário. É necessário que o envio seja feito como multipart/form-data, sendo obrigatório o formulário ter o campo name preenchido e que uma imagem seja enviada.
+
+Exemplo de resposta, retornando status 201-CREATED caso tudo ocorra de forma correta:
+
+```json
+{
+	"id": "ir_pp-kL_730S2jwzk-n3hu_4VFIT_PAXjrpw5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA",
+	"name": "Frutas",
+	"url": "https://my_bucket.s3.sa-west-09.amazonaws.com/ir_pp-kL_730S2jwzk-n3hu_4EuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA"
+}
+```
+
+## GET user/image-profile
+
+Essa rota é para verificar os dados da imagem de perfil. Não há necessidade de corpo de requisição, somente o token precisa ser enviado.
+
+Exemplo de resposta, retornando status 200 - OK caso tudo ocorra bem:
+
+```json
+{
+	"id": "ir_pp-kL_730S2jwzk-n3hu_4VFIT_PAXjrpw5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA",
+	"name": "Frutas",
+	"url": "https://my-bucket.s3.saaffs.amazonaws.com/5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA"
+}
+```
+
+## DELETE - user/image-profile
+
+Essa rota é para deletar a imagem de perfil do usuário. Não é necessário corpo de requisição, somente o token.
+
+Caso tudo ocorra bem, será retornado status 204 - NO CONTENT.
+
+# Exam Files
+
+## POST - user/exam/file/exam_id
+
+Essa rota é para upload e cadastro do documento exame. É aceito somente imagens(png, jpg e jpeg) e pdf. Deverá ser enviado por formulário multipart/form-data com o campo name preenchido.
+
+Exemplo de resposta, retornando status 201 - CREATED caso tudo ocorra bem:
+
+```json
+
+```
+
+
+
+
+
+
+
