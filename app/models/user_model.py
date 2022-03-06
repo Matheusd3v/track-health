@@ -80,8 +80,8 @@ class User(db.Model):
             backref = "exams_user", 
             viewonly = True)
 
-    image: ProfileImageModel = relationship("ProfileImageModel", 
-            backref="image", 
+    image_profile: ProfileImageModel = relationship("ProfileImageModel", 
+            backref="image_profile", 
             viewonly=True, 
             uselist=False)
 

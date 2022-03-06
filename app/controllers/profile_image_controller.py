@@ -1,3 +1,5 @@
+from cProfile import Profile
+from email import message
 from flask import request, jsonify, current_app
 from app.models.profile_image_model import ProfileImageModel
 from http import HTTPStatus
@@ -8,7 +10,6 @@ from psycopg2.errors import UniqueViolation
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from botocore.exceptions import NoCredentialsError, ClientError
 from app.services.profile_image_services import delete_object_from_cloud, upload_and_get_url, verify_names
-import logging
 
 @jwt_required()
 def upload_image():
@@ -16,9 +17,12 @@ def upload_image():
         session: Session = current_app.db.session
         user_id = get_jwt_identity()["id"]
 
-        file_name = list(request.files)[0]
+        if not list(request.files):
+            message = {"Error": "No files were sent."}
+            raise BadRequest(description=message)
+
+        file_name = list(request.files)[0] 
         data = request.files[f"{file_name}"]
-        print(data.name, "*"*50)
 
         url, id = upload_and_get_url(data)
         name = verify_names(data)
@@ -39,9 +43,8 @@ def upload_image():
         return {"Error": e.fmt}, HTTPStatus.INTERNAL_SERVER_ERROR
 
     except ClientError as e:
-        logging.error(e)
-        message = {"Error": ""}
-        return e.MSG_TEMPLATE, HTTPStatus.BAD_REQUEST
+        message = {"ClientError": e.response["Error"]["Code"]}
+        return message, HTTPStatus.BAD_REQUEST
         
     except BadRequest as e:
         return e.description, e.code
@@ -53,19 +56,46 @@ def upload_image():
 
 
 @jwt_required()
+def get_image_profile():
+    try:
+        session: Session = current_app.db.session
+        id_user = get_jwt_identity()["id"]
+
+        image_profile = session.query(ProfileImageModel).filter_by(user_id = id_user).first()
+
+        if not image_profile:
+            message = {"Error": "User don't have image profile."}
+            raise NotFound(description=message)
+
+        return jsonify(image_profile), HTTPStatus.OK
+
+    except NotFound as e:
+        return e.description, e.code
+
+
+@jwt_required()
 def delete_image_profile():
-    session: Session = current_app.db.session
-    user_id = get_jwt_identity()["id"]
+    try:
+        session: Session = current_app.db.session
+        user_id = get_jwt_identity()["id"]
 
-    image = session.query(ProfileImageModel).filter_by(user_id=user_id).first()
-    image_id = image.id
+        image = session.query(ProfileImageModel).filter_by(user_id=user_id).first()
 
-    delete_object_from_cloud(image_id)
+        if not image:
+            message = {"Error": "User don't have image profile."}
+            raise NotFound(description=message)
 
-    session.delete(image)
-    session.commit()
+        image_id = image.id
 
-    return "", HTTPStatus.NO_CONTENT
+        delete_object_from_cloud(image_id)
+
+        session.delete(image)
+        session.commit()
+
+        return "", HTTPStatus.NO_CONTENT
+    
+    except NotFound as e:
+        return e.description, e.code
 
 
 

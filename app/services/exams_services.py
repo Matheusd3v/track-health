@@ -51,18 +51,19 @@ def join_user_exams(exams_table):
     session = current_app.db.session
     output = []
     for user_exam in exams_table:
-        exams: Query = (session.query(
-            Exam.name, ExamDetails.date, ExamDetails.upload_img, ExamDetails.description)
-            .select_from(UserExam).join(ExamDetails).join(Exam)
-            .filter(user_exam.exam_details_id == UserExam.exam_details_id)
+        exams: Query = (session.query(Exam.id,
+                                      Exam.name, ExamDetails.date, ExamDetails.upload_img, ExamDetails.description)
+                        .select_from(UserExam).join(ExamDetails).join(Exam)
+                        .filter(user_exam.exam_details_id == UserExam.exam_details_id)
 
-        ).all()
+                        ).all()
         for exam in exams:
             appended_exam = {
-                "name": exam[0],
-                "date": exam[1],
-                "upload_img": exam[2],
-                "description": exam[3],
+                "id": exam[0],
+                "name": exam[1],
+                "date": exam[2],
+                "upload_img": exam[3],
+                "description": exam[4],
             }
             output.append(appended_exam)
     return output
