@@ -8,6 +8,8 @@ def upload_file(data: FileStorage) -> str:
     content_type = data.content_type
     verify_content(content_type)
 
+    verify_name(data)
+
     data_type = content_type.split("/")[-1]
 
     return upload_to_cloud(data, data_type)
@@ -48,3 +50,11 @@ def get_key_file(url_file: str) -> str:
     id = url_file.split(".com/")[-1]
 
     return id
+
+def verify_name(data: FileStorage) -> str:
+    name = data.name
+
+    if not name:
+        message = {"Error": "A empty name has been send."}
+
+        raise BadRequest(description=message)

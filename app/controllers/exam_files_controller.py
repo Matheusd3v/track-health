@@ -24,10 +24,14 @@ def upload_exam_file(exam_id: str):
         user_exam = session.query(UserExam).filter_by(exam_id = exam_id).first()
 
         if not user_exam:
-            message = {"Error": f"Not found exam."}
+            message = {"Error": f"Not found exam_id {exam_id}."}
             raise NotFound(description=message)
 
         exam_details = session.query(ExamDetails).get(user_exam.exam_details_id)
+
+        if not list(request.files):
+            message = {"Error": "No files were sent."}
+            raise BadRequest(description=message)
 
         file_name = list(request.files)[0]
         data = request.files[f"{file_name}"]
