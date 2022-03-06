@@ -539,7 +539,7 @@ Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
 
 Essa rota é para deletar as informações. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 se estiver tudo correto.
 
-# ALLERGY
+rt
 
 ## POST - /allergy
 
@@ -557,8 +557,8 @@ Retorno esperado :
 
 ```json
 {
-  "id": "df85ee37-0766-4c7c-bd78-0489596e398d",
-  "name": "camarão"
+  "id": "16770b6a-70c7-40ed-88d5-a237dcb5dfd0",
+  "name": "Camarão"
 }
 ```
 
@@ -588,12 +588,9 @@ Retorno esperado :
 
 ```json
 {
-  "id": "0d3316dd-bd68-4e27-984c-98b40b2fbb76",
+  "id": "dffa762a-05cd-4bb1-a52c-0d4506d69d15",
   "description": "Alergia grave a frutos do mar",
-  "allergy": {
-    "id": "83cbe018-eaff-4fc2-87f7-f1cbdc7773a6",
-    "name": "Frutos Do Mar"
-  }
+  "name": "Frutos Do Mar"
 }
 ```
 
@@ -619,9 +616,7 @@ Retorno esperado :
 {
   "id": "f3498206-47cd-4eca-acf7-03617dd31670",
   "description": "Alergia grave a pelo de cachorro",
-  "allergy": {
-    "id": "205d4f8e-a236-4410-8faf-559ac69244f3",
-    "name": "Cachorro"
+  "name": "Cachorro"
   }
 }
 ```
