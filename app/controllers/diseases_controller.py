@@ -8,7 +8,7 @@ from app.models.diseases_detail_model import DiseasesDetailModel
 from app.models.user_disease_model import UserDiseaseModel
 from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
 from sqlalchemy.orm.exc import UnmappedInstanceError
-from app.services.diseases_services import find_diseases, serializing_all_fields, verify_update_types, verify_user_diseases_key, normalize_disease_keys
+from app.services.diseases_services import find_diseases, join_user_disease, serializing_all_fields, verify_update_types, verify_user_diseases_key, normalize_disease_keys
 from app.models.user_model import User
 
 
@@ -33,14 +33,16 @@ def create_user_diseases():
         session.commit()
 
         user_diseases = UserDiseaseModel(user_id=user_id, disease_id=diseases.id,
-            disease_detail_id=diseases_datails.id)
+                                         disease_detail_id=diseases_datails.id)
 
         session.add(user_diseases)
         session.commit()
 
-        
-
-        return jsonify(serializing_all_fields(user_diseases.asdict())), HTTPStatus.CREATED
+        return jsonify({"disease_id": user_diseases.disease_id,
+                        "name": user_diseases.disease_details.disease.name,
+                        "description": user_diseases.disease_details.description,
+                        "medication": user_diseases.disease_details.medication}
+                       ), HTTPStatus.CREATED
 
     except BadRequest:
         return jsonify({"Error": "The keyword 'name' does not exit"}), HTTPStatus.BAD_REQUEST
@@ -97,11 +99,7 @@ def delete_user_diseases(disease_id):
 def get_user_diseases():
 
     user_identity = get_jwt_identity()
-
-    user = User.query.get(user_identity['id'])
-
-    user = user.asdict()
-
-    user_disease = serializing_all_fields(user)
-
-    return jsonify(user_disease['diseases']), HTTPStatus.OK
+    diseases_table = UserDiseaseModel.query.filter_by(
+        user_id=user_identity.get("id")).all()
+    output = join_user_disease(diseases_table)
+    return jsonify(output), HTTPStatus.OK

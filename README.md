@@ -161,6 +161,16 @@ Exemplo de resposta, retornando status 200 - OK se estiver tudo correto:
 Essa rota é para deletar um usuário. Não necessita de corpo de requisição, somente o bearer token. Não é retornado corpo, somente status 204 caso tudo ocorra bem.
 
 # Exams
+## GET - user/exams
+
+Esta rota é para a visualização dos exames cadastradas pelo usuário.
+
+Exemplo de requisição:
+
+Authorization: ` Bearer Token`
+
+Retorno esperado :
+
 
 ## POST - user/exams
 
@@ -212,7 +222,49 @@ Esta rota é para apagar um exame do usuário. Para realizar a deleção é some
 
 Authorization: ` Bearer Token`
 
+```json
+[
+{
+  "name": "hemograma",
+  "date": "22/02/2022",
+  "upload_img": "matheus_pic_profile.png",
+  "description": "Descrição maneira"
+},
+{
+  "name": "Galilei G4",
+  "date": "22/02/2022",
+  "upload_img": "matheus_pic_profile.png",
+  "description": "Descrição maneira"
+}
+]
+```
 # DISEASE
+## GET - user/diseases
+Esta rota é para a visualização das doenças cadastradas pelo usuário.
+
+Exemplo de requisição:
+
+Authorization: ` Bearer Token`
+
+Retorno esperado :
+
+```json
+[	
+  {
+		"id": "ed3ef1f1-e82b-48b5-ba03-18c6e4f79402",
+		"name": "Diabete",
+		"description": "Diabete tipo 2",
+		"medication": "Insulina"
+	},
+	{
+		"id": "ed3ef1f1-e82b-48b5-ba03-18c6e4f79402",
+		"name": "Diabete",
+		"description": "Diabete tipo 2",
+		"medication": "Insulina"
+	}
+]
+```
+
 
 ## POST - user/diseases
 
