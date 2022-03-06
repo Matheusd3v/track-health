@@ -132,6 +132,6 @@ def serializing_medications(user):
     
 
 def serialize_image(user):
-    user["image"].pop("id")
+    user["image_profile"].pop("id")
 
 

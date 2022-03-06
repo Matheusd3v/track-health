@@ -74,6 +74,6 @@ bp_user.post("/anamnesis")(create_anamnesis)
 bp_user.patch("/anamnesis")(update_anamnesis)
 bp_user.get("/anamnesis")(get_anamnesis)
 
-bp_user.post("/image/upload")(upload_image)
-bp_user.delete("/image/delete")(delete_image_profile)
+bp_user.post("/image-profile")(upload_image)
+bp_user.delete("/image-profile")(delete_image_profile)
 
