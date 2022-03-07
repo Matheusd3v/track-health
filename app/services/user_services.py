@@ -91,6 +91,7 @@ def serializing_all_fields(user):
     serializing_surgery(user)
     serializing_medications(user)
     serialize_image(user)
+    serializing_lower_tables(user)
  
     return user
 
@@ -132,5 +133,12 @@ def serializing_medications(user):
 
 def serialize_image(user):
     user["image_profile"] and user["image_profile"].pop("id")
+
+def serializing_lower_tables(user):
+    lower_tables = ["alcohol","user_drug", "smoker", "physical_activity"]
+    
+    for table in lower_tables:
+        if not user[f"{table}"]:
+            user[f"{table}"] = {}
 
 
