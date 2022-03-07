@@ -59,14 +59,17 @@ def update_diseases(disease_id):
 
         diseases_details = DiseasesDetailModel.query.filter_by(
             id=diseases_details_id.disease_detail_id).first()
-
         for key, value in data.items():
             setattr(diseases_details, key, value)
 
         session.add(diseases_details)
         session.commit()
 
-        return jsonify(diseases_details), HTTPStatus.OK
+        return jsonify({"disease_id": disease_id,
+                        "name": "",
+                        "description": "",
+                        "medication": ""
+                        }), HTTPStatus.OK
 
     except ProgrammingError:
         data = request.get_json()
@@ -77,7 +80,7 @@ def update_diseases(disease_id):
         return {"Error": f"disease_id {disease_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
-@jwt_required()
+@ jwt_required()
 def delete_user_diseases(disease_id):
     try:
         session: Session = current_app.db.session
@@ -95,7 +98,7 @@ def delete_user_diseases(disease_id):
         return {"Error": f"disease_id {disease_id} is not valid"}, HTTPStatus.NOT_FOUND
 
 
-@jwt_required()
+@ jwt_required()
 def get_user_diseases():
 
     user_identity = get_jwt_identity()
