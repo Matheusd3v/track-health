@@ -18,7 +18,7 @@ class UserAllergyModel(db.Model):
     id: str = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     description: str = Column(String(200))
 
-    user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable = False)
+    user_id = Column(UUID(as_uuid=True), ForeignKey('users.id', ondelete="CASCADE"), nullable = False)
     allergy_id = Column(UUID(as_uuid=True), ForeignKey('allergies.id'), nullable = False, unique=True)
 
     allergy: AllergyModel = relationship("AllergyModel", uselist=False, 

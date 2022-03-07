@@ -695,6 +695,38 @@ Exemplo de resposta, status 200 - OK:
 
 Essa rota é para deletar as informações cadastradas na tabela smoker. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 - CONTENT
 
+# User Physical Activity
+
+## POST - user/physical_activity
+
+Essa rota é para cadastro de informaçoes relacionadas a atividades fisicas. É necessário passar somente os campos frequency e description, sendo o campo description opcional. 
+
+Exemplo de requisição:
+
+```json
+{
+	"frequency": "uma vez por semana",
+	"description": "caminhada na praia"
+}
+```
+
+Exemplo de resposta status 201 - CREATED
+
+```json
+{
+	"id": "d727da29-7937-4f53-9a7e-9bd7080234e3",
+	"user_id": "e1ab8988-4b19-4cae-9613-0f70e26a7d5d",
+	"frequency": "Uma vez por semana",
+	"description": "Caminhada na praia"
+}
+```
+
+## PATCH - user/physical_activity
+
+Essa rota atualiza os dados cadastrados 
+
+
+
 # Address
 
 ## POST - address
