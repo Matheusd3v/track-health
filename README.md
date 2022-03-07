@@ -9,39 +9,37 @@ Essa rota é para o cadastro de usuário. Os campos obrigatórios são: name, em
 Exemplo de requisição:
 
 ```json
-
 {
-	"name":"malaquias brandão",
-	"email":"malaquias@email.com",
-	"birth_date": "25/12/25",
-	"password": "1234",
-	"gender": "hetero",
-	"sex": " masculino"	
+  "name": "malaquias brandão",
+  "email": "malaquias@email.com",
+  "birth_date": "25/12/25",
+  "password": "1234",
+  "gender": "hetero",
+  "sex": " masculino"
 }
-
 ```
 
 Exemplo de resposta, caso esta tudo correto o status retornado será 201 - CREATED:
 
 ```json
 {
-	"id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
-	"name": "Malaquias Brandão",
-	"email": "malaquias@email.com",
-	"birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
-	"gender": "Hetero",
-	"sex": "Masculino",
-	"allergy": [],
-	"medications": [],
-	"surgerys": [],
-	"alcohol": null,
-	"user_drug": null,
-	"smoker": null,
-	"physical_activity": null,
-	"anamnesis": [],
-	"diseases": [],
-	"exams": [],
-	"image_profile": null
+  "id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
+  "name": "Malaquias Brandão",
+  "email": "malaquias@email.com",
+  "birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
+  "gender": "Hetero",
+  "sex": "Masculino",
+  "allergy": [],
+  "medications": [],
+  "surgerys": [],
+  "alcohol": null,
+  "user_drug": null,
+  "smoker": null,
+  "physical_activity": null,
+  "anamnesis": [],
+  "diseases": [],
+  "exams": [],
+  "image_profile": null
 }
 ```
 
@@ -53,8 +51,8 @@ Exemplo de requisição:
 
 ```json
 {
-	"email":"malaquias@email.com",
-	"password": "1234"
+  "email": "malaquias@email.com",
+  "password": "1234"
 }
 ```
 
@@ -62,26 +60,26 @@ Exemplo de resposta, caso esteja tudo correto será retornado status 200 - OK:
 
 ```json
 {
-	"user_data": {
-		"id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
-		"name": "Malaquias Brandão",
-		"email": "malaquias@email.com",
-		"birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
-		"gender": "Hetero",
-		"sex": "Masculino",
-		"allergy": [],
-		"medications": [],
-		"surgerys": [],
-		"alcohol": null,
-		"user_drug": null,
-		"smoker": null,
-		"physical_activity": null,
-		"anamnesis": [],
-		"diseases": [],
-		"exams": [],
-		"image_profile": null
-	},
-	"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NjU4NTQwOSwianRpIjoiYmE5Zjk4YzctY2MwNi00MTFkLWFhYWQtNGVmZjM3ZWM0YTgxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJpZCI6IjhhMDY3Mzc4LWVkNTItNGQ2Ny04NWNhLTBkYWE4Y2YwMDBiNCIsIm5hbWUiOiJNYWxhcXVpYXMgQnJhbmRcdTAwZTNvIiwiZW1haWwiOiJtYWxhcXVpYXNAZW1haWwuY29tIiwiYmlydGhfZGF0ZSI6IlRodSwgMjUgRGVjIDIwMjUgMDA6MDA6MDAgR01UIiwiZ2VuZGVyIjoiSGV0ZXJvIiwic2V4IjoiTWFzY3VsaW5vIiwiYWxsZXJneSI6W10sIm1lZGljYXRpb25zIjpbXSwic3VyZ2VyeXMiOltdLCJhbGNvaG9sIjpudWxsLCJ1c2VyX2RydWciOm51bGwsInNtb2tlciI6bnVsbCwicGh5c2ljYWxfYWN0aXZpdHkiOm51bGwsImFuYW1uZXNpcyI6W10sImRpc2Vhc2VzIjpbXSwiZXhhbXMiOltdLCJpbWFnZV9wcm9maWxlIjpudWxsfSwibmJmIjoxNjQ2NTg1NDA5LCJleHAiOjE2NDY1OTk4MDl9.YsGTH2X1lajdn-MfC42kkd4HIwPGvsxiW5QZXFNqV90"
+  "user_data": {
+    "id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
+    "name": "Malaquias Brandão",
+    "email": "malaquias@email.com",
+    "birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
+    "gender": "Hetero",
+    "sex": "Masculino",
+    "allergy": [],
+    "medications": [],
+    "surgerys": [],
+    "alcohol": null,
+    "user_drug": null,
+    "smoker": null,
+    "physical_activity": null,
+    "anamnesis": [],
+    "diseases": [],
+    "exams": [],
+    "image_profile": null
+  },
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NjU4NTQwOSwianRpIjoiYmE5Zjk4YzctY2MwNi00MTFkLWFhYWQtNGVmZjM3ZWM0YTgxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJpZCI6IjhhMDY3Mzc4LWVkNTItNGQ2Ny04NWNhLTBkYWE4Y2YwMDBiNCIsIm5hbWUiOiJNYWxhcXVpYXMgQnJhbmRcdTAwZTNvIiwiZW1haWwiOiJtYWxhcXVpYXNAZW1haWwuY29tIiwiYmlydGhfZGF0ZSI6IlRodSwgMjUgRGVjIDIwMjUgMDA6MDA6MDAgR01UIiwiZ2VuZGVyIjoiSGV0ZXJvIiwic2V4IjoiTWFzY3VsaW5vIiwiYWxsZXJneSI6W10sIm1lZGljYXRpb25zIjpbXSwic3VyZ2VyeXMiOltdLCJhbGNvaG9sIjpudWxsLCJ1c2VyX2RydWciOm51bGwsInNtb2tlciI6bnVsbCwicGh5c2ljYWxfYWN0aXZpdHkiOm51bGwsImFuYW1uZXNpcyI6W10sImRpc2Vhc2VzIjpbXSwiZXhhbXMiOltdLCJpbWFnZV9wcm9maWxlIjpudWxsfSwibmJmIjoxNjQ2NTg1NDA5LCJleHAiOjE2NDY1OTk4MDl9.YsGTH2X1lajdn-MfC42kkd4HIwPGvsxiW5QZXFNqV90"
 }
 ```
 
@@ -99,23 +97,23 @@ Exemplo de resposta:
 
 ```json
 {
-	"id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
-	"name": "Malaquias Brandão",
-	"email": "malaquias@email.com",
-	"birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
-	"gender": "Hetero",
-	"sex": "Masculino",
-	"allergy": [],
-	"medications": [],
-	"surgerys": [],
-	"alcohol": null,
-	"user_drug": null,
-	"smoker": null,
-	"physical_activity": null,
-	"anamnesis": [],
-	"diseases": [],
-	"exams": [],
-	"image_profile": null
+  "id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
+  "name": "Malaquias Brandão",
+  "email": "malaquias@email.com",
+  "birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
+  "gender": "Hetero",
+  "sex": "Masculino",
+  "allergy": [],
+  "medications": [],
+  "surgerys": [],
+  "alcohol": null,
+  "user_drug": null,
+  "smoker": null,
+  "physical_activity": null,
+  "anamnesis": [],
+  "diseases": [],
+  "exams": [],
+  "image_profile": null
 }
 ```
 
@@ -127,8 +125,8 @@ Exemplo de requisição:
 
 ```json
 {
-	"name": " matheus gomes",
-	"campo_extra": "extra"
+  "name": " matheus gomes",
+  "campo_extra": "extra"
 }
 ```
 
@@ -136,23 +134,23 @@ Exemplo de resposta, retornando status 200 - OK se estiver tudo correto:
 
 ```json
 {
-	"id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
-	"name": "Matheus Gomes",
-	"email": "malaquias@email.com",
-	"birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
-	"gender": "Hetero",
-	"sex": "Masculino",
-	"allergy": [],
-	"medications": [],
-	"surgerys": [],
-	"alcohol": null,
-	"user_drug": null,
-	"smoker": null,
-	"physical_activity": null,
-	"anamnesis": [],
-	"diseases": [],
-	"exams": [],
-	"image_profile": null
+  "id": "8a067378-ed52-4d67-85ca-0daa8cf000b4",
+  "name": "Matheus Gomes",
+  "email": "malaquias@email.com",
+  "birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
+  "gender": "Hetero",
+  "sex": "Masculino",
+  "allergy": [],
+  "medications": [],
+  "surgerys": [],
+  "alcohol": null,
+  "user_drug": null,
+  "smoker": null,
+  "physical_activity": null,
+  "anamnesis": [],
+  "diseases": [],
+  "exams": [],
+  "image_profile": null
 }
 ```
 
@@ -161,6 +159,7 @@ Exemplo de resposta, retornando status 200 - OK se estiver tudo correto:
 Essa rota é para deletar um usuário. Não necessita de corpo de requisição, somente o bearer token. Não é retornado corpo, somente status 204 caso tudo ocorra bem.
 
 # Exams
+
 ## GET - user/exams
 
 Esta rota é para a visualização dos exames cadastradas pelo usuário.
@@ -170,7 +169,6 @@ Exemplo de requisição:
 Authorization: ` Bearer Token`
 
 Retorno esperado :
-
 
 ## POST - user/exams
 
@@ -224,22 +222,25 @@ Authorization: ` Bearer Token`
 
 ```json
 [
-{
-  "name": "hemograma",
-  "date": "22/02/2022",
-  "upload_img": "matheus_pic_profile.png",
-  "description": "Descrição maneira"
-},
-{
-  "name": "Galilei G4",
-  "date": "22/02/2022",
-  "upload_img": "matheus_pic_profile.png",
-  "description": "Descrição maneira"
-}
+  {
+    "name": "hemograma",
+    "date": "22/02/2022",
+    "upload_img": "matheus_pic_profile.png",
+    "description": "Descrição maneira"
+  },
+  {
+    "name": "Galilei G4",
+    "date": "22/02/2022",
+    "upload_img": "matheus_pic_profile.png",
+    "description": "Descrição maneira"
+  }
 ]
 ```
+
 # DISEASE
+
 ## GET - user/diseases
+
 Esta rota é para a visualização das doenças cadastradas pelo usuário.
 
 Exemplo de requisição:
@@ -249,22 +250,21 @@ Authorization: ` Bearer Token`
 Retorno esperado :
 
 ```json
-[	
+[
   {
-		"id": "ed3ef1f1-e82b-48b5-ba03-18c6e4f79402",
-		"name": "Diabete",
-		"description": "Diabete tipo 2",
-		"medication": "Insulina"
-	},
-	{
-		"id": "ed3ef1f1-e82b-48b5-ba03-18c6e4f79402",
-		"name": "Diabete",
-		"description": "Diabete tipo 2",
-		"medication": "Insulina"
-	}
+    "id": "ed3ef1f1-e82b-48b5-ba03-18c6e4f79402",
+    "name": "Diabete",
+    "description": "Diabete tipo 2",
+    "medication": "Insulina"
+  },
+  {
+    "id": "ed3ef1f1-e82b-48b5-ba03-18c6e4f79402",
+    "name": "Diabete",
+    "description": "Diabete tipo 2",
+    "medication": "Insulina"
+  }
 ]
 ```
-
 
 ## POST - user/diseases
 
@@ -637,43 +637,46 @@ Essa rota é para deletar as informações. Não é necessário enviar corpo de 
 
 ## POST - user/smoker
 
-Essa rota é para que o fumante possa decrever seus hábitos com mais detalhes se quiser. Os campos requeridos são frequency e description, sendo description opcional. 
+Essa rota é para que o fumante possa decrever seus hábitos com mais detalhes se quiser. Os campos requeridos são frequency e description, sendo description opcional.
 
 Exemplo de requisição:
 
 ```json
 {
-	"frequency": "Duas vezes ao dias.",
-	"description": "Cigarro de palha com cravo."
+  "frequency": "Duas vezes ao dias.",
+  "description": "Cigarro de palha com cravo."
 }
 ```
+
 Exemplo de resposta, , retornando status 201 - CREATED caso tudo seja passado corretamente:
 
 ```json
 {
-	"id": "51ff0f8d-e7ff-4f72-8cd2-0f67201c8292",
-	"frequency": "Duas vezes ao dias.",
-	"description": "Cigarro de palha com cravo."
+  "id": "51ff0f8d-e7ff-4f72-8cd2-0f67201c8292",
+  "frequency": "Duas vezes ao dias.",
+  "description": "Cigarro de palha com cravo."
 }
 ```
+
 ## PATCH - user/smoker
 
-Essa rota é para atualizar os dados referentes as informações do usuário fumante. Deverá ser passado unicamente os campos frequency e description, não necessáriamente os dois ao mesmo tempo. 
+Essa rota é para atualizar os dados referentes as informações do usuário fumante. Deverá ser passado unicamente os campos frequency e description, não necessáriamente os dois ao mesmo tempo.
 
 Exemplo de requisição:
 
 ```json
 {
-	"frequency": "5 vezes ao dias"
+  "frequency": "5 vezes ao dias"
 }
 ```
 
 Exemplo de resposta - status 200 - OK
+
 ```json
 {
-	"id": "096c21f2-4181-49c4-a279-9de9b3d88f66",
-	"frequency": "5 vezes ao dias",
-	"description": "Cigarro de palha com cravo."
+  "id": "096c21f2-4181-49c4-a279-9de9b3d88f66",
+  "frequency": "5 vezes ao dias",
+  "description": "Cigarro de palha com cravo."
 }
 ```
 
@@ -685,9 +688,9 @@ Exemplo de resposta, status 200 - OK:
 
 ```json
 {
-	"id": "096c21f2-4181-49c4-a279-9de9b3d88f66",
-	"frequency": "5 vezes ao dias",
-	"description": "Cigarro de palha com cravo."
+  "id": "096c21f2-4181-49c4-a279-9de9b3d88f66",
+  "frequency": "5 vezes ao dias",
+  "description": "Cigarro de palha com cravo."
 }
 ```
 
@@ -699,14 +702,14 @@ Essa rota é para deletar as informações cadastradas na tabela smoker. Não é
 
 ## POST - user/physical_activity
 
-Essa rota é para cadastro de informaçoes relacionadas a atividades fisicas. É necessário passar somente os campos frequency e description no corpo de requisição, sendo o campo description opcional. 
+Essa rota é para cadastro de informaçoes relacionadas a atividades fisicas. É necessário passar somente os campos frequency e description no corpo de requisição, sendo o campo description opcional.
 
 Exemplo de requisição:
 
 ```json
 {
-	"frequency": "uma vez por semana",
-	"description": "caminhada na praia"
+  "frequency": "uma vez por semana",
+  "description": "caminhada na praia"
 }
 ```
 
@@ -714,10 +717,10 @@ Exemplo de resposta status 201 - CREATED
 
 ```json
 {
-	"id": "d727da29-7937-4f53-9a7e-9bd7080234e3",
-	"user_id": "e1ab8988-4b19-4cae-9613-0f70e26a7d5d",
-	"frequency": "Uma vez por semana",
-	"description": "Caminhada na praia"
+  "id": "d727da29-7937-4f53-9a7e-9bd7080234e3",
+  "user_id": "e1ab8988-4b19-4cae-9613-0f70e26a7d5d",
+  "frequency": "Uma vez por semana",
+  "description": "Caminhada na praia"
 }
 ```
 
@@ -729,38 +732,40 @@ Exemplo de requisição:
 
 ```json
 {
-	"frequency": "3x na semana",
-	"description": " academia   "
+  "frequency": "3x na semana",
+  "description": " academia   "
 }
 ```
+
 Exemplo de resposta, status 200 - OK:
 
 ```json
 {
-	"id": "d727da29-7937-4f53-9a7e-9bd7080234e3",
-	"user_id": "e1ab8988-4b19-4cae-9613-0f70e26a7d5d",
-	"frequency": "3x na semana",
-	"description": "Academia"
+  "id": "d727da29-7937-4f53-9a7e-9bd7080234e3",
+  "user_id": "e1ab8988-4b19-4cae-9613-0f70e26a7d5d",
+  "frequency": "3x na semana",
+  "description": "Academia"
 }
 ```
+
 ## GET - user/physical_activity
 
-Essa rota é para obter as informações cadastradas sobre atividades físicas. Não é necessário enviar corpo de requisição. 
+Essa rota é para obter as informações cadastradas sobre atividades físicas. Não é necessário enviar corpo de requisição.
 
 Exemplo de resposta:
 
 ```json
 {
-	"id": "ed5ed43e-371b-48ce-864a-aedc941e736a",
-	"user_id": "c67286af-f95e-49cc-ad7f-7707888e3f79",
-	"frequency": "3x na semana",
-	"description": "Academia"
+  "id": "ed5ed43e-371b-48ce-864a-aedc941e736a",
+  "user_id": "c67286af-f95e-49cc-ad7f-7707888e3f79",
+  "frequency": "3x na semana",
+  "description": "Academia"
 }
 ```
 
 ## DELETE - user/physical_activity
 
-Essa rota é para deletar as informações cadastradas sobre atividade física. Não é necessário enviar corpo de requisição, somente o token. Será caso tudo ocorra bem, será retornado status 204 - NO CONTENT 
+Essa rota é para deletar as informações cadastradas sobre atividade física. Não é necessário enviar corpo de requisição, somente o token. Será caso tudo ocorra bem, será retornado status 204 - NO CONTENT
 
 # Address
 
@@ -847,15 +852,16 @@ Exemplo de resposta, com status 204 - OK caso esteja tudo correto.
 # Profile image
 
 ## POST user/image-profile
+
 Essa rota é para cadastro e upload da imagem de perfil do usuário. É necessário que o envio seja feito como multipart/form-data, sendo obrigatório o formulário ter o campo name preenchido e que uma imagem seja enviada.
 
 Exemplo de resposta, retornando status 201-CREATED caso tudo ocorra de forma correta:
 
 ```json
 {
-	"id": "ir_pp-kL_730S2jwzk-n3hu_4VFIT_PAXjrpw5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA",
-	"name": "Frutas",
-	"url": "https://my_bucket.s3.nu-rtrg9.amazonaws.com/ir_pp-kL_730S2jwzk-n3hu_4EuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA"
+  "id": "ir_pp-kL_730S2jwzk-n3hu_4VFIT_PAXjrpw5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA",
+  "name": "Frutas",
+  "url": "https://my_bucket.s3.nu-rtrg9.amazonaws.com/ir_pp-kL_730S2jwzk-n3hu_4EuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA"
 }
 ```
 
@@ -867,9 +873,9 @@ Exemplo de resposta, retornando status 200 - OK caso tudo ocorra bem:
 
 ```json
 {
-	"id": "ir_pp-kL_730S2jwzk-n3hu_4VFIT_PAXjrpw5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA",
-	"name": "Frutas",
-	"url": "https://my-bucket.s3.wyaffs.amazonaws.com/5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA"
+  "id": "ir_pp-kL_730S2jwzk-n3hu_4VFIT_PAXjrpw5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA",
+  "name": "Frutas",
+  "url": "https://my-bucket.s3.wyaffs.amazonaws.com/5XZzMnHEuZPuUriNAMKTOtcNq6FGLiqHm8lTu_QAckAq6Y_mA"
 }
 ```
 
@@ -889,7 +895,7 @@ Exemplo de resposta, retornando status 201 - CREATED caso tudo ocorra bem:
 
 ```json
 {
-	"success": "https://my-bucket.s3.wdsvvc.amazonaws.com/fE45VCFnI4sB8l4vsVh1ffXiVwAng9UkqwoiETodwCxJ0Drml9KMGS5FznSJ55aaHZ"
+  "success": "https://my-bucket.s3.wdsvvc.amazonaws.com/fE45VCFnI4sB8l4vsVh1ffXiVwAng9UkqwoiETodwCxJ0Drml9KMGS5FznSJ55aaHZ"
 }
 ```
 
@@ -897,8 +903,90 @@ Exemplo de resposta, retornando status 201 - CREATED caso tudo ocorra bem:
 
 Essa rota é para deletar o documento. É necessário passar somente o id do exame que contém o documento no final da rota e o token. Será retornado status 204 - NO CONTENT caso tudo ocorra bem.
 
+# ALLERGY
 
+## POST - /allergy
 
+Esta rota é para adicionar uma alergia na tabela de alergias. Campo obrigatório é apenas o "name".
 
+Authorization: ` Bearer Token`
 
+```json
+{
+  "name": "camarão"
+}
+```
 
+Retorno esperado :
+
+```json
+{
+  "id": "16770b6a-70c7-40ed-88d5-a237dcb5dfd0",
+  "name": "Camarão"
+}
+```
+
+## GET - /user/allergy
+
+Esta rota é para pegar todas as alergias do usuário, não sendo necessário passar nenhum body.
+
+Authorization: ` Bearer Token`
+
+## POST - /user/allergy
+
+Esta rota é para o cadastro das alergias de um usuário, caso a alergia não exista na tabela ela a cria.
+Os campos obrigatórios são: “name”, "description" sendo facultativo.
+
+Exemplo de requisição abaixo:
+
+Authorization: ` Bearer Token`
+
+```json
+{
+  "name": "frutos do mar",
+  "description": "alergia grave a frutos do mar"
+}
+```
+
+Retorno esperado :
+
+```json
+{
+  "id": "dffa762a-05cd-4bb1-a52c-0d4506d69d15",
+  "description": "Alergia grave a frutos do mar",
+  "name": "Frutos Do Mar"
+}
+```
+
+## PATCH - /user/allergy/<int:allergy_id>
+
+Esta rota é para a atualização dos dados de uma das alergias do usuário, podendo atualizar “name” e “description".
+Para realizar a atualização é somente necessário passar o id da alergia do usuário por query params.
+
+Exemplo de requisição:
+
+Authorization: ` Bearer Token`
+
+```json
+{
+  "name": "camarão",
+  "description": "Alergia grave a camarão"
+}
+```
+
+Retorno esperado :
+
+```json
+{
+  "id": "f3498206-47cd-4eca-acf7-03617dd31670",
+  "description": "Alergia grave a pelo de cachorro",
+  "name": "Cachorro"
+  }
+}
+```
+
+## DELETE - /user/allergy/<int:allergy_id
+
+Esta rota é para deletar uma das alergias do usuário. Para realizar a deleção é somente necessário passar o id da alergia do usuário por query params.
+
+Authorization: ` Bearer Token`
