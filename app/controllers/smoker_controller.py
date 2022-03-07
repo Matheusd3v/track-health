@@ -49,7 +49,7 @@ def get_data():
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not data:
-        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+        return jsonify([]), HTTPStatus.OK
 
 
     if not check_data_id(data,user):
