@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from flask import jsonify, render_template, make_response
 import pdfkit
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -8,19 +9,23 @@ from app.services.user_services import serializing_all_fields
 
 @jwt_required()
 def create_pdf():
-    user = get_jwt_identity()
-    user = User.query.filter_by(id = user["id"]).first()
-    user = serializing_all_fields(user.asdict()) 
+    try:    
+        user = get_jwt_identity()
+        user = User.query.filter_by(id = user["id"]).first()
+        user = serializing_all_fields(user.asdict()) 
 
-    anamnesis = get_anamnesis(user["id"])
+        anamnesis = get_anamnesis(user["id"])
 
-    rendered = render_template("anamnesis.html", anamnesis=anamnesis, name=user["name"], user=user)
-    pdf = pdfkit.from_string(rendered, False)
+        rendered = render_template("anamnesis.html", anamnesis=anamnesis, name=user["name"], user=user)
+        pdf = pdfkit.from_string(rendered, False)
 
-    response = make_response(pdf)
-    response.headers["Content-Type"] = "application/pdf"
-    response.headers["Content-Disposition"] = f"attachment; filename=DKJSAKJD.pdf"
+        response = make_response(pdf)
+        response.headers["Content-Type"] = "application/pdf"
+        response.headers["Content-Disposition"] = f"attachment; filename=DKJSAKJD.pdf"
 
 
 
-    return response
+        return response
+
+    except IndexError:
+        return {"msg":"The user doenst have an anamnesis"}, HTTPStatus.NOT_FOUND
