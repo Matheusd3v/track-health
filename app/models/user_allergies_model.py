@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, String
 from app.configs.database import db
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
@@ -24,3 +24,5 @@ class UserAllergyModel(db.Model):
     allergy: AllergyModel = relationship("AllergyModel", uselist=False, 
         backref="allergy_name")
 
+    def asdict(self):
+        return asdict(self)
