@@ -6,9 +6,9 @@ from http import HTTPStatus
 from sqlalchemy.orm import Session
 from werkzeug.exceptions import NotFound, Unauthorized, BadRequest
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from sqlalchemy.exc import IntegrityError
-from psycopg2.errors import UniqueViolation
-from app.services.user_services import data_normalized, user_updated, verify_fields_and_values, verify_user, verify_user_and_password
+from sqlalchemy.exc import IntegrityError, DataError
+from psycopg2.errors import UniqueViolation, DatetimeFieldOverflow
+from app.services.user_services import data_normalized, serializing_all_fields, user_updated, verify_fields_and_values, verify_user, verify_user_and_password
 
 def create_user():
     try:
@@ -38,6 +38,11 @@ def create_user():
 
     except BadRequest as e:
         return e.description, e.code
+    
+    except DataError as e:
+        if isinstance(e.orig, DatetimeFieldOverflow):
+            message = {"Error": "Date must be format: m/d/y"}
+            return message, HTTPStatus.BAD_REQUEST
     
 
 def login():
@@ -69,8 +74,10 @@ def get_user():
 
         verify_user(user_bd)
 
-        return jsonify(user_bd), HTTPStatus.OK
-    
+        user = user_bd.asdict()
+
+        return jsonify(serializing_all_fields(user)), HTTPStatus.OK
+
     except NotFound as e:
         return e.description, e.code
 
@@ -96,6 +103,11 @@ def update_user():
     
     except BadRequest as e:
         return e.description, e.code
+
+    except DataError as e:
+        if isinstance(e.orig, DatetimeFieldOverflow):
+            message = {"Error": "Date must be format: m/d/y"}
+            return message, HTTPStatus.BAD_REQUEST
 
 @jwt_required()
 def delete_user():

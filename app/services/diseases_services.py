@@ -1,9 +1,10 @@
 from werkzeug.exceptions import BadRequest
 from sqlalchemy.orm import Session
-from flask import request, jsonify, current_app
+from flask import current_app
 from app.models.diseases_detail_model import DiseasesDetailModel
-from sqlalchemy.orm import Query
 from app.models.diseases_model import DiseasesModel
+from sqlalchemy.orm import Query
+
 from app.models.user_disease_model import UserDiseaseModel
 
 
@@ -44,23 +45,6 @@ def verify_update_types(data):
     return response
 
 
-def join_user_diseases(diseases_table):
-    session = current_app.db.session
-    output = []
-    for user_diseases in diseases_table:
-        diseases: Query = (session.query(DiseasesModel.name, DiseasesDetailModel.description, DiseasesDetailModel.medication).select_from(
-            UserDiseaseModel).join(DiseasesDetailModel).join(DiseasesModel).filter(user_diseases.disease_detail_id == UserDiseaseModel.disease_detail_id)).all()
-
-        for disease in diseases:
-            appended_diseases = {
-                "name": disease.name,
-                "description": disease.description,
-                "medication": disease.medication
-            }
-            output.append(appended_diseases)
-    return output
-
-
 def normalize_disease_keys(data: dict) -> dict:
     if data.get("name"):
         name = data.pop("name").title()
@@ -72,3 +56,34 @@ def normalize_disease_keys(data: dict) -> dict:
         medication = data.pop("medication").title()
         data["medication"] = medication
     return data
+
+
+def serializing_all_fields(user_disease):
+    diseases = user_disease['diseases']
+    for disease in diseases:
+        name = disease['disease']['name']
+        disease['name'] = name
+        disease.pop('disease')
+    print(user_disease)
+    return user_disease
+
+
+def join_user_disease(disease_table):
+    session = current_app.db.session
+    output = []
+    for user_disease in disease_table:
+        diseases: Query = (session.query(DiseasesModel.id,
+                                         DiseasesModel.name, DiseasesDetailModel.description, DiseasesDetailModel.medication)
+                           .select_from(UserDiseaseModel).join(DiseasesDetailModel).join(DiseasesModel)
+                           .filter(user_disease.disease_detail_id == UserDiseaseModel.disease_detail_id)
+
+                           ).all()
+        for disease in diseases:
+            appended_disease = {
+                "id": disease[0],
+                "name": disease[1],
+                "description": disease[2],
+                "medication": disease[3],
+            }
+            output.append(appended_disease)
+    return output

@@ -6,13 +6,10 @@ from sqlalchemy.dialects.postgresql import UUID
 
 
 @dataclass
-class UserDrugs(db.Model):
-    __tablename__ = "user_drug"
+class ProfileImageModel(db.Model):
+    __tablename__ = "profile_image"
 
-    id: str = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    id: str = Column(String, primary_key=True)
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id', ondelete="CASCADE"), nullable = False, unique=True)
-    frequency: str = Column(String, nullable=False)
-    description: str = Column(String)
-
-
-
+    name: str = Column(String, nullable=False)
+    url: str = Column(String, nullable=False)

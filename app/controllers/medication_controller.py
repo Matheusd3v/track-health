@@ -53,7 +53,11 @@ def create_medication_user():
         user_medication = UserMedication(**user_medication_data)
         session.add(user_medication)
         session.commit()
-        return jsonify(medication), HTTPStatus.CREATED
+        return jsonify({
+        "id":medication.id,
+        "name":medication.name,
+        "description":user_medication.description
+    }), HTTPStatus.CREATED
 
     except BadRequest as e:
         return e.description, e.code

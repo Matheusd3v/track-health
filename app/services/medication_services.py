@@ -28,6 +28,8 @@ def serializing_medications(user):
         medication_details =medication.pop("medication")    
         medication.pop("user_id")
         medication["name"] = medication_details["name"]
+        medication_id  = medication.pop("medication_id")
+        medication["id"] = medication_id 
         medications.append(medication)
 
         

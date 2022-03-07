@@ -9,7 +9,7 @@ from werkzeug.exceptions import BadRequest
 
 from app.models.user_allergies_model import UserAllergyModel
 from app.models.allergies_model import AllergyModel
-from app.services.allergy_services import verify_fields_and_values
+from app.services.allergy_services import verify_fields_and_values, remove_spaces
 
 
 @jwt_required()
@@ -20,6 +20,9 @@ def create_allergies():
         user_jwt = get_jwt_identity()
 
         verify_fields_and_values(data)
+
+        data['name'] = data['name'].title()
+        data['description'] = remove_spaces(data['description'])
 
         data['user_id'] = user_jwt['id']
 
@@ -45,6 +48,11 @@ def create_allergies():
         session.add(allergy)
         session.commit()
 
+        allergy = allergy.asdict()
+        name = allergy['allergy']['name']
+        allergy['name'] = name
+        allergy.pop('allergy')
+
         return jsonify(allergy), HTTPStatus.CREATED
 
     except MissingKeysError as e:
@@ -64,7 +72,15 @@ def get_allergies():
 
     my_allergies = session.query(UserAllergyModel).filter_by(user_id = user_jwt["id"]).all()
 
-    return jsonify(my_allergies), HTTPStatus.OK
+    output = []
+    for allergy in my_allergies:
+        allergy = allergy.asdict()
+        name = allergy['allergy']['name']
+        allergy['name'] = name
+        allergy.pop('allergy')
+        output.append(allergy)
+
+    return jsonify(output), HTTPStatus.OK
 
 
 @jwt_required()
@@ -78,8 +94,11 @@ def update_allergy(allergy_id):
 
         the_allergy = session.query(UserAllergyModel).get_or_404(allergy_id)
 
+        if data.get('description'):
+            data['description'] = remove_spaces(data['description'])
+
         if 'name' in data.keys():
-            print('*' * 20)
+            data['name'] = data['name'].title()
             allergies = AllergyModel.query.all()
 
             allergies_name = []
@@ -100,6 +119,12 @@ def update_allergy(allergy_id):
 
         session.add(the_allergy)
         session.commit()
+
+        
+        the_allergy = the_allergy.asdict()
+        name = the_allergy['allergy']['name']
+        the_allergy['name'] = name
+        the_allergy.pop('allergy')
 
         return jsonify(the_allergy), HTTPStatus.OK
     
@@ -141,6 +166,8 @@ def create_new_allergy():
 
         verify_fields_and_values(data)
 
+        data['name'] = data['name'].title()
+
         allergy = AllergyModel(**data)
 
         session.add(allergy)
@@ -156,3 +183,5 @@ def create_new_allergy():
 
     except IntegrityError as e:
         return {"error": "Allergy already created"}, HTTPStatus.CONFLICT
+
+

@@ -1,7 +1,7 @@
 from app.exceptions.missing_keys import MissingKeysError
 from app.models.user_drug_model import UserDrugs
-from werkzeug.exceptions import NotFound, Forbidden
-from app.services.user_services import remove_space_before_and_after, verify_values
+from werkzeug.exceptions import NotFound, Forbidden, BadRequest
+from app.services.user_services import remove_space_before_and_after
 
 def drug_data_updated(body: dict, old_data: UserDrugs) -> UserDrugs:
     if not old_data:
@@ -48,6 +48,18 @@ def data_standardized(data: dict = None, instance_value: str = None):
     new_value = remove_space_before_and_after(instance_value)
     
     return new_value
+
+def verify_values(values: list):
+    for value in values:
+        if not isinstance(value, str):
+            message = {"Error": "All values must be string."}
+            raise BadRequest(description=message)
+
+        if not value:
+            message = {
+                "Error": f"A invalid value has been send. Values: {values}"
+            }
+            raise BadRequest(description=message)
 
 
 

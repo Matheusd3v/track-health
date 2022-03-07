@@ -10,9 +10,9 @@ class AddressModel(db.Model):
     __tablename__ = "address"
 
     id: str = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
-    street: str = Column(String(100), nullable=False)
+    street: str = Column(String(250), nullable=False)
     number: int = Column(Integer, nullable=False)
     district: str = Column(String(50))
     city: str = Column(String(50))
-    complement: str = Column(String(200))
+    complement: str = Column(String(250))
 
