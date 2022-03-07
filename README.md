@@ -720,7 +720,6 @@ Exemplo de resposta status 201 - CREATED
 ```json
 {
   "id": "d727da29-7937-4f53-9a7e-9bd7080234e3",
-  "user_id": "e1ab8988-4b19-4cae-9613-0f70e26a7d5d",
   "frequency": "Uma vez por semana",
   "description": "Caminhada na praia"
 }
@@ -744,7 +743,6 @@ Exemplo de resposta, status 200 - OK:
 ```json
 {
   "id": "d727da29-7937-4f53-9a7e-9bd7080234e3",
-  "user_id": "e1ab8988-4b19-4cae-9613-0f70e26a7d5d",
   "frequency": "3x na semana",
   "description": "Academia"
 }
@@ -759,7 +757,6 @@ Exemplo de resposta:
 ```json
 {
   "id": "ed5ed43e-371b-48ce-864a-aedc941e736a",
-  "user_id": "c67286af-f95e-49cc-ad7f-7707888e3f79",
   "frequency": "3x na semana",
   "description": "Academia"
 }
