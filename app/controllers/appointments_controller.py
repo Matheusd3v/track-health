@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.appointment_model import AppointmentModel
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import DataError
-from app.services.appointments_services import check_data_keys, check_not_nullable_keys, get_invalid_data, check_appointment_id
+from app.services.appointments_services import check_data_keys, check_date_type, check_not_nullable_keys, get_invalid_data, check_appointment_id
 
 
 @jwt_required()
@@ -25,6 +25,8 @@ def create_controller():
     if not check_not_nullable_keys(data):
         return {"error": "body have to has name and date keys"},HTTPStatus.BAD_REQUEST
 
+    if not check_date_type(data['date']):
+        return {"error": "Date must be in format: m/d/y"},HTTPStatus.BAD_REQUEST
     data['user_id'] = user['id']
     new_appointment = AppointmentModel(**data)
     session.add(new_appointment)
