@@ -48,6 +48,11 @@ def create_allergies():
         session.add(allergy)
         session.commit()
 
+        allergy = allergy.asdict()
+        name = allergy['allergy']['name']
+        allergy['name'] = name
+        allergy.pop('allergy')
+
         return jsonify(allergy), HTTPStatus.CREATED
 
     except MissingKeysError as e:
@@ -67,7 +72,15 @@ def get_allergies():
 
     my_allergies = session.query(UserAllergyModel).filter_by(user_id = user_jwt["id"]).all()
 
-    return jsonify(my_allergies), HTTPStatus.OK
+    output = []
+    for allergy in my_allergies:
+        allergy = allergy.asdict()
+        name = allergy['allergy']['name']
+        allergy['name'] = name
+        allergy.pop('allergy')
+        output.append(allergy)
+
+    return jsonify(output), HTTPStatus.OK
 
 
 @jwt_required()
@@ -106,6 +119,12 @@ def update_allergy(allergy_id):
 
         session.add(the_allergy)
         session.commit()
+
+        
+        the_allergy = the_allergy.asdict()
+        name = the_allergy['allergy']['name']
+        the_allergy['name'] = name
+        the_allergy.pop('allergy')
 
         return jsonify(the_allergy), HTTPStatus.OK
     
