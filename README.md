@@ -1,3 +1,74 @@
+|Methods  |Endpoint|Responsability|
+----------------------------------|  -------|  -------------------------------------|
+|POST    |/user/register||
+|POST    |/user/login||
+|GET     |/user/exam||
+|POST    |/user/exam||
+|PATCH   |/user/exam/<exam_id>||
+|DELETE  |/user/exam/<exam_id>||
+|DELETE  |/user/exam/file/<exam_id>||
+|POST    |/user/exam/file/<exam_id>||
+|POST    |/user/allergy||
+|GET     |/user/allergy||
+|PATCH   |/user/allergy/<allergy_id>||
+|DELETE  |/user/allergy/<allergy_id>||
+|POST    |/user/medication||
+|DELETE  |/user/medication/<medication_id>||
+|GET     |/user/medication||
+|PATCH   |/user/medication/<medication_id>||
+|GET     |/user/diseases||
+|POST    |/user/diseases||
+|PATCH   |/user/diseases/<disease_id>||
+|DELETE  |/user/diseases/<disease_id>||
+|POST    |/user/surgery||
+|DELETE  |/user/surgery/<id>||
+|GET     |/user/surgery||
+|PATCH   |/user/surgery/<id>||
+|POST    |/user/drug||
+|DELETE  |/user/drug||
+|GET     |/user/drug||
+|PATCH   |/user/drug||
+|POST    |/user/physical_activity||
+|DELETE  |/user/physical_activity||
+|GET     |/user/physical_activity||
+|PATCH   |/user/physical_activity||
+|POST    |/user/smoker||
+|DELETE  |/user/smoker||
+|GET     |/user/smoker||
+|PATCH   |/user/smoker||
+|POST    |/user/alcoholic||
+|GET     |/user/alcoholic/<string:alcoholic_id>||
+|DELETE  |/user/alcoholic/<string:alcoholic_id>||
+|PATCH   |/user/alcoholic/<string:alcoholic_id>||
+|POST    |/user/anamnesis||
+|GET     |/user/anamnesis||
+|PATCH   |/user/anamnesis||
+|DELETE  |/user/image-profile||
+|GET     |/user/image-profile||
+|POST    |/user/image-profile||
+|DELETE  |/user||
+|GET     |/user||
+|PATCH   |/user||
+|POST     |/address||
+|DELETE   |/address||
+|GET      |/address||
+|PATCH    |/address||
+|POST    |/allergy||
+|POST    |/appointments|
+|DELETE  |/appointments/<string:appointment_id>||
+|GET     |/appointments/<string:appointment_id>||
+|PATCH   |/appointments/<string:appointment_id>||
+|POST    |/doctor||
+|GET     |/doctor||
+|DELETE  |/doctor/<doctor_id>||
+|PATCH   |/doctor/<doctor_id>||
+|POST    |/exams||
+|POST    |/medication||
+|GET     |/pdf/||
+|POST    |/surgery||
+
+
+
 # Rotas Públicas
 
 # User
