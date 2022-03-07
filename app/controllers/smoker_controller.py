@@ -49,7 +49,9 @@ def get_data():
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not data:
-        return jsonify([]), HTTPStatus.OK
+
+        return {}, HTTPStatus.OK
+
 
 
     if not check_data_id(data,user):
@@ -82,7 +84,7 @@ def patch_data():
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not user_smoker:
-        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+        return {}, HTTPStatus.OK
 
 
     if not check_data_id(user_smoker,user):

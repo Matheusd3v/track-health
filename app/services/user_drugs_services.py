@@ -28,14 +28,6 @@ def verify_keys_and_values(body: dict):
 
     verify_values(list(body.values()))
 
-def verify_data_and_id(drug_data: UserDrugs, id: str):
-    if not drug_data:
-        raise NotFound
-
-    if not str(drug_data.user_id) == id:
-        message = {"Error": "Forbidden to change data of other users"}
-        raise Forbidden(description=message)
-
 def data_standardized(data: dict = None, instance_value: str = None):
 
     if data:

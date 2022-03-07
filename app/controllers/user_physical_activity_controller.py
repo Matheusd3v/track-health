@@ -53,7 +53,9 @@ def get_physical_activity():
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not physical_activity:
-        return jsonify([]), HTTPStatus.OK
+
+        return {}, HTTPStatus.OK
+
 
 
     if not check_data_id(physical_activity,user):
@@ -85,7 +87,7 @@ def patch_physical_activity():
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not physical_activity:
-        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+        return {}, HTTPStatus.OK
 
 
     if not check_data_id(physical_activity,user):
@@ -112,7 +114,7 @@ def delete_physical_activity():
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not physical_activity:
-        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+        return "", HTTPStatus.NO_CONTENT
 
 
     if not check_data_id(physical_activity,user):
