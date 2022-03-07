@@ -64,7 +64,6 @@ def serializing_all_fields(user_disease):
         name = disease['disease']['name']
         disease['name'] = name
         disease.pop('disease')
-    print(user_disease)
     return user_disease
 
 
