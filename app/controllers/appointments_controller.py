@@ -25,12 +25,15 @@ def create_controller():
     if not check_not_nullable_keys(data):
         return {"error": "body have to has name and date keys"},HTTPStatus.BAD_REQUEST
 
-    if not check_date_type(data['date']):
-        return {"error": "Date must be in format: m/d/y"},HTTPStatus.BAD_REQUEST
     data['user_id'] = user['id']
     new_appointment = AppointmentModel(**data)
     session.add(new_appointment)
-    session.commit()
+    try:
+        session.commit()
+        
+    except DataError:
+        return {"error": "Date must be in format: m/d/y"},HTTPStatus.BAD_REQUEST
+
     return jsonify(new_appointment), HTTPStatus.CREATED
 
 

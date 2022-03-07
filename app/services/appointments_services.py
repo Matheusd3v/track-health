@@ -30,4 +30,4 @@ def check_not_nullable_keys(data):
 
 def check_date_type(date):
     month = date.split("/")[0]
-    return int(month) < 12
+    return int(month) <= 12
