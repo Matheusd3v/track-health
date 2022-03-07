@@ -56,9 +56,9 @@ bp_user.patch("/drug")(update_user_drug_data)
 bp_user.delete("/drug")(delete_drug_data)
 
 bp_user.post("/physical_activity")(create_physical_activity)
-bp_user.get("/physical_activity/<string:physical_activity_id>")(get_physical_activity)
-bp_user.patch("/physical_activity/<string:physical_activity_id>")(patch_physical_activity)
-bp_user.delete("/physical_activity/<string:physical_activity_id>")(delete_physical_activity)
+bp_user.get("/physical_activity")(get_physical_activity)
+bp_user.patch("/physical_activity")(patch_physical_activity)
+bp_user.delete("/physical_activity")(delete_physical_activity)
 
 bp_user.post("/smoker")(create_data)
 bp_user.get("/smoker")(get_data)
