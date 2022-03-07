@@ -150,7 +150,7 @@ Exemplo de resposta, caso esteja tudo correto será retornado status 200 - OK:
     "exams": [],
     "image_profile": null
   },
-  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NjU4NTQwOSwianRpIjoiYmE5Zjk4YzctY2MwNi00MTFkLWFhYWQtNGVmZjM3ZWM0YTgxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJpZCI6IjhhMDY3Mzc4LWVkNTItNGQ2Ny04NWNhLTBkYWE4Y2YwMDBiNCIsIm5hbWUiOiJNYWxhcXVpYXMgQnJhbmRcdTAwZTNvIiwiZW1haWwiOiJtYWxhcXVpYXNAZW1haWwuY29tIiwiYmlydGhfZGF0ZSI6IlRodSwgMjUgRGVjIDIwMjUgMDA6MDA6MDAgR01UIiwiZ2VuZGVyIjoiSGV0ZXJvIiwic2V4IjoiTWFzY3VsaW5vIiwiYWxsZXJneSI6W10sIm1lZGljYXRpb25zIjpbXSwic3VyZ2VyeXMiOltdLCJhbGNvaG9sIjpudWxsLCJ1c2VyX2RydWciOm51bGwsInNtb2tlciI6bnVsbCwicGh5c2ljYWxfYWN0aXZpdHkiOm51bGwsImFuYW1uZXNpcyI6W10sImRpc2Vhc2VzIjpbXSwiZXhhbXMiOltdLCJpbWFnZV9wcm9maWxlIjpudWxsfSwibmJmIjoxNjQ2NTg1NDA5LCJleHAiOjE2NDY1OTk4MDl9.YsGTH2X1lajdn-MfC42kkd4HIwPGvsxiW5QZXFNqV90"
+  "access_token": TOKEN
 }
 ```
 
@@ -957,7 +957,7 @@ Caso tudo ocorra bem, será retornado status 204 - NO CONTENT.
 
 # Exam Files
 
-## POST - user/exam/file/exam_id
+## POST - user/exam/file/<exam_id>
 
 Essa rota é para upload e cadastro do documento de exame. É necessário passar o id do exame no final da rota. É aceito somente imagens(png, jpg e jpeg) e pdf. Deverá ser enviado por formulário multipart/form-data com o campo name preenchido.
 
@@ -969,7 +969,7 @@ Exemplo de resposta, retornando status 201 - CREATED caso tudo ocorra bem:
 }
 ```
 
-## DELETE - user/exam/file/exam_id
+## DELETE - user/exam/file/<exam_id>
 
 Essa rota é para deletar o documento. É necessário passar somente o id do exame que contém o documento no final da rota e o token. Será retornado status 204 - NO CONTENT caso tudo ocorra bem.
 
@@ -1060,3 +1060,76 @@ Retorno esperado :
 Esta rota é para deletar uma das alergias do usuário. Para realizar a deleção é somente necessário passar o id da alergia do usuário por query params.
 
 Authorization: ` Bearer Token`
+
+#
+# Anamnesis 
+
+## POST - /user/anamnesis
+Esta rota é para criação de anamnesis relacionada ao usuário. A seguir os campos obrigatórios:  'diseases', 'allergy','continous_medication', 'surgery', 'alcoholic','drug_user', 'smoker', 'physical_activity', 'diabetes', 'hipertension'
+
+Authorization: ` Bearer Token`
+
+Segue abaixo o exemplo de requisição:
+
+```json
+
+{  
+  "diseases":true,
+  "allergy":true,
+  "continous_medication":true,
+  "surgery":false,
+  "alcoholic":true,
+  "drug_user":false,
+  "smoker":true,
+  "physical_activity":false,
+  "diabetes":false,
+  "hipertension":true
+}
+
+```
+
+Caso tudo dê certo irá retornar o código 201 e uma resposta similar a esta abaixo:
+
+```json
+{
+  "id": "117b8a38-4c59-4149-911f-e3f42fa5c7f3",
+  "diseases": true,
+  "allergy": true,
+  "continous_medication": true,
+  "surgery": false,
+  "alcoholic": true,
+  "drug_user": false,
+  "smoker": true,
+  "physical_activity": false,
+  "diabetes": false,
+  "hipertension": true
+}
+```
+
+
+
+## PATCH - /user/anamnesis
+Esta rota é para atualização da anamnesis do usuário todos os campos podem ser atualizados, caso dê tudo certo irá retornar 204.
+
+Authorization: ` Bearer Token`
+
+
+## GET - /user/anamnesis
+Esta rota é para pegar a anamnesis relacionada ao usuário, caso dê tudo certo irá retornar a anamnesis do usuário, como mostrado no exemplo abaixo:
+Authorization: ` Bearer Token`
+
+```json
+{
+  "id": "117b8a38-4c59-4149-911f-e3f42fa5c7f3",
+  "diseases": true,
+  "allergy": true,
+  "continous_medication": true,
+  "surgery": false,
+  "alcoholic": true,
+  "drug_user": false,
+  "smoker": true,
+  "physical_activity": false,
+  "diabetes": false,
+  "hipertension": true
+}
+```
