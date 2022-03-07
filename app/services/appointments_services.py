@@ -27,3 +27,9 @@ def check_data_keys(data):
 def check_not_nullable_keys(data):
     not_nullable_keys = ['name','date']
     return all(key in data for key in not_nullable_keys)
+
+def check_date_type(date):
+    month = date.split("/")[0]
+    print(month)
+
+    return int(month) < 12
