@@ -160,7 +160,7 @@ Essa rota é para deletar um usuário. Não necessita de corpo de requisição, 
 
 # Exams
 
-## GET - user/exams
+## GET - user/exam
 
 Esta rota é para a visualização dos exames cadastradas pelo usuário.
 
@@ -169,8 +169,26 @@ Exemplo de requisição:
 Authorization: ` Bearer Token`
 
 Retorno esperado :
+```json
+[
+  {
+    "id": "ed3ef1f1-e82b-48b5-ba03-18c6e4f79402",
+    "name": "Hemograma",
+    "description": "Controle de glicemia",
+    "date": "Fri, 25 Dec 2020 00:00:00 GMT",
+    "upload_img": null,
+  },
+  {
+    "id": "ed3ef1f1-e82b-48b5-ba03-18c6e4f79402",
+    "name": "Galilei G4",
+    "description": "exame de vista",
+    "date": "Fri, 25 Dec 2020 00:00:00 GMT",
+    "upload_img": "www.google.com.br/exame.jpg",
+  }
+]
+```
 
-## POST - user/exams
+## POST - user/exam
 
 Esta rota é para o cadastro de exames relacionados ao usuário.
 Os campos obrigatórios são: “name”, “date”, caso o o nome do exame enviado já exista ele irá buscar na base de dados, caso não exista, irá cadastrar um novo exame.
@@ -182,7 +200,7 @@ Authorization: ` Bearer Token`
 ```json
 {
   "name": "hemograma",
-  "date": "22/02/2022"
+  "date": "12/27/20"
 }
 ```
 
@@ -191,13 +209,14 @@ Retorno esperado :
 ```json
 {
   "id": "9",
-  "user_id": "7",
-  "exam_id": "8",
-  "exam_details_id": "5"
+	"name": "Hemograma",
+	"date": "Sun, 27 Dec 2020 00:00:00 GMT",
+	"description": null,
+	"upload_img": null
 }
 ```
 
-## PATCH - user/exams/<int:exam_id>
+## PATCH - user/exam/<int:exam_id>
 
 Esta rota é para a atualização dos exames do usuário, podendo atualizar somente a “date”,”description” e a “upload_img” do exame
 
@@ -207,35 +226,18 @@ Authorization: ` Bearer Token`
 
 ```json
 {
-  "name": "hemograma",
   "date": "22/02/2022",
   "upload_img": "matheus_pic_profile.png",
   "description": "Descrição maneira"
 }
 ```
 
-## DELETE - user/exams/<int:exam_id>
+## DELETE - user/exam/<int:exam_id>
 
 Esta rota é para apagar um exame do usuário. Para realizar a deleção é somente necessário passar o exam_id por query params.
 
 Authorization: ` Bearer Token`
 
-```json
-[
-  {
-    "name": "hemograma",
-    "date": "22/02/2022",
-    "upload_img": "matheus_pic_profile.png",
-    "description": "Descrição maneira"
-  },
-  {
-    "name": "Galilei G4",
-    "date": "22/02/2022",
-    "upload_img": "matheus_pic_profile.png",
-    "description": "Descrição maneira"
-  }
-]
-```
 
 # DISEASE
 
