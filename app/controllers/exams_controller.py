@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from flask import request, jsonify, current_app
 from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
+from psycopg2.errors import DatetimeFieldOverflow
 from werkzeug.exceptions import BadRequest, NotFound
 from app.models.user_exam_model import UserExam
 from app.services.exams_services import find_exam, join_user_exams, verify_exam_key, verify_update_types, verify_user_exam_key, normalize_exam_keys
@@ -65,6 +66,11 @@ def create_user_exam():
         }), HTTPStatus.CREATED
     except BadRequest:
         return jsonify({"Error": "The keyword 'name' or 'date' does not exit"}), HTTPStatus.BAD_REQUEST
+    
+    except DataError as e:
+        if isinstance(e.orig, DatetimeFieldOverflow):
+            message = {"Error": "Date must be format: mm/dd/yy"}
+            return message, HTTPStatus.BAD_REQUEST
 
 
 @jwt_required()
@@ -95,8 +101,14 @@ def update_exam(exam_id):
         data = request.get_json()
         msg = verify_update_types(data)
         return jsonify({"Error": msg}), HTTPStatus.BAD_REQUEST
-    except (DataError, AttributeError):
-        return {"Error": f"exam_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
+
+    except DataError as e:
+        if isinstance(e.orig, AttributeError):
+            return {"Error": f"exam_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
+        
+        if isinstance(e.orig, DatetimeFieldOverflow):
+            message = {"Error": "Date must be format: m/d/y"}
+            return message, HTTPStatus.BAD_REQUEST
 
 
 @jwt_required()

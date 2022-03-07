@@ -104,6 +104,11 @@ def update_user():
     except BadRequest as e:
         return e.description, e.code
 
+    except DataError as e:
+        if isinstance(e.orig, DatetimeFieldOverflow):
+            message = {"Error": "Date must be format: m/d/y"}
+            return message, HTTPStatus.BAD_REQUEST
+
 @jwt_required()
 def delete_user():
     try:
