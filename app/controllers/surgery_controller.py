@@ -105,7 +105,7 @@ def delete_user_surgery(id):
         
         user_surgery = UserSurgery.query.filter_by(surgery_id=id).first()
 
-        if user_surgery.user_id != user_id:
+        if str(user_surgery.user_id) != str(user_id):
             return {"msg":"You cant delete a surgery that its not yours"}, HTTPStatus.NOT_ACCEPTABLE
         surgery_details = SurgeryDetails.query.filter_by(id = user_surgery.surgery_detail_id).first()
 

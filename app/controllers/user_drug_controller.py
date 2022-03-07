@@ -7,8 +7,7 @@ from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
-from app.services.user_drugs_services import data_standardized, drug_data_updated, verify_data_and_id, verify_keys_and_values
-from app.services.user_services import verify_values
+from app.services.user_drugs_services import data_standardized, drug_data_updated, verify_data_and_id, verify_keys_and_values, verify_values
 
 @jwt_required()
 def get_user_drug():

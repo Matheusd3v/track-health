@@ -18,5 +18,4 @@ class ExamDetails(db.Model):
     upload_img:str = Column(String)
     description:str = Column(String) 
         
-    user_id: str = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable = False)
     exam:Exam = relationship("Exam", secondary="user_exam", backref="exams", uselist=False)
