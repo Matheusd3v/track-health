@@ -699,7 +699,7 @@ Essa rota é para deletar as informações cadastradas na tabela smoker. Não é
 
 ## POST - user/physical_activity
 
-Essa rota é para cadastro de informaçoes relacionadas a atividades fisicas. É necessário passar somente os campos frequency e description, sendo o campo description opcional. 
+Essa rota é para cadastro de informaçoes relacionadas a atividades fisicas. É necessário passar somente os campos frequency e description no corpo de requisição, sendo o campo description opcional. 
 
 Exemplo de requisição:
 
@@ -723,9 +723,44 @@ Exemplo de resposta status 201 - CREATED
 
 ## PATCH - user/physical_activity
 
-Essa rota atualiza os dados cadastrados 
+Essa rota atualiza os dados cadastrados sobre atividades físicas. Serão aceitos somente os campos frequency e description.
 
+Exemplo de requisição:
 
+```json
+{
+	"frequency": "3x na semana",
+	"description": " academia   "
+}
+```
+Exemplo de resposta, status 200 - OK:
+
+```json
+{
+	"id": "d727da29-7937-4f53-9a7e-9bd7080234e3",
+	"user_id": "e1ab8988-4b19-4cae-9613-0f70e26a7d5d",
+	"frequency": "3x na semana",
+	"description": "Academia"
+}
+```
+## GET - user/physical_activity
+
+Essa rota é para obter as informações cadastradas sobre atividades físicas. Não é necessário enviar corpo de requisição. 
+
+Exemplo de resposta:
+
+```json
+{
+	"id": "ed5ed43e-371b-48ce-864a-aedc941e736a",
+	"user_id": "c67286af-f95e-49cc-ad7f-7707888e3f79",
+	"frequency": "3x na semana",
+	"description": "Academia"
+}
+```
+
+## DELETE - user/physical_activity
+
+Essa rota é para deletar as informações cadastradas sobre atividade física. Não é necessário enviar corpo de requisição, somente o token. Será caso tudo ocorra bem, será retornado status 204 - NO CONTENT 
 
 # Address
 
