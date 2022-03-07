@@ -53,7 +53,9 @@ def get_physical_activity():
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not physical_activity:
+
         return {}, HTTPStatus.OK
+
 
 
     if not check_data_id(physical_activity,user):
