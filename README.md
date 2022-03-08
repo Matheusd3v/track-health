@@ -49,24 +49,23 @@
 |DELETE  |/user||
 |GET     |/user||
 |PATCH   |/user||
-|POST     |/address||
-|DELETE   |/address||
-|GET      |/address||
-|PATCH    |/address||
-|POST    |/allergy||
-|POST    |/appointments|
-|DELETE  |/appointments/<string:appointment_id>||
-|GET     |/appointments/<string:appointment_id>||
-|PATCH   |/appointments/<string:appointment_id>||
-|POST    |/doctor||
-|GET     |/doctor||
-|DELETE  |/doctor/<doctor_id>||
-|PATCH   |/doctor/<doctor_id>||
-|POST    |/exams||
-|POST    |/medication||
-|GET     |/pdf/||
-|POST    |/surgery||
-
+|POST     |/address|  Criação de um endereço. |
+|GET      |/address|Vizualizar os endereços.| 
+|PATCH    |/address|Atualização de um endereço.| 
+|DELETE   |/address|Deletar um endereço.| 
+|POST    |/allergy|Criação de uma alergia.|  
+|POST    |/appointments| Criação de um agendamento.
+|GET     |/appointments/<string:appointment_id>| Vizualação dos agendamentos.|
+|PATCH   |/appointments/<string:appointment_id>| Atualização de um agendamento.| 
+|DELETE  |/appointments/<string:appointment_id>| Deletar um agendamento. | 
+|POST    |/doctor|Criação de um médico relacionado ao usuário.| 
+|GET     |/doctor| Ver todos os médicos relacionao ao usuário. | 
+|DELETE  |/doctor/<doctor_id>| Deletar um médico relacionado ao usuário.|
+|PATCH   |/doctor/<doctor_id>|Atualizar os dados de um médico.| 
+|POST    |/exams| Criar um exame.|
+|POST    |/medication|Criar uma medicação.| 
+|GET     |/pdf| Retorna um PDF com os dados do usuário. |
+|POST    |/surgery|Criação de uma cirurgia.| 
 
 
 # Rotas Públicas
