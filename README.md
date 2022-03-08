@@ -1,73 +1,77 @@
-|Methods  |Endpoint|Responsability|
-----------------------------------|  -------|  -------------------------------------|
-|POST    |/user/register||
-|POST    |/user/login||
-|GET     |/user/exam||
-|POST    |/user/exam||
-|PATCH   |/user/exam/<exam_id>||
-|DELETE  |/user/exam/<exam_id>||
-|DELETE  |/user/exam/file/<exam_id>||
-|POST    |/user/exam/file/<exam_id>||
-|POST    |/user/allergy||
-|GET     |/user/allergy||
-|PATCH   |/user/allergy/<allergy_id>||
-|DELETE  |/user/allergy/<allergy_id>||
-|POST    |/user/medication||
-|DELETE  |/user/medication/<medication_id>||
-|GET     |/user/medication||
-|PATCH   |/user/medication/<medication_id>||
-|GET     |/user/diseases||
-|POST    |/user/diseases||
-|PATCH   |/user/diseases/<disease_id>||
-|DELETE  |/user/diseases/<disease_id>||
-|POST    |/user/surgery||
-|DELETE  |/user/surgery/<id>||
-|GET     |/user/surgery||
-|PATCH   |/user/surgery/<id>||
-|POST    |/user/drug||
-|DELETE  |/user/drug||
-|GET     |/user/drug||
-|PATCH   |/user/drug||
-|POST    |/user/physical_activity||
-|DELETE  |/user/physical_activity||
-|GET     |/user/physical_activity||
-|PATCH   |/user/physical_activity||
-|POST    |/user/smoker||
-|DELETE  |/user/smoker||
-|GET     |/user/smoker||
-|PATCH   |/user/smoker||
-|POST    |/user/alcoholic||
-|GET     |/user/alcoholic/<string:alcoholic_id>||
-|DELETE  |/user/alcoholic/<string:alcoholic_id>||
-|PATCH   |/user/alcoholic/<string:alcoholic_id>||
-|POST    |/user/anamnesis||
-|GET     |/user/anamnesis||
-|PATCH   |/user/anamnesis||
-|DELETE  |/user/image-profile||
-|GET     |/user/image-profile||
-|POST    |/user/image-profile||
-|DELETE  |/user||
-|GET     |/user||
-|PATCH   |/user||
-|POST     |/address||
-|DELETE   |/address||
-|GET      |/address||
-|PATCH    |/address||
-|POST    |/allergy||
-|POST    |/appointments|
-|DELETE  |/appointments/<string:appointment_id>||
-|GET     |/appointments/<string:appointment_id>||
-|PATCH   |/appointments/<string:appointment_id>||
-|POST    |/doctor||
-|GET     |/doctor||
-|DELETE  |/doctor/<doctor_id>||
-|PATCH   |/doctor/<doctor_id>||
-|POST    |/exams||
-|POST    |/medication||
-|GET     |/pdf/||
-|POST    |/surgery||
+| Methods | Endpoint                   | Responsability |
+| ------- | -------------------------- | -------------- |
+| POST    | /user/register             |                |
+| POST    | /user/login                |                |
+| GET     | /user/exam                 |                |
+| POST    | /user/exam                 |                |
+| PATCH   | /user/exam/<exam_id>       |                |
+| DELETE  | /user/exam/<exam_id>       |                |
+| DELETE  | /user/exam/file/<exam_id>  |                |
+| POST    | /user/exam/file/<exam_id>  |                |
+| POST    | /user/allergy              |                |
+| GET     | /user/allergy              |                |
+| PATCH   | /user/allergy/<allergy_id> |                |
+| DELETE  | /user/allergy/<allergy_id> |                |
 
+|POST |/user/medication|Criar uma medicação do usuário|
+|GET |/user/medication|Visualizar uma medicação do usuário|
+|PATCH |/user/medication/<medication_id>|Alterar uma medicação do usuário|
+|DELETE |/user/medication/<medication_id>|Deletar uma medicação do usuário|
 
+|POST |/user/diseases|Criar uma doença do usuário|
+|GET |/user/diseases|Visualizar uma doença do usuário|
+|PATCH |/user/diseases/<disease_id>|Alterar uma doença do usuário|
+|DELETE |/user/diseases/<disease_id>|Deletar uma doença do usuário|
+
+|POST |/user/surgery|Criar uma cirurgia do usuário|
+|GET |/user/surgery|Visualizar uma cirurgia do usuário|
+|PATCH |/user/surgery/<id>|Alterar uma cirurgia do usuário|
+|DELETE |/user/surgery/<id>|Deletar uma cirurgia do usuário|
+
+|POST |/user/drug|Criar uma droga do usuário|
+|GET |/user/drug|Visualizar uma droga do usuário|
+|PATCH |/user/drug|Alterar uma droga do usuário|
+|DELETE |/user/drug|Deletar uma droga do usuário|
+
+|POST |/user/physical_activity|Criar uma atividade física do usuário|
+|GET |/user/physical_activity|Visualizar uma atividade física do usuário|
+|PATCH |/user/physical_activity|Alterar|
+|DELETE |/user/physical_activity|Deletar uma atividade física do usuário|
+
+|POST |/user/smoker||
+|DELETE |/user/smoker||
+|GET |/user/smoker||
+|PATCH |/user/smoker||
+|POST |/user/alcoholic||
+|GET |/user/alcoholic/<string:alcoholic_id>||
+|DELETE |/user/alcoholic/<string:alcoholic_id>||
+|PATCH |/user/alcoholic/<string:alcoholic_id>||
+|POST |/user/anamnesis||
+|GET |/user/anamnesis||
+|PATCH |/user/anamnesis||
+|DELETE |/user/image-profile||
+|GET |/user/image-profile||
+|POST |/user/image-profile||
+|DELETE |/user||
+|GET |/user||
+|PATCH |/user||
+|POST |/address||
+|DELETE |/address||
+|GET |/address||
+|PATCH |/address||
+|POST |/allergy||
+|POST |/appointments|
+|DELETE |/appointments/<string:appointment_id>||
+|GET |/appointments/<string:appointment_id>||
+|PATCH |/appointments/<string:appointment_id>||
+|POST |/doctor||
+|GET |/doctor||
+|DELETE |/doctor/<doctor_id>||
+|PATCH |/doctor/<doctor_id>||
+|POST |/exams||
+|POST |/medication||
+|GET |/pdf/||
+|POST |/surgery||
 
 # Rotas Públicas
 
@@ -240,6 +244,7 @@ Exemplo de requisição:
 Authorization: ` Bearer Token`
 
 Retorno esperado :
+
 ```json
 [
   {
@@ -247,14 +252,14 @@ Retorno esperado :
     "name": "Hemograma",
     "description": "Controle de glicemia",
     "date": "Fri, 25 Dec 2020 00:00:00 GMT",
-    "upload_img": null,
+    "upload_img": null
   },
   {
     "id": "ed3ef1f1-e82b-48b5-ba03-18c6e4f79402",
     "name": "Galilei G4",
     "description": "exame de vista",
     "date": "Fri, 25 Dec 2020 00:00:00 GMT",
-    "upload_img": "www.google.com.br/exame.jpg",
+    "upload_img": "www.google.com.br/exame.jpg"
   }
 ]
 ```
@@ -280,10 +285,10 @@ Retorno esperado :
 ```json
 {
   "id": "9",
-	"name": "Hemograma",
-	"date": "Sun, 27 Dec 2020 00:00:00 GMT",
-	"description": null,
-	"upload_img": null
+  "name": "Hemograma",
+  "date": "Sun, 27 Dec 2020 00:00:00 GMT",
+  "description": null,
+  "upload_img": null
 }
 ```
 
@@ -308,7 +313,6 @@ Authorization: ` Bearer Token`
 Esta rota é para apagar um exame do usuário. Para realizar a deleção é somente necessário passar o exam_id por query params.
 
 Authorization: ` Bearer Token`
-
 
 # DISEASE
 
@@ -1062,30 +1066,30 @@ Esta rota é para deletar uma das alergias do usuário. Para realizar a deleçã
 Authorization: ` Bearer Token`
 
 #
-# Anamnesis 
+
+# Anamnesis
 
 ## POST - /user/anamnesis
-Esta rota é para criação de anamnesis relacionada ao usuário. A seguir os campos obrigatórios:  'diseases', 'allergy','continous_medication', 'surgery', 'alcoholic','drug_user', 'smoker', 'physical_activity', 'diabetes', 'hipertension'
+
+Esta rota é para criação de anamnesis relacionada ao usuário. A seguir os campos obrigatórios: 'diseases', 'allergy','continous_medication', 'surgery', 'alcoholic','drug_user', 'smoker', 'physical_activity', 'diabetes', 'hipertension'
 
 Authorization: ` Bearer Token`
 
 Segue abaixo o exemplo de requisição:
 
 ```json
-
-{  
-  "diseases":true,
-  "allergy":true,
-  "continous_medication":true,
-  "surgery":false,
-  "alcoholic":true,
-  "drug_user":false,
-  "smoker":true,
-  "physical_activity":false,
-  "diabetes":false,
-  "hipertension":true
+{
+  "diseases": true,
+  "allergy": true,
+  "continous_medication": true,
+  "surgery": false,
+  "alcoholic": true,
+  "drug_user": false,
+  "smoker": true,
+  "physical_activity": false,
+  "diabetes": false,
+  "hipertension": true
 }
-
 ```
 
 Caso tudo dê certo irá retornar o código 201 e uma resposta similar a esta abaixo:
@@ -1106,15 +1110,14 @@ Caso tudo dê certo irá retornar o código 201 e uma resposta similar a esta ab
 }
 ```
 
-
-
 ## PATCH - /user/anamnesis
+
 Esta rota é para atualização da anamnesis do usuário todos os campos podem ser atualizados, caso dê tudo certo irá retornar 204.
 
 Authorization: ` Bearer Token`
 
-
 ## GET - /user/anamnesis
+
 Esta rota é para pegar a anamnesis relacionada ao usuário, caso dê tudo certo irá retornar a anamnesis do usuário, como mostrado no exemplo abaixo:
 Authorization: ` Bearer Token`
 
