@@ -9,6 +9,7 @@ from werkzeug.exceptions import BadRequest
 from app.models.surgery_model import Surgery
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import DataError
+from psycopg2.errors import DatetimeFieldOverflow, InvalidTextRepresentation
 
 def create_surgery():
     try:
@@ -66,6 +67,11 @@ def create_surgery_user():
 
     except (BadRequest, TypeError, KeyError):
         return {"error":"These are required fields  ['name','date', 'description']"}, HTTPStatus.BAD_REQUEST
+    
+    except DataError as e:
+        if isinstance(e.orig, DatetimeFieldOverflow):
+            message = {"Error": "Date must be format: mm/dd/yy"}
+            return message, HTTPStatus.BAD_REQUEST
 
 
 
@@ -93,8 +99,13 @@ def update_user_surgery(id):
             "date":surgery_details.date
         }), HTTPStatus.OK
     
-    except DataError:
-        return {"error":"A surgery with this id was not found"}, HTTPStatus.NOT_FOUND
+    except DataError as e:
+        if isinstance(e.orig, InvalidTextRepresentation):
+            return {"error":"A surgery with this id was not found"}, HTTPStatus.NOT_FOUND
+        
+        if isinstance(e.orig, DatetimeFieldOverflow):
+            message = {"Error": "Date must be format: mm/dd/yy"}
+            return message, HTTPStatus.BAD_REQUEST
 
 
 @jwt_required()
