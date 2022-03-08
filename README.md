@@ -1,17 +1,17 @@
 |Methods  |Endpoint|Responsability|
 ----------------------------------|  -------|  -------------------------------------|
-|POST    |/user/register||
-|POST    |/user/login||
-|GET     |/user/exam||
-|POST    |/user/exam||
-|PATCH   |/user/exam/<exam_id>||
-|DELETE  |/user/exam/<exam_id>||
-|DELETE  |/user/exam/file/<exam_id>||
-|POST    |/user/exam/file/<exam_id>||
-|POST    |/user/allergy||
-|GET     |/user/allergy||
-|PATCH   |/user/allergy/<allergy_id>||
-|DELETE  |/user/allergy/<allergy_id>||
+|POST    |/user/register| Cadastro de usuário.|
+|POST    |/user/login| Realizar login.|
+|POST    |/user/exam| Cadastrar um novo exame para o usuário.|
+|GET     |/user/exam| Visualizar os exames cadastrados pelo usuário.|
+|PATCH   |/user/exam/<exam_id>| Atualiza informações de exames do usuário.|
+|DELETE  |/user/exam/<exam_id>| Deleta um exame do usuário.|
+|POST    |/user/exam/file/<exam_id>|Adiciona um arquivo pdf/jpg a um exame.|
+|DELETE  |/user/exam/file/<exam_id>|Deleta um arquivo de um exame.|
+|POST    |/user/allergy|Cadastra uma nova alergia para o usuário.|
+|GET     |/user/allergy|Visualiza alergias cadastradas pelo usuário.|
+|PATCH   |/user/allergy/<allergy_id>|Atualiza informações de alergias do usuario.|
+|DELETE  |/user/allergy/<allergy_id>|Deleta uma alergia do usuário.|
 |POST    |/user/medication||
 |DELETE  |/user/medication/<medication_id>||
 |GET     |/user/medication||
