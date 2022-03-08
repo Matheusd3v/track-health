@@ -1,73 +1,71 @@
-| Methods | Endpoint                              | Responsability                              |
-| ------- | ------------------------------------- | ------------------------------------------- |
-|POST    |/user/register| Cadastro de usuário.|
-|POST    |/user/login| Realizar login.|
-|POST    |/user/exam| Cadastrar um novo exame para o usuário.|
-|GET     |/user/exam| Visualizar os exames cadastrados pelo usuário.|
-|PATCH   |/user/exam/<exam_id>| Atualiza informações de exames do usuário.|
-|DELETE  |/user/exam/<exam_id>| Deleta um exame do usuário.|
-|POST    |/user/exam/file/<exam_id>|Adiciona um arquivo pdf/jpg a um exame.|
-|DELETE  |/user/exam/file/<exam_id>|Deleta um arquivo de um exame.|
-|POST    |/user/allergy|Cadastra uma nova alergia para o usuário.|
-|GET     |/user/allergy|Visualiza alergias cadastradas pelo usuário.|
-|PATCH   |/user/allergy/<allergy_id>|Atualiza informações de alergias do usuario.|
-|DELETE  |/user/allergy/<allergy_id>|Deleta uma alergia do usuário.|
-| POST    | /user/medication                      | Criar uma medicação do usuário.             |
-| GET     | /user/medication                      | Visualizar uma medicação do usuário.        |
-| PATCH   | /user/medication/<medication_id>      | Alterar uma medicação do usuário.           |
-| DELETE  | /user/medication/<medication_id>      | Deletar uma medicação do usuário.           |
-| POST    | /user/diseases                        | Criar uma doença do usuário.                |
-| GET     | /user/diseases                        | Visualizar uma doença do usuário.           |
-| PATCH   | /user/diseases/<disease_id>           | Alterar uma doença do usuário.              |
-| DELETE  | /user/diseases/<disease_id>           | Deletar uma doença do usuário.              |
-| POST    | /user/surgery                         | Criar uma cirurgia do usuário.              |
-| GET     | /user/surgery                         | Visualizar uma cirurgia do usuário.         |
-| PATCH   | /user/surgery/<id>                    | Alterar uma cirurgia do usuário.            |
-| DELETE  | /user/surgery/<id>                    | Deletar uma cirurgia do usuário.            |
-| POST    | /user/drug                            | Criar uma droga do usuário.                 |
-| GET     | /user/drug                            | Visualizar uma droga do usuário.            |
-| PATCH   | /user/drug                            | Alterar uma droga do usuário.               |
-| DELETE  | /user/drug                            | Deletar uma droga do usuário.               |
-| POST    | /user/physical_activity               | Criar uma atividade física do usuário.      |
-| GET     | /user/physical_activity               | Visualizar uma atividade física do usuário. |
-| PATCH   | /user/physical_activity               | Alterar uma atividade física do usuário.    |
-| DELETE  | /user/physical_activity               | Deletar uma atividade física do usuário.    |
-|POST    |/user/smoker| Cadastra informações do user fumante.|
-|GET     |/user/smoker| Retorna as informações do user fumante. |
-|PATCH   |/user/smoker| Atualiza informações cadastradas do user fumante.|
-|DELETE  |/user/smoker| Deleta informações cadastradas do user fumante.|
-|POST    |/user/alcoholic| Cadastra informações do user alcoólico.|
-|GET     |/user/alcoholic| Retorna informações do user alcoólico.|
-|PATCH   |/user/alcoholic| Atualiza informações do user alcoólico.|
-|DELETE  |/user/alcoholic| Deleta informações do user alcoólico.|
-|POST    |/user/anamnesis| Cria dados de anamnsesis.|
-|GET     |/user/anamnesis| Retorna os dados cadastrados da anamnesis.|
-|PATCH   |/user/anamnesis| Atualiza os dados cadastrados da anamnesis.|
-|POST    |/user/image-profile| Cadastra e imagem de perfil.|
-|GET     |/user/image-profile| Retorna o link da imagem de perfil.|
-|DELETE  |/user/image-profile| Deleta a imagem de perfil.|
-|DELETE  |/user| Deleta o usuário.|
-|GET     |/user| Retorna as informações do usuário.|
-|PATCH   |/user| Atualiza os dados do usuário.|
-| POST    | /address                              |                                             |
-| DELETE  | /address                              |                                             |
-| GET     | /address                              |                                             |
-| PATCH   | /address                              |                                             |
-| POST    | /allergy                              |                                             |
-|POST    |/allergy|Criação de uma alergia.|  
-|POST    |/appointments| Criação de um agendamento.
-|GET     |/appointments/<string:appointment_id>| Vizualação dos agendamentos.|
-|PATCH   |/appointments/<string:appointment_id>| Atualização de um agendamento.| 
-|DELETE  |/appointments/<string:appointment_id>| Deletar um agendamento. | 
-|POST    |/doctor|Criação de um médico relacionado ao usuário.| 
-|GET     |/doctor| Ver todos os médicos relacionao ao usuário. | 
-|DELETE  |/doctor/<doctor_id>| Deletar um médico relacionado ao usuário.|
-|PATCH   |/doctor/<doctor_id>|Atualizar os dados de um médico.| 
-|POST    |/exams| Criar um exame.|
-|POST    |/medication|Criar uma medicação.| 
-|GET     |/pdf| Retorna um PDF com os dados do usuário. |
-|POST    |/surgery|Criação de uma cirurgia.| 
-
+| Methods | Endpoint                              | Responsability                                    |
+| ------- | ------------------------------------- | ------------------------------------------------- |
+| POST    | /user/register                        | Cadastro de usuário.                              |
+| POST    | /user/login                           | Realizar login.                                   |
+| POST    | /user/exam                            | Cadastrar um novo exame para o usuário.           |
+| GET     | /user/exam                            | Visualizar os exames cadastrados pelo usuário.    |
+| PATCH   | /user/exam/<exam_id>                  | Atualiza informações de exames do usuário.        |
+| DELETE  | /user/exam/<exam_id>                  | Deleta um exame do usuário.                       |
+| POST    | /user/exam/file/<exam_id>             | Adiciona um arquivo pdf/jpg a um exame.           |
+| DELETE  | /user/exam/file/<exam_id>             | Deleta um arquivo de um exame.                    |
+| POST    | /user/allergy                         | Cadastra uma nova alergia para o usuário.         |
+| GET     | /user/allergy                         | Visualiza alergias cadastradas pelo usuário.      |
+| PATCH   | /user/allergy/<allergy_id>            | Atualiza informações de alergias do usuario.      |
+| DELETE  | /user/allergy/<allergy_id>            | Deleta uma alergia do usuário.                    |
+| POST    | /user/medication                      | Criar uma medicação do usuário.                   |
+| GET     | /user/medication                      | Visualizar uma medicação do usuário.              |
+| PATCH   | /user/medication/<medication_id>      | Alterar uma medicação do usuário.                 |
+| DELETE  | /user/medication/<medication_id>      | Deletar uma medicação do usuário.                 |
+| POST    | /user/diseases                        | Criar uma doença do usuário.                      |
+| GET     | /user/diseases                        | Visualizar uma doença do usuário.                 |
+| PATCH   | /user/diseases/<disease_id>           | Alterar uma doença do usuário.                    |
+| DELETE  | /user/diseases/<disease_id>           | Deletar uma doença do usuário.                    |
+| POST    | /user/surgery                         | Criar uma cirurgia do usuário.                    |
+| GET     | /user/surgery                         | Visualizar uma cirurgia do usuário.               |
+| PATCH   | /user/surgery/<id>                    | Alterar uma cirurgia do usuário.                  |
+| DELETE  | /user/surgery/<id>                    | Deletar uma cirurgia do usuário.                  |
+| POST    | /user/drug                            | Criar uma droga do usuário.                       |
+| GET     | /user/drug                            | Visualizar uma droga do usuário.                  |
+| PATCH   | /user/drug                            | Alterar uma droga do usuário.                     |
+| DELETE  | /user/drug                            | Deletar uma droga do usuário.                     |
+| POST    | /user/physical_activity               | Criar uma atividade física do usuário.            |
+| GET     | /user/physical_activity               | Visualizar uma atividade física do usuário.       |
+| PATCH   | /user/physical_activity               | Alterar uma atividade física do usuário.          |
+| DELETE  | /user/physical_activity               | Deletar uma atividade física do usuário.          |
+| POST    | /user/smoker                          | Cadastra informações do user fumante.             |
+| GET     | /user/smoker                          | Retorna as informações do user fumante.           |
+| PATCH   | /user/smoker                          | Atualiza informações cadastradas do user fumante. |
+| DELETE  | /user/smoker                          | Deleta informações cadastradas do user fumante.   |
+| POST    | /user/alcoholic                       | Cadastra informações do user alcoólico.           |
+| GET     | /user/alcoholic                       | Retorna informações do user alcoólico.            |
+| PATCH   | /user/alcoholic                       | Atualiza informações do user alcoólico.           |
+| DELETE  | /user/alcoholic                       | Deleta informações do user alcoólico.             |
+| POST    | /user/anamnesis                       | Cria dados de anamnsesis.                         |
+| GET     | /user/anamnesis                       | Retorna os dados cadastrados da anamnesis.        |
+| PATCH   | /user/anamnesis                       | Atualiza os dados cadastrados da anamnesis.       |
+| POST    | /user/image-profile                   | Cadastra e imagem de perfil.                      |
+| GET     | /user/image-profile                   | Retorna o link da imagem de perfil.               |
+| DELETE  | /user/image-profile                   | Deleta a imagem de perfil.                        |
+| DELETE  | /user                                 | Deleta o usuário.                                 |
+| GET     | /user                                 | Retorna as informações do usuário.                |
+| PATCH   | /user                                 | Atualiza os dados do usuário.                     |
+| POST    | /address                              | Criação de um endereço médico.                    |
+| DELETE  | /address                              | Deletar um endereço médico.                       |
+| GET     | /address                              | Pegar todos os endereços médicos                  |
+| PATCH   | /address                              | Alterar um endereço médico.                       |
+| POST    | /allergy                              | Criação de uma alergia.                           |
+| POST    | /appointments                         | Criação de um agendamento.                        |
+| GET     | /appointments/<string:appointment_id> | Vizualação dos agendamentos.                      |
+| PATCH   | /appointments/<string:appointment_id> | Atualização de um agendamento.                    |
+| DELETE  | /appointments/<string:appointment_id> | Deletar um agendamento.                           |
+| POST    | /doctor                               | Criação de um médico relacionado ao usuário.      |
+| GET     | /doctor                               | Ver todos os médicos relacionao ao usuário.       |
+| DELETE  | /doctor/<doctor_id>                   | Deletar um médico relacionado ao usuário.         |
+| PATCH   | /doctor/<doctor_id>                   | Atualizar os dados de um médico.                  |
+| POST    | /exams                                | Criar um exame.                                   |
+| POST    | /medication                           | Criar uma medicação.                              |
+| GET     | /pdf                                  | Retorna um PDF com os dados do usuário.           |
+| POST    | /surgery                              | Criação de uma cirurgia.                          |
 
 # Rotas Públicas
 
