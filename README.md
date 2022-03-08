@@ -1,77 +1,71 @@
-| Methods | Endpoint                   | Responsability |
-| ------- | -------------------------- | -------------- |
-| POST    | /user/register             |                |
-| POST    | /user/login                |                |
-| GET     | /user/exam                 |                |
-| POST    | /user/exam                 |                |
-| PATCH   | /user/exam/<exam_id>       |                |
-| DELETE  | /user/exam/<exam_id>       |                |
-| DELETE  | /user/exam/file/<exam_id>  |                |
-| POST    | /user/exam/file/<exam_id>  |                |
-| POST    | /user/allergy              |                |
-| GET     | /user/allergy              |                |
-| PATCH   | /user/allergy/<allergy_id> |                |
-| DELETE  | /user/allergy/<allergy_id> |                |
-
-|POST |/user/medication|Criar uma medicação do usuário|
-|GET |/user/medication|Visualizar uma medicação do usuário|
-|PATCH |/user/medication/<medication_id>|Alterar uma medicação do usuário|
-|DELETE |/user/medication/<medication_id>|Deletar uma medicação do usuário|
-
-|POST |/user/diseases|Criar uma doença do usuário|
-|GET |/user/diseases|Visualizar uma doença do usuário|
-|PATCH |/user/diseases/<disease_id>|Alterar uma doença do usuário|
-|DELETE |/user/diseases/<disease_id>|Deletar uma doença do usuário|
-
-|POST |/user/surgery|Criar uma cirurgia do usuário|
-|GET |/user/surgery|Visualizar uma cirurgia do usuário|
-|PATCH |/user/surgery/<id>|Alterar uma cirurgia do usuário|
-|DELETE |/user/surgery/<id>|Deletar uma cirurgia do usuário|
-
-|POST |/user/drug|Criar uma droga do usuário|
-|GET |/user/drug|Visualizar uma droga do usuário|
-|PATCH |/user/drug|Alterar uma droga do usuário|
-|DELETE |/user/drug|Deletar uma droga do usuário|
-
-|POST |/user/physical_activity|Criar uma atividade física do usuário|
-|GET |/user/physical_activity|Visualizar uma atividade física do usuário|
-|PATCH |/user/physical_activity|Alterar|
-|DELETE |/user/physical_activity|Deletar uma atividade física do usuário|
-
-|POST |/user/smoker||
-|DELETE |/user/smoker||
-|GET |/user/smoker||
-|PATCH |/user/smoker||
-|POST |/user/alcoholic||
-|GET |/user/alcoholic/<string:alcoholic_id>||
-|DELETE |/user/alcoholic/<string:alcoholic_id>||
-|PATCH |/user/alcoholic/<string:alcoholic_id>||
-|POST |/user/anamnesis||
-|GET |/user/anamnesis||
-|PATCH |/user/anamnesis||
-|DELETE |/user/image-profile||
-|GET |/user/image-profile||
-|POST |/user/image-profile||
-|DELETE |/user||
-|GET |/user||
-|PATCH |/user||
-|POST |/address||
-|DELETE |/address||
-|GET |/address||
-|PATCH |/address||
-|POST |/allergy||
-|POST |/appointments|
-|DELETE |/appointments/<string:appointment_id>||
-|GET |/appointments/<string:appointment_id>||
-|PATCH |/appointments/<string:appointment_id>||
-|POST |/doctor||
-|GET |/doctor||
-|DELETE |/doctor/<doctor_id>||
-|PATCH |/doctor/<doctor_id>||
-|POST |/exams||
-|POST |/medication||
-|GET |/pdf/||
-|POST |/surgery||
+| Methods | Endpoint                              | Responsability                             |
+| ------- | ------------------------------------- | ------------------------------------------ |
+| POST    | /user/register                        |                                            |
+| POST    | /user/login                           |                                            |
+| GET     | /user/exam                            |                                            |
+| POST    | /user/exam                            |                                            |
+| PATCH   | /user/exam/<exam_id>                  |                                            |
+| DELETE  | /user/exam/<exam_id>                  |                                            |
+| DELETE  | /user/exam/file/<exam_id>             |                                            |
+| POST    | /user/exam/file/<exam_id>             |                                            |
+| POST    | /user/allergy                         |                                            |
+| GET     | /user/allergy                         |                                            |
+| PATCH   | /user/allergy/<allergy_id>            |                                            |
+| DELETE  | /user/allergy/<allergy_id>            |                                            |
+| POST    | /user/medication                      | Criar uma medicação do usuário             |
+| GET     | /user/medication                      | Visualizar uma medicação do usuário        |
+| PATCH   | /user/medication/<medication_id>      | Alterar uma medicação do usuário           |
+| DELETE  | /user/medication/<medication_id>      | Deletar uma medicação do usuário           |
+| POST    | /user/diseases                        | Criar uma doença do usuário                |
+| GET     | /user/diseases                        | Visualizar uma doença do usuário           |
+| PATCH   | /user/diseases/<disease_id>           | Alterar uma doença do usuário              |
+| DELETE  | /user/diseases/<disease_id>           | Deletar uma doença do usuário              |
+| POST    | /user/surgery                         | Criar uma cirurgia do usuário              |
+| GET     | /user/surgery                         | Visualizar uma cirurgia do usuário         |
+| PATCH   | /user/surgery/<id>                    | Alterar uma cirurgia do usuário            |
+| DELETE  | /user/surgery/<id>                    | Deletar uma cirurgia do usuário            |
+| POST    | /user/drug                            | Criar uma droga do usuário                 |
+| GET     | /user/drug                            | Visualizar uma droga do usuário            |
+| PATCH   | /user/drug                            | Alterar uma droga do usuário               |
+| DELETE  | /user/drug                            | Deletar uma droga do usuário               |
+| POST    | /user/physical_activity               | Criar uma atividade física do usuário      |
+| GET     | /user/physical_activity               | Visualizar uma atividade física do usuário |
+| PATCH   | /user/physical_activity               | Alterar uma atividade física do usuário    |
+| DELETE  | /user/physical_activity               | Deletar uma atividade física do usuário    |
+| POST    | /user/smoker                          |                                            |
+| DELETE  | /user/smoker                          |                                            |
+| GET     | /user/smoker                          |                                            |
+| PATCH   | /user/smoker                          |                                            |
+| POST    | /user/alcoholic                       |                                            |
+| GET     | /user/alcoholic/<string:alcoholic_id> |                                            |
+| DELETE  | /user/alcoholic/<string:alcoholic_id> |                                            |
+| PATCH   | /user/alcoholic/<string:alcoholic_id> |                                            |
+| POST    | /user/anamnesis                       |                                            |
+| GET     | /user/anamnesis                       |                                            |
+| PATCH   | /user/anamnesis                       |                                            |
+| DELETE  | /user/image-profile                   |                                            |
+| GET     | /user/image-profile                   |                                            |
+| POST    | /user/image-profile                   |                                            |
+| DELETE  | /user                                 |                                            |
+| GET     | /user                                 |                                            |
+| PATCH   | /user                                 |                                            |
+| POST    | /address                              |                                            |
+| DELETE  | /address                              |                                            |
+| GET     | /address                              |                                            |
+| PATCH   | /address                              |                                            |
+| POST    | /allergy                              |                                            |
+| POST    | /appointments                         |
+| DELETE  | /appointments/<string:appointment_id> |                                            |
+| GET     | /appointments/<string:appointment_id> |                                            |
+| PATCH   | /appointments/<string:appointment_id> |                                            |
+| POST    | /doctor                               |                                            |
+| GET     | /doctor                               |                                            |
+| DELETE  | /doctor/<doctor_id>                   |                                            |
+| PATCH   | /doctor/<doctor_id>                   |                                            |
+| POST    | /exams                                |                                            |
+| POST    | /medication                           |                                            |
+| GET     | /pdf/                                 |                                            |
+| POST    | /surgery                              |                                            |
 
 # Rotas Públicas
 
