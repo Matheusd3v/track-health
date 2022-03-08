@@ -28,6 +28,7 @@ def create_allergies():
 
         allergies = AllergyModel.query.all()
 
+
         allergies_name = []
         for allergy in allergies:
             allergies_name.append(allergy.name)
@@ -38,6 +39,11 @@ def create_allergies():
             session.commit()
 
         new_allergy = AllergyModel.query.filter_by(name = data['name']).first()
+
+        my_allergies = session.query(UserAllergyModel).filter_by(user_id = data['user_id']).all()
+        my_allergies_name = [allergy.allergy.name for allergy in my_allergies]
+        if data['name'] in my_allergies_name:
+            return {"error": "allergy already added"}, HTTPStatus.CONFLICT
 
         data['allergy_id'] = new_allergy.id
 

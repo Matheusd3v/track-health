@@ -19,7 +19,7 @@ class UserAllergyModel(db.Model):
     description: str = Column(String(200))
 
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id', ondelete="CASCADE"), nullable = False)
-    allergy_id = Column(UUID(as_uuid=True), ForeignKey('allergies.id'), nullable = False, unique=True)
+    allergy_id = Column(UUID(as_uuid=True), ForeignKey('allergies.id'), nullable = False)
 
     allergy: AllergyModel = relationship("AllergyModel", uselist=False, 
         backref="allergy_name")
