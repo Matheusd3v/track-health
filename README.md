@@ -32,23 +32,23 @@
 |DELETE  |/user/physical_activity||
 |GET     |/user/physical_activity||
 |PATCH   |/user/physical_activity||
-|POST    |/user/smoker||
-|DELETE  |/user/smoker||
-|GET     |/user/smoker||
-|PATCH   |/user/smoker||
-|POST    |/user/alcoholic||
-|GET     |/user/alcoholic/<string:alcoholic_id>||
-|DELETE  |/user/alcoholic/<string:alcoholic_id>||
-|PATCH   |/user/alcoholic/<string:alcoholic_id>||
-|POST    |/user/anamnesis||
-|GET     |/user/anamnesis||
-|PATCH   |/user/anamnesis||
-|DELETE  |/user/image-profile||
-|GET     |/user/image-profile||
-|POST    |/user/image-profile||
-|DELETE  |/user||
-|GET     |/user||
-|PATCH   |/user||
+|POST    |/user/smoker| Cadastra informações do user fumante.|
+|GET     |/user/smoker| Retorna as informações do user fumante. |
+|PATCH   |/user/smoker| Atualiza informações cadastradas do user fumante.|
+|DELETE  |/user/smoker| Deleta informações cadastradas do user fumante.|
+|POST    |/user/alcoholic| Cadastra informações do user alcoólico.|
+|GET     |/user/alcoholic| Retorna informações do user alcoólico.|
+|PATCH   |/user/alcoholic| Atualiza informações do user alcoólico.|
+|DELETE  |/user/alcoholic| Deleta informações do user alcoólico.|
+|POST    |/user/anamnesis| Cria dados de anamnsesis.|
+|GET     |/user/anamnesis| Retorna os dados cadastrados da anamnesis.|
+|PATCH   |/user/anamnesis| Atualiza os dados cadastrados da anamnesis.|
+|POST    |/user/image-profile| Cadastra e imagem de perfil.|
+|GET     |/user/image-profile| Retorna o link da imagem de perfil.|
+|DELETE  |/user/image-profile| Deleta a imagem de perfil.|
+|DELETE  |/user| Deleta o usuário.|
+|GET     |/user| Retorna as informações do usuário.|
+|PATCH   |/user| Atualiza os dados do usuário.|
 |POST     |/address||
 |DELETE   |/address||
 |GET      |/address||
