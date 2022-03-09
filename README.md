@@ -2,7 +2,7 @@
 
 ## Introdução
 
-Esse projeto é um CRUD feito em flask. Seu principal objetivo é ser uma aplicação onde o usuário possa cadastrar seu histório médico de doenças, cirurgias, exames e consultas e fazer upload de arquivos. Ele está hospedado na UrlBase: https://track-health-caps.herokuapp.com/
+Esse projeto é uma API Rest feita em flask. Seu principal objetivo é ser uma aplicação onde o usuário possa cadastrar seu histório médico de doenças, cirurgias, exames e consultas e fazer upload de arquivos. Ela pode ser utilizada na UrlBase: https://track-health-caps.herokuapp.com/
 
 ## Dependências 
 
@@ -84,7 +84,7 @@ Esse projeto é um CRUD feito em flask. Seu principal objetivo é ser uma aplica
 | GET     | [/doctor ](#get---doctor)                              | Ver todos os médicos relacionao ao usuário.       |
 | DELETE  | [/doctor/<doctor_id>](#delete---userdoctorintdoctor_id)                   | Deletar um médico relacionado ao usuário.         |
 | PATCH   | [/doctor/<doctor_id>](#patch---doctorintdoctor_id)                   | Atualizar os dados de um médico.                  |
-| POST    | /exams                               | Criar um exame.                                   |
+| POST    | [/exams](#post---exam)                               | Criar um exame.                                   |
 | POST    | [/medication ](#post---medication)                          | Criar uma medicação.                              |
 | GET     | /pdf                                  | Retorna um PDF com os dados do usuário.           |
 | POST    | [/surgery ](#post---surgery)                             | Criação de uma cirurgia.                          |
@@ -276,6 +276,25 @@ Retorno esperado :
     "upload_img": "www.google.com.br/exame.jpg"
   }
 ]
+```
+
+## POST - exam
+
+Essa rota é para cadastrar somente um nome de exame. Será usada para cadastrar exames comuns. Deverá ser passado o campo name. 
+
+Exemplo de requisição:
+```json
+{
+	"name": "Endoscopia"
+}
+```
+
+Exemplo de retorno:
+```json
+{
+	"id": "0b946d18-c894-4642-9b19-1b1700bb739c",
+	"name": "Endoscopia"
+}
 ```
 
 ## POST - user/exam
