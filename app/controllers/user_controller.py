@@ -26,7 +26,9 @@ def create_user():
         session.add(user)
         session.commit()
 
-        return jsonify(user), HTTPStatus.CREATED
+        user = user.asdict()
+
+        return jsonify(serializing_all_fields(user)), HTTPStatus.CREATED
 
     except IntegrityError as e:
         if isinstance(e.orig, UniqueViolation):
@@ -41,7 +43,7 @@ def create_user():
     
     except DataError as e:
         if isinstance(e.orig, DatetimeFieldOverflow):
-            message = {"Error": "Date must be format: m/d/y"}
+            message = {"Error": "Date must be format: mm/dd/yy"}
             return message, HTTPStatus.BAD_REQUEST
     
 
@@ -56,7 +58,9 @@ def login():
 
         token = create_access_token(user, expires_delta=(timedelta(hours=4)) )
 
-        return jsonify({"user_data": user,"access_token": token }), HTTPStatus.OK
+        user = user.asdict()
+
+        return jsonify({"user_data": serializing_all_fields(user),"access_token": token }), HTTPStatus.OK
     
     except NotFound as e:
         return e.description, e.code

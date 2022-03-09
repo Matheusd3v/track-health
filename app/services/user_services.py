@@ -18,6 +18,14 @@ def verify_values(values: list):
             message = {"Error": "All values must be string."}
             raise BadRequest(description=message)
 
+        value = value.split()
+        value = " ".join(value)
+
+        if not value:
+            message = {"Error": f"Invalid value has been send: {values}"}
+            raise BadRequest(description=message)
+
+
 def verify_user(user):
     if not user:
         message = {"Error": "User not found."}
