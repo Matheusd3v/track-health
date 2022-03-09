@@ -37,57 +37,57 @@ Esse projeto é um CRUD feito em flask. Seu principal objetivo é ser uma aplica
 | POST    | [/user/medication](#post---usermedication)                      | Criar uma medicação do usuário.                   |
 | GET     | [/user/medication](#get---usermedication)                      | Visualizar uma medicação do usuário.              |
 | PATCH   | [/user/medication/<medication_id>](#patch---usermedicationmedication_id)      | Alterar uma medicação do usuário.                 |
-| DELETE  | /user/medication/<medication_id>      | Deletar uma medicação do usuário.                 |
-| POST    | /user/diseases                        | Criar uma doença do usuário.                      |
-| GET     | /user/diseases                        | Visualizar uma doença do usuário.                 |
-| PATCH   | /user/diseases/<disease_id>           | Alterar uma doença do usuário.                    |
-| DELETE  | /user/diseases/<disease_id>           | Deletar uma doença do usuário.                    |
-| POST    | /user/surgery                         | Criar uma cirurgia do usuário.                    |
-| GET     | /user/surgery                         | Visualizar uma cirurgia do usuário.               |
-| PATCH   | /user/surgery/<id>                    | Alterar uma cirurgia do usuário.                  |
-| DELETE  | /user/surgery/<id>                    | Deletar uma cirurgia do usuário.                  |
-| POST    | /user/drug                            | Criar uma droga do usuário.                       |
-| GET     | /user/drug                            | Visualizar uma droga do usuário.                  |
-| PATCH   | /user/drug                            | Alterar uma droga do usuário.                     |
-| DELETE  | /user/drug                            | Deletar uma droga do usuário.                     |
-| POST    | /user/physical_activity               | Criar uma atividade física do usuário.            |
-| GET     | /user/physical_activity               | Visualizar uma atividade física do usuário.       |
-| PATCH   | /user/physical_activity               | Alterar uma atividade física do usuário.          |
-| DELETE  | /user/physical_activity               | Deletar uma atividade física do usuário.          |
-| POST    | /user/smoker                          | Cadastra informações do user fumante.             |
-| GET     | /user/smoker                          | Retorna as informações do user fumante.           |
-| PATCH   | /user/smoker                          | Atualiza informações cadastradas do user fumante. |
-| DELETE  | /user/smoker                          | Deleta informações cadastradas do user fumante.   |
+| DELETE  | [/user/medication/<medication_id>](#delete---usermedicationmedication_id)      | Deletar uma medicação do usuário.                 |
+| POST    | [/user/diseases](#post---userdiseases)                        | Criar uma doença do usuário.                      |
+| GET     | [/user/diseases](#get---userdiseases)                        | Visualizar uma doença do usuário.                 |
+| PATCH   | [/user/diseases/<disease_id>](#patch---userdiseasesintuser_disease_id)           | Alterar uma doença do usuário.                    |
+| DELETE  | [/user/diseases/<disease_id>](#delete---userdiseasesintuser_disease_id)           | Deletar uma doença do usuário.                    |
+| POST    | [/user/surgery](#post---usersurgery)                         | Criar uma cirurgia do usuário.                    |
+| GET     | [/user/surgery](#get---usersurgery)                         | Visualizar uma cirurgia do usuário.               |
+| PATCH   | [/user/surgery/<id>](#patch---usersurgerysurgery_id)                    | Alterar uma cirurgia do usuário.                  |
+| DELETE  | [/user/surgery/<id>](#delete---usersurgerysurgery_id)                    | Deletar uma cirurgia do usuário.                  |
+| POST    | [/user/drug](#post---userdrug)                            | Criar uma droga do usuário.                       |
+| GET     | [/user/drug](#get---userdrug)                            | Visualizar uma droga do usuário.                  |
+| PATCH   | [/user/drug](#patch---userdrug)                            | Alterar uma droga do usuário.                     |
+| DELETE  | [/user/drug](#delete-userdrug)                            | Deletar uma droga do usuário.                     |
+| POST    | [/user/physical_activity](#post---userphysical_activity)               | Criar uma atividade física do usuário.            |
+| GET     | [/user/physical_activity](#get---userphysical_activity)               | Visualizar uma atividade física do usuário.       |
+| PATCH   | [/user/physical_activity](#patch---userphysical_activity)               | Alterar uma atividade física do usuário.          |
+| DELETE  | [/user/physical_activity](#delete---userphysical_activity)               | Deletar uma atividade física do usuário.          |
+| POST    | [/user/smoker](#post---usersmoker)                          | Cadastra informações do user fumante.             |
+| GET     | [/user/smoker](#get---usersmoker)                          | Retorna as informações do user fumante.           |
+| PATCH   | [/user/smoker](#patch---usersmoker)                          | Atualiza informações cadastradas do user fumante. |
+| DELETE  | [/user/smoker](#delete---usersmoker)                          | Deleta informações cadastradas do user fumante.   |
 | POST    | /user/alcoholic                       | Cadastra informações do user alcoólico.           |
 | GET     | /user/alcoholic                       | Retorna informações do user alcoólico.            |
 | PATCH   | /user/alcoholic                       | Atualiza informações do user alcoólico.           |
 | DELETE  | /user/alcoholic                       | Deleta informações do user alcoólico.             |
-| POST    | /user/anamnesis                       | Cria dados de anamnsesis.                         |
-| GET     | /user/anamnesis                       | Retorna os dados cadastrados da anamnesis.        |
-| PATCH   | /user/anamnesis                       | Atualiza os dados cadastrados da anamnesis.       |
-| POST    | /user/image-profile                   | Cadastra e imagem de perfil.                      |
-| GET     | /user/image-profile                   | Retorna o link da imagem de perfil.               |
-| DELETE  | /user/image-profile                   | Deleta a imagem de perfil.                        |
-| DELETE  | /user                                 | Deleta o usuário.                                 |
-| GET     | /user                                 | Retorna as informações do usuário.                |
-| PATCH   | /user                                 | Atualiza os dados do usuário.                     |
-| POST    | /address                              | Criação de um endereço médico.                    |
-| DELETE  | /address                              | Deletar um endereço médico.                       |
-| GET     | /address                              | Pegar todos os endereços médicos                  |
-| PATCH   | /address                              | Alterar um endereço médico.                       |
-| POST    | /allergy                              | Criação de uma alergia.                           |
-| POST    | /appointments                         | Criação de um agendamento.                        |
+| POST    | [/user/anamnesis](#post---useranamnesis)                       | Cria dados de anamnsesis.                         |
+| GET     | [/user/anamnesis](#get---useranamnesis)                       | Retorna os dados cadastrados da anamnesis.        |
+| PATCH   | [/user/anamnesis](#patch---useranamnesis)                       | Atualiza os dados cadastrados da anamnesis.       |
+| POST    | [/user/image-profile](#post-userimage-profile)                   | Cadastra e imagem de perfil.                      |
+| GET     | [/user/image-profile](#get-userimage-profile)                   | Retorna o link da imagem de perfil.               |
+| DELETE  | [/user/image-profile](#delete---userimage-profile)                   | Deleta a imagem de perfil.                        |
+| DELETE  | [/user ](#delete---user)                                | Deleta o usuário.                                 |
+| GET     | [/user ](#get---user)                                | Retorna as informações do usuário.                |
+| PATCH   | [/user ](#patch---user)                                | Atualiza os dados do usuário.                     |
+| POST    | [/address ](#post---address)                             | Criação de um endereço médico.                    |
+| DELETE  | [/address ](#delete---address)                             | Deletar um endereço médico.                       |
+| GET     | [/address ]()                             | Pegar todos os endereços médicos                  |
+| PATCH   | [/address ](#patch---address)                             | Alterar um endereço médico.                       |
+| POST    | [/allergy ](#post---allergy)                             | Criação de uma alergia.                           |
+| POST    | /appointments                        | Criação de um agendamento.                        |
 | GET     | /appointments/<string:appointment_id> | Vizualação dos agendamentos.                      |
 | PATCH   | /appointments/<string:appointment_id> | Atualização de um agendamento.                    |
 | DELETE  | /appointments/<string:appointment_id> | Deletar um agendamento.                           |
-| POST    | /doctor                               | Criação de um médico relacionado ao usuário.      |
-| GET     | /doctor                               | Ver todos os médicos relacionao ao usuário.       |
-| DELETE  | /doctor/<doctor_id>                   | Deletar um médico relacionado ao usuário.         |
-| PATCH   | /doctor/<doctor_id>                   | Atualizar os dados de um médico.                  |
-| POST    | /exams                                | Criar um exame.                                   |
-| POST    | /medication                           | Criar uma medicação.                              |
+| POST    | [/doctor ](#post---doctor)                              | Criação de um médico relacionado ao usuário.      |
+| GET     | [/doctor ](#get---doctor)                              | Ver todos os médicos relacionao ao usuário.       |
+| DELETE  | [/doctor/<doctor_id>](#delete---userdoctorintdoctor_id)                   | Deletar um médico relacionado ao usuário.         |
+| PATCH   | [/doctor/<doctor_id>](#patch---doctorintdoctor_id)                   | Atualizar os dados de um médico.                  |
+| POST    | /exams                               | Criar um exame.                                   |
+| POST    | [/medication ](#post---medication)                          | Criar uma medicação.                              |
 | GET     | /pdf                                  | Retorna um PDF com os dados do usuário.           |
-| POST    | /surgery                              | Criação de uma cirurgia.                          |
+| POST    | [/surgery ](#post---surgery)                             | Criação de uma cirurgia.                          |
 
 # Rotas Públicas
 
