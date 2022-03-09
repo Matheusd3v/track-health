@@ -1,20 +1,42 @@
+# Notas da Aplicação
+
+## Introdução
+
+Esse projeto é um CRUD feito em flask. Seu principal objetivo é ser uma aplicação onde o usuário possa cadastrar seu histório médico de doenças, cirurgias, exames e consultas e fazer upload de arquivos. Ele está hospedado na UrlBase: https://track-health-caps.herokuapp.com/
+
+## Dependências 
+
+* [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
+* [Flask](https://flask.palletsprojects.com/en/2.0.x/)
+* [Flask Cors](https://flask-cors.readthedocs.io/en/latest/)
+* [Flask JWT Extended](https://flask-jwt-extended.readthedocs.io/en/stable/)
+* [Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/)
+* [Gunicorn](https://gunicorn.org/)
+* [Pdfkit](https://pdfkit.org/)
+* [Psycopg binary](https://pypi.org/project/psycopg2-binary/)
+* [Python dotenv](https://pypi.org/project/python-dotenv/#getting-started)
+* [Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/)
+
+
+## Rotas e Endpoints
+
 | Methods | Endpoint                              | Responsability                                    |
 | ------- | ------------------------------------- | ------------------------------------------------- |
-| POST    | /user/register                        | Cadastro de usuário.                              |
-| POST    | /user/login                           | Realizar login.                                   |
-| POST    | /user/exam                            | Cadastrar um novo exame para o usuário.           |
-| GET     | /user/exam                            | Visualizar os exames cadastrados pelo usuário.    |
-| PATCH   | /user/exam/<exam_id>                  | Atualiza informações de exames do usuário.        |
-| DELETE  | /user/exam/<exam_id>                  | Deleta um exame do usuário.                       |
-| POST    | /user/exam/file/<exam_id>             | Adiciona um arquivo pdf/jpg a um exame.           |
-| DELETE  | /user/exam/file/<exam_id>             | Deleta um arquivo de um exame.                    |
-| POST    | /user/allergy                         | Cadastra uma nova alergia para o usuário.         |
-| GET     | /user/allergy                         | Visualiza alergias cadastradas pelo usuário.      |
-| PATCH   | /user/allergy/<allergy_id>            | Atualiza informações de alergias do usuario.      |
-| DELETE  | /user/allergy/<allergy_id>            | Deleta uma alergia do usuário.                    |
-| POST    | /user/medication                      | Criar uma medicação do usuário.                   |
-| GET     | /user/medication                      | Visualizar uma medicação do usuário.              |
-| PATCH   | /user/medication/<medication_id>      | Alterar uma medicação do usuário.                 |
+| POST    | [/user/register](#post---userregister)                        | Cadastro de usuário.                              |
+| POST    | [/user/login](#post---userlogin)                           | Realizar login.                                   |
+| POST    | [/user/exam](#post---userexam)                            | Cadastrar um novo exame para o usuário.           |
+| GET     | [/user/exam](#get---userexam)                            | Visualizar os exames cadastrados pelo usuário.    |
+| PATCH   | [/user/exam/<exam_id>](#patch---userexamintexam_id)                  | Atualiza informações de exames do usuário.        |
+| DELETE  | [/user/exam/<exam_id>](#delete---userexamintexam_id)                  | Deleta um exame do usuário.                       |
+| POST    | [/user/exam/file/<exam_id>](#post---userexamfileexam_id)             | Adiciona um arquivo pdf/jpg a um exame.           |
+| DELETE  | [/user/exam/file/<exam_id>](#delete---userexamfileexam_id)             | Deleta um arquivo de um exame.                    |
+| POST    | [/user/allergy](#post---userallergy)                         | Cadastra uma nova alergia para o usuário.         |
+| GET     | [/user/allergy](#get---userallergy)                         | Visualiza alergias cadastradas pelo usuário.      |
+| PATCH   | [/user/allergy/<allergy_id>](#patch---userallergyintallergy_id)            | Atualiza informações de alergias do usuario.      |
+| DELETE  | [/user/allergy/<allergy_id>](#delete---userallergyintallergy_id)            | Deleta uma alergia do usuário.                    |
+| POST    | [/user/medication](#post---usermedication)                      | Criar uma medicação do usuário.                   |
+| GET     | [/user/medication](#get---usermedication)                      | Visualizar uma medicação do usuário.              |
+| PATCH   | [/user/medication/<medication_id>](#patch---usermedicationmedication_id)      | Alterar uma medicação do usuário.                 |
 | DELETE  | /user/medication/<medication_id>      | Deletar uma medicação do usuário.                 |
 | POST    | /user/diseases                        | Criar uma doença do usuário.                      |
 | GET     | /user/diseases                        | Visualizar uma doença do usuário.                 |
@@ -82,9 +104,7 @@ Exemplo de requisição:
   "name": "malaquias brandão",
   "email": "malaquias@email.com",
   "birth_date": "25/12/25",
-  "password": "1234",
-  "gender": "hetero",
-  "sex": " masculino"
+  "password": "1234"
 }
 ```
 
@@ -96,15 +116,15 @@ Exemplo de resposta, caso esta tudo correto o status retornado será 201 - CREAT
   "name": "Malaquias Brandão",
   "email": "malaquias@email.com",
   "birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
-  "gender": "Hetero",
-  "sex": "Masculino",
+  "gender": null,
+  "sex": null,
   "allergy": [],
   "medications": [],
   "surgerys": [],
-  "alcohol": null,
-  "user_drug": null,
-  "smoker": null,
-  "physical_activity": null,
+  "alcohol": {},
+  "user_drug": {},
+  "smoker": {},
+  "physical_activity": {},
   "anamnesis": [],
   "diseases": [],
   "exams": [],
@@ -134,15 +154,15 @@ Exemplo de resposta, caso esteja tudo correto será retornado status 200 - OK:
     "name": "Malaquias Brandão",
     "email": "malaquias@email.com",
     "birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
-    "gender": "Hetero",
-    "sex": "Masculino",
+    "gender": null,
+    "sex": null,
     "allergy": [],
     "medications": [],
     "surgerys": [],
-    "alcohol": null,
-    "user_drug": null,
-    "smoker": null,
-    "physical_activity": null,
+    "alcohol": {},
+    "user_drug": {},
+    "smoker": {},
+    "physical_activity": {},
     "anamnesis": [],
     "diseases": [],
     "exams": [],
@@ -170,15 +190,15 @@ Exemplo de resposta:
   "name": "Malaquias Brandão",
   "email": "malaquias@email.com",
   "birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
-  "gender": "Hetero",
-  "sex": "Masculino",
+  "gender": null,
+  "sex": null,
   "allergy": [],
   "medications": [],
   "surgerys": [],
-  "alcohol": null,
-  "user_drug": null,
-  "smoker": null,
-  "physical_activity": null,
+  "alcohol": {},
+  "user_drug": {},
+  "smoker": {},
+  "physical_activity": {},
   "anamnesis": [],
   "diseases": [],
   "exams": [],
@@ -207,15 +227,15 @@ Exemplo de resposta, retornando status 200 - OK se estiver tudo correto:
   "name": "Matheus Gomes",
   "email": "malaquias@email.com",
   "birth_date": "Thu, 25 Dec 2025 00:00:00 GMT",
-  "gender": "Hetero",
-  "sex": "Masculino",
+  "gender": null,
+  "sex": null,
   "allergy": [],
   "medications": [],
   "surgerys": [],
-  "alcohol": null,
-  "user_drug": null,
-  "smoker": null,
-  "physical_activity": null,
+  "alcohol": {},
+  "user_drug": {},
+  "smoker": {},
+  "physical_activity": {},
   "anamnesis": [],
   "diseases": [],
   "exams": [],
@@ -1049,7 +1069,6 @@ Retorno esperado :
   "id": "f3498206-47cd-4eca-acf7-03617dd31670",
   "description": "Alergia grave a pelo de cachorro",
   "name": "Cachorro"
-  }
 }
 ```
 
