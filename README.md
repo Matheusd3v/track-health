@@ -888,6 +888,33 @@ Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
   "complement": "Do lado do posto de gasolina"
 }
 ```
+## GET - address
+
+Essa rota é para verificação dos endereços cadastrados. É necessário enviar somente o token.
+
+Exemplo de reposta be sucedida status 200 - OK:
+
+```json
+[
+	{
+		"id": "23e1038d-f52b-4acc-bba1-3df7daa20351",
+		"street": "Rua Do Conhecimento",
+		"number": 20,
+		"district": "Sp",
+		"city": "Praia Grande",
+		"complement": "Dlçadçlaslçd"
+	},
+	{
+		"id": "7cecb2f5-abb3-40f8-b784-4a95f0672e87",
+		"street": "Rua Blah",
+		"number": 25,
+		"district": "Madureira",
+		"city": "Rio De Janeiro",
+		"complement": "Do lado do posto de gasolina"
+	}
+]
+```
+
 
 ## PATCH - address
 
