@@ -42,24 +42,10 @@ def create_controller():
 
 
 @jwt_required()
-def get_appointment(appointment_id):
+def get_appointment():
     user = get_jwt_identity()
 
-    if not appointment_id:
-        return{"error": "url must have the appointment_id"},HTTPStatus.BAD_REQUEST
-
-    try:
-        appointment = AppointmentModel.query.filter_by(id = appointment_id).first()
-
-    except DataError:
-        return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
-
-
-    if not appointment:
-        return {"error":"Appointment not found"}, HTTPStatus.NOT_FOUND
-
-    if not check_appointment_id(appointment, user):
-        return {"error":"This appointment is not from your user"}, HTTPStatus.NOT_FOUND
+    appointment = AppointmentModel.query.filter_by(user_id = user['id']).all()
 
     return jsonify(appointment)
 
