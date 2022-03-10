@@ -17,7 +17,7 @@ class AppointmentModel(db.Model):
     description: str = Column(String(200))
 
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable = False)
-    doctor_id = Column(UUID(as_uuid=True), ForeignKey('doctors.id'), nullable=False)
+    doctor_id = Column(UUID(as_uuid=True), ForeignKey('doctors.id', ondelete="CASCADE"), nullable=False)
 
     doctor: DoctorModel = relationship("DoctorModel", uselist=False, 
         backref="appointment")
