@@ -4,92 +4,93 @@
 
 Esse projeto é uma API Rest feita em flask. Seu principal objetivo é ser uma aplicação onde o usuário possa cadastrar seu histório médico de doenças, cirurgias, exames e consultas e fazer upload de arquivos. Ela pode ser utilizada na UrlBase: https://track-health-caps.herokuapp.com/
 
-## Dependências 
+## Dependências
 
-* [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
-* [Flask](https://flask.palletsprojects.com/en/2.0.x/)
-* [Flask Cors](https://flask-cors.readthedocs.io/en/latest/)
-* [Flask JWT Extended](https://flask-jwt-extended.readthedocs.io/en/stable/)
-* [Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/)
-* [Gunicorn](https://gunicorn.org/)
-* [Pdfkit](https://pdfkit.org/)
-* [Psycopg binary](https://pypi.org/project/psycopg2-binary/)
-* [Python dotenv](https://pypi.org/project/python-dotenv/#getting-started)
-* [Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/)
-
+- [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
+- [Flask](https://flask.palletsprojects.com/en/2.0.x/)
+- [Flask Cors](https://flask-cors.readthedocs.io/en/latest/)
+- [Flask JWT Extended](https://flask-jwt-extended.readthedocs.io/en/stable/)
+- [Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/)
+- [Gunicorn](https://gunicorn.org/)
+- [Pdfkit](https://pdfkit.org/)
+- [Psycopg binary](https://pypi.org/project/psycopg2-binary/)
+- [Python dotenv](https://pypi.org/project/python-dotenv/#getting-started)
+- [Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/)
 
 ## Rotas e Endpoints
 
-| Methods | Endpoint                              | Responsability                                    |
-| ------- | ------------------------------------- | ------------------------------------------------- |
-| POST    | [/user/register](#post---userregister)                        | Cadastro de usuário.                              |
-| POST    | [/user/login](#post---userlogin)                           | Realizar login.                                   |
-| POST    | [/user/exam](#post---userexam)                            | Cadastrar um novo exame para o usuário.           |
-| GET     | [/user/exam](#get---userexam)                            | Visualizar os exames cadastrados pelo usuário.    |
-| PATCH   | [/user/exam/<exam_id>](#patch---userexamintexam_id)                  | Atualiza informações de exames do usuário.        |
-| DELETE  | [/user/exam/<exam_id>](#delete---userexamintexam_id)                  | Deleta um exame do usuário.                       |
-| POST    | [/user/exam/file/<exam_id>](#post---userexamfileexam_id)             | Adiciona um arquivo pdf/jpg a um exame.           |
-| DELETE  | [/user/exam/file/<exam_id>](#delete---userexamfileexam_id)             | Deleta um arquivo de um exame.                    |
-| POST    | [/user/allergy](#post---userallergy)                         | Cadastra uma nova alergia para o usuário.         |
-| GET     | [/user/allergy](#get---userallergy)                         | Visualiza alergias cadastradas pelo usuário.      |
-| PATCH   | [/user/allergy/<allergy_id>](#patch---userallergyintallergy_id)            | Atualiza informações de alergias do usuario.      |
-| DELETE  | [/user/allergy/<allergy_id>](#delete---userallergyintallergy_id)            | Deleta uma alergia do usuário.                    |
-| POST    | [/user/medication](#post---usermedication)                      | Criar uma medicação do usuário.                   |
-| GET     | [/user/medication](#get---usermedication)                      | Visualizar uma medicação do usuário.              |
-| PATCH   | [/user/medication/<medication_id>](#patch---usermedicationmedication_id)      | Alterar uma medicação do usuário.                 |
-| DELETE  | [/user/medication/<medication_id>](#delete---usermedicationmedication_id)      | Deletar uma medicação do usuário.                 |
-| POST    | [/user/diseases](#post---userdiseases)                        | Criar uma doença do usuário.                      |
-| GET     | [/user/diseases](#get---userdiseases)                        | Visualizar uma doença do usuário.                 |
-| PATCH   | [/user/diseases/<disease_id>](#patch---userdiseasesintuser_disease_id)           | Alterar uma doença do usuário.                    |
-| DELETE  | [/user/diseases/<disease_id>](#delete---userdiseasesintuser_disease_id)           | Deletar uma doença do usuário.                    |
-| POST    | [/user/surgery](#post---usersurgery)                         | Criar uma cirurgia do usuário.                    |
-| GET     | [/user/surgery](#get---usersurgery)                         | Visualizar uma cirurgia do usuário.               |
-| PATCH   | [/user/surgery/<id>](#patch---usersurgerysurgery_id)                    | Alterar uma cirurgia do usuário.                  |
-| DELETE  | [/user/surgery/<id>](#delete---usersurgerysurgery_id)                    | Deletar uma cirurgia do usuário.                  |
-| POST    | [/user/drug](#post---userdrug)                            | Criar uma droga do usuário.                       |
-| GET     | [/user/drug](#get---userdrug)                            | Visualizar uma droga do usuário.                  |
-| PATCH   | [/user/drug](#patch---userdrug)                            | Alterar uma droga do usuário.                     |
-| DELETE  | [/user/drug](#delete-userdrug)                            | Deletar uma droga do usuário.                     |
-| POST    | [/user/physical_activity](#post---userphysical_activity)               | Criar uma atividade física do usuário.            |
-| GET     | [/user/physical_activity](#get---userphysical_activity)               | Visualizar uma atividade física do usuário.       |
-| PATCH   | [/user/physical_activity](#patch---userphysical_activity)               | Alterar uma atividade física do usuário.          |
-| DELETE  | [/user/physical_activity](#delete---userphysical_activity)               | Deletar uma atividade física do usuário.          |
-| POST    | [/user/smoker](#post---usersmoker)                          | Cadastra informações do user fumante.             |
-| GET     | [/user/smoker](#get---usersmoker)                          | Retorna as informações do user fumante.           |
-| PATCH   | [/user/smoker](#patch---usersmoker)                          | Atualiza informações cadastradas do user fumante. |
-| DELETE  | [/user/smoker](#delete---usersmoker)                          | Deleta informações cadastradas do user fumante.   |
-| POST    | /user/alcoholic                       | Cadastra informações do user alcoólico.           |
-| GET     | /user/alcoholic                       | Retorna informações do user alcoólico.            |
-| PATCH   | /user/alcoholic                       | Atualiza informações do user alcoólico.           |
-| DELETE  | /user/alcoholic                       | Deleta informações do user alcoólico.             |
-| POST    | [/user/anamnesis](#post---useranamnesis)                       | Cria dados de anamnsesis.                         |
-| GET     | [/user/anamnesis](#get---useranamnesis)                       | Retorna os dados cadastrados da anamnesis.        |
-| PATCH   | [/user/anamnesis](#patch---useranamnesis)                       | Atualiza os dados cadastrados da anamnesis.       |
-| POST    | [/user/image-profile](#post-userimage-profile)                   | Cadastra e imagem de perfil.                      |
-| GET     | [/user/image-profile](#get-userimage-profile)                   | Retorna o link da imagem de perfil.               |
-| DELETE  | [/user/image-profile](#delete---userimage-profile)                   | Deleta a imagem de perfil.                        |
-| DELETE  | [/user ](#delete---user)                                | Deleta o usuário.                                 |
-| GET     | [/user ](#get---user)                                | Retorna as informações do usuário.                |
-| PATCH   | [/user ](#patch---user)                                | Atualiza os dados do usuário.                     |
-| POST    | [/address ](#post---address)                             | Criação de um endereço médico.                    |
-| DELETE  | [/address ](#delete---address)                             | Deletar um endereço médico.                       |
-| GET     | [/address ]()                             | Pegar todos os endereços médicos                  |
-| PATCH   | [/address ](#patch---address)                             | Alterar um endereço médico.                       |
-| POST    | [/allergy ](#post---allergy)                             | Criação de uma alergia.                           |
-| POST    | /appointments                        | Criação de um agendamento.                        |
-| GET     | /appointments/<string:appointment_id> | Vizualação dos agendamentos.                      |
-| PATCH   | /appointments/<string:appointment_id> | Atualização de um agendamento.                    |
-| DELETE  | /appointments/<string:appointment_id> | Deletar um agendamento.                           |
-| POST    | [/doctor ](#post---doctor)                              | Criação de um médico relacionado ao usuário.      |
-| GET     | [/doctor ](#get---doctor)                              | Ver todos os médicos relacionao ao usuário.       |
+| Methods | Endpoint                                                                  | Responsability                                    |
+| ------- | ------------------------------------------------------------------------- | ------------------------------------------------- |
+| POST    | [/user/register](#post---userregister)                                    | Cadastro de usuário.                              |
+| POST    | [/user/login](#post---userlogin)                                          | Realizar login.                                   |
+| POST    | [/user/exam](#post---userexam)                                            | Cadastrar um novo exame para o usuário.           |
+| GET     | [/user/exam](#get---userexam)                                             | Visualizar os exames cadastrados pelo usuário.    |
+| PATCH   | [/user/exam/<exam_id>](#patch---userexamintexam_id)                       | Atualiza informações de exames do usuário.        |
+| DELETE  | [/user/exam/<exam_id>](#delete---userexamintexam_id)                      | Deleta um exame do usuário.                       |
+| POST    | [/user/exam/file/<exam_id>](#post---userexamfileexam_id)                  | Adiciona um arquivo pdf/jpg a um exame.           |
+| DELETE  | [/user/exam/file/<exam_id>](#delete---userexamfileexam_id)                | Deleta um arquivo de um exame.                    |
+| POST    | [/user/allergy](#post---userallergy)                                      | Cadastra uma nova alergia para o usuário.         |
+| GET     | [/user/allergy](#get---userallergy)                                       | Visualiza alergias cadastradas pelo usuário.      |
+| PATCH   | [/user/allergy/<allergy_id>](#patch---userallergyintallergy_id)           | Atualiza informações de alergias do usuario.      |
+| DELETE  | [/user/allergy/<allergy_id>](#delete---userallergyintallergy_id)          | Deleta uma alergia do usuário.                    |
+| POST    | [/user/medication](#post---usermedication)                                | Criar uma medicação do usuário.                   |
+| GET     | [/user/medication](#get---usermedication)                                 | Visualizar uma medicação do usuário.              |
+| PATCH   | [/user/medication/<medication_id>](#patch---usermedicationmedication_id)  | Alterar uma medicação do usuário.                 |
+| DELETE  | [/user/medication/<medication_id>](#delete---usermedicationmedication_id) | Deletar uma medicação do usuário.                 |
+| POST    | [/user/diseases](#post---userdiseases)                                    | Criar uma doença do usuário.                      |
+| GET     | [/user/diseases](#get---userdiseases)                                     | Visualizar uma doença do usuário.                 |
+| PATCH   | [/user/diseases/<disease_id>](#patch---userdiseasesintuser_disease_id)    | Alterar uma doença do usuário.                    |
+| DELETE  | [/user/diseases/<disease_id>](#delete---userdiseasesintuser_disease_id)   | Deletar uma doença do usuário.                    |
+| POST    | [/user/surgery](#post---usersurgery)                                      | Criar uma cirurgia do usuário.                    |
+| GET     | [/user/surgery](#get---usersurgery)                                       | Visualizar uma cirurgia do usuário.               |
+| PATCH   | [/user/surgery/<id>](#patch---usersurgerysurgery_id)                      | Alterar uma cirurgia do usuário.                  |
+| DELETE  | [/user/surgery/<id>](#delete---usersurgerysurgery_id)                     | Deletar uma cirurgia do usuário.                  |
+| POST    | [/user/drug](#post---userdrug)                                            | Criar uma droga do usuário.                       |
+| GET     | [/user/drug](#get---userdrug)                                             | Visualizar uma droga do usuário.                  |
+| PATCH   | [/user/drug](#patch---userdrug)                                           | Alterar uma droga do usuário.                     |
+| DELETE  | [/user/drug](#delete-userdrug)                                            | Deletar uma droga do usuário.                     |
+| POST    | [/user/physical_activity](#post---userphysical_activity)                  | Criar uma atividade física do usuário.            |
+| GET     | [/user/physical_activity](#get---userphysical_activity)                   | Visualizar uma atividade física do usuário.       |
+| PATCH   | [/user/physical_activity](#patch---userphysical_activity)                 | Alterar uma atividade física do usuário.          |
+| DELETE  | [/user/physical_activity](#delete---userphysical_activity)                | Deletar uma atividade física do usuário.          |
+| POST    | [/user/smoker](#post---usersmoker)                                        | Cadastra informações do user fumante.             |
+| GET     | [/user/smoker](#get---usersmoker)                                         | Retorna as informações do user fumante.           |
+| PATCH   | [/user/smoker](#patch---usersmoker)                                       | Atualiza informações cadastradas do user fumante. |
+| DELETE  | [/user/smoker](#delete---usersmoker)                                      | Deleta informações cadastradas do user fumante.   |
+| POST    | /user/alcoholic                                                           | Cadastra informações do user alcoólico.           |
+| GET     | /user/alcoholic                                                           | Retorna informações do user alcoólico.            |
+| PATCH   | /user/alcoholic                                                           | Atualiza informações do user alcoólico.           |
+| DELETE  | /user/alcoholic                                                           | Deleta informações do user alcoólico.             |
+| POST    | [/user/anamnesis](#post---useranamnesis)                                  | Cria dados de anamnsesis.                         |
+| GET     | [/user/anamnesis](#get---useranamnesis)                                   | Retorna os dados cadastrados da anamnesis.        |
+| PATCH   | [/user/anamnesis](#patch---useranamnesis)                                 | Atualiza os dados cadastrados da anamnesis.       |
+| POST    | [/user/image-profile](#post-userimage-profile)                            | Cadastra e imagem de perfil.                      |
+| GET     | [/user/image-profile](#get-userimage-profile)                             | Retorna o link da imagem de perfil.               |
+| DELETE  | [/user/image-profile](#delete---userimage-profile)                        | Deleta a imagem de perfil.                        |
+| DELETE  | [/user ](#delete---user)                                                  | Deleta o usuário.                                 |
+| GET     | [/user ](#get---user)                                                     | Retorna as informações do usuário.                |
+| PATCH   | [/user ](#patch---user)                                                   | Atualiza os dados do usuário.                     |
+| POST    | [/address ](#post---address)                                              | Criação de um endereço médico.                    |
+| DELETE  | [/address ](#delete---address)                                            | Deletar um endereço médico.                       |
+| GET     | [/address ]()                                                             | Pegar todos os endereços médicos                  |
+| PATCH   | [/address ](#patch---address)                                             | Alterar um endereço médico.                       |
+| POST    | [/allergy ](#post---allergy)                                              | Criação de uma alergia.                           |
+| POST    | /appointments                                                             | Criação de um agendamento.                        |
+| GET     | /appointments                                                             | Vizualação dos agendamentos.                      |
+| PATCH   | /appointments/<string:appointment_id>                                     | Atualização de um agendamento.                    |
+| DELETE  | /appointments/<string:appointment_id>                                     | Deletar um agendamento.                           |
+| POST    | [/doctor ](#post---doctor)                                                | Criação de um médico relacionado ao usuário.      |
+| GET     | [/doctor ](#get---doctor)                                                 | Ver todos os médicos relacionao ao usuário.       |
 | DELETE  | [/doctor/<doctor_id>](#delete---userdoctorintdoctor_id)                   | Deletar um médico relacionado ao usuário.         |
-| PATCH   | [/doctor/<doctor_id>](#patch---doctorintdoctor_id)                   | Atualizar os dados de um médico.                  |
-| POST    | [/exams](#post---exam)                               | Criar um exame.                                   |
-| POST    | [/medication ](#post---medication)                          | Criar uma medicação.                              |
-| GET     | /pdf                                  | Retorna um PDF com os dados do usuário.           |
-| POST    | [/surgery ](#post---surgery)                             | Criação de uma cirurgia.                          |
+| PATCH   | [/doctor/<doctor_id>](#patch---doctorintdoctor_id)                        | Atualizar os dados de um médico.                  |
+| POST    | [/exams](#post---exam)                                                    | Criar um exame.                                   |
+| POST    | [/medication ](#post---medication)                                        | Criar uma medicação.                              |
+| GET     | /pdf                                                                      | Retorna um PDF com os dados do usuário.           |
+| POST    | [/surgery ](#post---surgery)                                              | Criação de uma cirurgia.                          |
 
 # Rotas Públicas
+
+#
 
 # User
 
@@ -176,6 +177,8 @@ Exemplo de resposta, caso esteja tudo correto será retornado status 200 - OK:
 
 Para acessar essas rotas é necessário o envio do jwt por bearer token.
 
+#
+
 # User
 
 ## GET - user
@@ -247,6 +250,8 @@ Exemplo de resposta, retornando status 200 - OK se estiver tudo correto:
 
 Essa rota é para deletar um usuário. Não necessita de corpo de requisição, somente o bearer token. Não é retornado corpo, somente status 204 caso tudo ocorra bem.
 
+#
+
 # Exams
 
 ## GET - user/exam
@@ -280,20 +285,22 @@ Retorno esperado :
 
 ## POST - exam
 
-Essa rota é para cadastrar somente um nome de exame. Será usada para cadastrar exames comuns. Deverá ser passado o campo name. 
+Essa rota é para cadastrar somente um nome de exame. Será usada para cadastrar exames comuns. Deverá ser passado o campo name.
 
 Exemplo de requisição:
+
 ```json
 {
-	"name": "Endoscopia"
+  "name": "Endoscopia"
 }
 ```
 
 Exemplo de retorno:
+
 ```json
 {
-	"id": "0b946d18-c894-4642-9b19-1b1700bb739c",
-	"name": "Endoscopia"
+  "id": "0b946d18-c894-4642-9b19-1b1700bb739c",
+  "name": "Endoscopia"
 }
 ```
 
@@ -346,6 +353,8 @@ Authorization: ` Bearer Token`
 Esta rota é para apagar um exame do usuário. Para realizar a deleção é somente necessário passar o exam_id por query params.
 
 Authorization: ` Bearer Token`
+
+#
 
 # DISEASE
 
@@ -433,6 +442,8 @@ Retorno esperado :
 
 Esta rota é para apagar um doença do usuário. Para realizar a deleção é somente necessário passar o user_disease_id por query params.
 
+#
+
 # DOCTOR
 
 ## GET - /doctor
@@ -519,6 +530,8 @@ Retorno esperado :
 Esta rota é para apagar um médico do usuário. Para realizar a deleção é somente necessário passar o doctor_id por query params.
 
 Authorization: ` Bearer Token`
+
+#
 
 # Surgerys
 
@@ -678,6 +691,8 @@ Authorization: ` Bearer Token`
 
 Não é necessário nenhum corpo apenas a o token. Caso tudo dê certo irá retornar um dicionário com todos os medicamentos do usuários e um status code 200.
 
+#
+
 # Drug
 
 ## POST - user/drug
@@ -743,6 +758,8 @@ Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
 
 Essa rota é para deletar as informações. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 se estiver tudo correto.
 
+#
+
 # User Smoker
 
 ## POST - user/smoker
@@ -807,6 +824,8 @@ Exemplo de resposta, status 200 - OK:
 ## DELETE - user/smoker
 
 Essa rota é para deletar as informações cadastradas na tabela smoker. Não é necessário enviar corpo de requisição, somente o token. Não será retornado corpo, somente status 204 - CONTENT
+
+#
 
 # User Physical Activity
 
@@ -874,6 +893,8 @@ Exemplo de resposta:
 
 Essa rota é para deletar as informações cadastradas sobre atividade física. Não é necessário enviar corpo de requisição, somente o token. Será caso tudo ocorra bem, será retornado status 204 - NO CONTENT
 
+#
+
 # Address
 
 ## POST - address
@@ -907,6 +928,7 @@ Exemplo de resposta, com status 200 - OK caso esteja tudo correto:
   "complement": "Do lado do posto de gasolina"
 }
 ```
+
 ## GET - address
 
 Essa rota é para verificação dos endereços cadastrados. É necessário enviar somente o token.
@@ -915,25 +937,24 @@ Exemplo de reposta be sucedida status 200 - OK:
 
 ```json
 [
-	{
-		"id": "23e1038d-f52b-4acc-bba1-3df7daa20351",
-		"street": "Rua Do Conhecimento",
-		"number": 20,
-		"district": "Sp",
-		"city": "Praia Grande",
-		"complement": "Dlçadçlaslçd"
-	},
-	{
-		"id": "7cecb2f5-abb3-40f8-b784-4a95f0672e87",
-		"street": "Rua Blah",
-		"number": 25,
-		"district": "Madureira",
-		"city": "Rio De Janeiro",
-		"complement": "Do lado do posto de gasolina"
-	}
+  {
+    "id": "23e1038d-f52b-4acc-bba1-3df7daa20351",
+    "street": "Rua Do Conhecimento",
+    "number": 20,
+    "district": "Sp",
+    "city": "Praia Grande",
+    "complement": "Dlçadçlaslçd"
+  },
+  {
+    "id": "7cecb2f5-abb3-40f8-b784-4a95f0672e87",
+    "street": "Rua Blah",
+    "number": 25,
+    "district": "Madureira",
+    "city": "Rio De Janeiro",
+    "complement": "Do lado do posto de gasolina"
+  }
 ]
 ```
-
 
 ## PATCH - address
 
@@ -982,6 +1003,8 @@ Authorization: ` Bearer Token`
 ```
 
 Exemplo de resposta, com status 204 - OK caso esteja tudo correto.
+
+#
 
 # Profile image
 
@@ -1036,6 +1059,8 @@ Exemplo de resposta, retornando status 201 - CREATED caso tudo ocorra bem:
 ## DELETE - user/exam/file/<exam_id>
 
 Essa rota é para deletar o documento. É necessário passar somente o id do exame que contém o documento no final da rota e o token. Será retornado status 204 - NO CONTENT caso tudo ocorra bem.
+
+#
 
 # ALLERGY
 
@@ -1092,7 +1117,7 @@ Retorno esperado :
 }
 ```
 
-## PATCH - /user/allergy/<int:allergy_id>
+## PATCH - /user/allergy/<allergy_id>
 
 Esta rota é para a atualização dos dados de uma das alergias do usuário, podendo atualizar “name” e “description".
 Para realizar a atualização é somente necessário passar o id da alergia do usuário por query params.
@@ -1118,7 +1143,7 @@ Retorno esperado :
 }
 ```
 
-## DELETE - /user/allergy/<int:allergy_id
+## DELETE - /user/allergy/<allergy_id>
 
 Esta rota é para deletar uma das alergias do usuário. Para realizar a deleção é somente necessário passar o id da alergia do usuário por query params.
 
@@ -1195,3 +1220,90 @@ Authorization: ` Bearer Token`
   "hipertension": true
 }
 ```
+
+#
+
+# Appointment
+
+## POST - appointments
+
+Esta rota é para criação de uma consulta do usuário. A seguir os campos obrigatórios: 'name', 'date' e 'doctor_id'.
+
+Authorization: ` Bearer Token`
+
+Segue abaixo o exemplo de requisição:
+
+```json
+{
+  "date": "02/05/2022",
+  "description": "dor da região atras do rosto",
+  "doctor_id": "0bc81f76-bb51-4b8e-b70d-804bfb2ed144"
+}
+```
+
+Caso tudo dê certo irá retornar o código 201 e uma resposta similar a esta abaixo:
+
+```json
+{
+  "id": "c39b75aa-84a2-4f4e-9261-18e4681561f3",
+  "date": "Mon, 02 May 2022 00:00:00 GMT",
+  "description": "dor da região atras do rosto",
+  "doctor": {
+    "id": "0bc81f76-bb51-4b8e-b70d-804bfb2ed144",
+    "name": "Glodoaldo",
+    "type": "Cardiologista",
+    "email": null,
+    "phone": "(21)12345-6789",
+    "address": {
+      "id": "98c7e919-9b12-4519-bdc9-a9ad80ffbec4",
+      "street": "Rua Blah",
+      "number": 25,
+      "district": "Madureira",
+      "city": "Rio De Janeiro",
+      "complement": "Do lado do posto de gasolina"
+    }
+  }
+}
+```
+
+## PATCH - /appointments/<string:appointment_id>
+
+Esta rota é para atualização da anamnesis do usuário todos os campos podem ser atualizados, caso dê tudo certo irá retornar 204.
+
+Authorization: ` Bearer Token`
+
+## GET - appointments
+
+Esta rota é para pegar todas as consultas médicas relacionada ao usuário, caso dê tudo certo irá retornar as consultas do usuário, como mostrado no exemplo abaixo:
+Authorization: ` Bearer Token`
+
+```json
+[
+  {
+    "id": "8a8155ec-2eab-4949-9e0d-0fe0a9c87df7",
+    "date": "Mon, 02 May 2022 00:00:00 GMT",
+    "description": "dor da região atras do rosto",
+    "doctor": {
+      "id": "0bc81f76-bb51-4b8e-b70d-804bfb2ed144",
+      "name": "Glodoaldo",
+      "type": "Cardiologista",
+      "email": null,
+      "phone": "(21)12345-6789",
+      "address": {
+        "id": "98c7e919-9b12-4519-bdc9-a9ad80ffbec4",
+        "street": "Rua Blah",
+        "number": 25,
+        "district": "Madureira",
+        "city": "Rio De Janeiro",
+        "complement": "Do lado do posto de gasolina"
+      }
+    }
+  }
+]
+```
+
+## DELETE - appointments/<string:appointment_id>
+
+Esta rota é para deletar uma consulta do usuário. Para deletar é necessário somente passar o id da consulta do usuário por query params.
+
+Authorization: ` Bearer Token`
