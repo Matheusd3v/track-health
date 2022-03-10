@@ -2,15 +2,15 @@ from flask import request
 from sqlalchemy.orm import Session
 from flask import request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from werkzeug.exceptions import NotFound, Unauthorized, BadRequest
+from werkzeug.exceptions import BadRequest
 from http import HTTPStatus
+from sqlalchemy.exc import ProgrammingError, DataError
+from sqlalchemy.orm.exc import UnmappedInstanceError
+
+from app.services.diseases_services import find_diseases, join_user_disease, serializing_all_fields, verify_update_types, verify_user_diseases_key, normalize_disease_keys
 from app.models.diseases_detail_model import DiseasesDetailModel
 from app.models.user_disease_model import UserDiseaseModel
-from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
-from sqlalchemy.orm.exc import UnmappedInstanceError
-from app.services.diseases_services import find_diseases, join_user_disease, serializing_all_fields, verify_update_types, verify_user_diseases_key, normalize_disease_keys
-from app.models.user_model import User
-
+from app.models.diseases_model import DiseasesModel
 
 @jwt_required()
 def create_user_diseases():
@@ -57,8 +57,13 @@ def update_diseases(disease_id):
         diseases_details_id = UserDiseaseModel.query.filter_by(
             disease_id=disease_id).first()
 
+        diseases_name = DiseasesModel.query.filter_by(
+            id =diseases_details_id.disease_id).first()
+
         diseases_details = DiseasesDetailModel.query.filter_by(
             id=diseases_details_id.disease_detail_id).first()
+
+
         for key, value in data.items():
             setattr(diseases_details, key, value)
 
@@ -66,9 +71,9 @@ def update_diseases(disease_id):
         session.commit()
 
         return jsonify({"disease_id": disease_id,
-                        "name": "",
-                        "description": "",
-                        "medication": ""
+                        "name": diseases_name.name,
+                        "description": diseases_details.description,
+                        "medication": diseases_details.medication
                         }), HTTPStatus.OK
 
     except ProgrammingError:
