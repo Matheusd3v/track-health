@@ -20,7 +20,7 @@ class DoctorModel(db.Model):
 
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable = False)
 
-    address_id = Column(UUID(as_uuid=True), ForeignKey('address.id'), nullable=False)
+    address_id = Column(UUID(as_uuid=True), ForeignKey('address.id', ondelete="CASCADE"), nullable=False)
 
     address: AddressModel = relationship("AddressModel", uselist=False, 
         backref="doctor", viewonly=True)
