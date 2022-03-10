@@ -13,7 +13,6 @@ class AppointmentModel(db.Model):
     __tablename__ = "appointments"
 
     id: str = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
-    name: str = Column(String(100), nullable=False)
     date: str = Column(Date, nullable=False)
     description: str = Column(String(200))
 
