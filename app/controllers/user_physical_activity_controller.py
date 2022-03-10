@@ -43,18 +43,19 @@ def create_physical_activity():
 
 
 @jwt_required()
-def get_physical_activity(physical_activity_id):
+def get_physical_activity():
     user = get_jwt_identity()
-    if not physical_activity_id:
-        return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
+    id_user = user["id"]
 
     try:
-        physical_activity = UserPhysicalActivity.query.filter_by(id=physical_activity_id).first()
+        physical_activity = UserPhysicalActivity.query.filter_by(user_id=id_user).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not physical_activity:
-        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+
+        return {}, HTTPStatus.OK
+
 
 
     if not check_data_id(physical_activity,user):
@@ -64,14 +65,11 @@ def get_physical_activity(physical_activity_id):
 
 
 @jwt_required()
-def patch_physical_activity(physical_activity_id):
+def patch_physical_activity():
     user = get_jwt_identity()
+    id_user = user["id"]
     data = request.get_json()
     session:Session = current_app.db.session
-
-
-    if not physical_activity_id:
-        return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
 
     if not check_data_keys(data):
         return {"error": "Invalid keys were found",
@@ -84,12 +82,12 @@ def patch_physical_activity(physical_activity_id):
         return {"These keys are with an invalid data type": invalid_data}, HTTPStatus.BAD_REQUEST
 
     try:
-        physical_activity = UserPhysicalActivity.query.filter_by(id=physical_activity_id).first()
+        physical_activity = UserPhysicalActivity.query.filter_by(user_id=id_user).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not physical_activity:
-        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+        return {}, HTTPStatus.OK
 
 
     if not check_data_id(physical_activity,user):
@@ -105,21 +103,18 @@ def patch_physical_activity(physical_activity_id):
 
 
 @jwt_required()
-def delete_physical_activity(physical_activity_id):
+def delete_physical_activity():
     user = get_jwt_identity()
+    id_user = user["id"]
     session:Session = current_app.db.session
 
-
-    if not physical_activity_id:
-        return {"error":"id must be in the url"},HTTPStatus.BAD_REQUEST
-
     try:
-        physical_activity = UserPhysicalActivity.query.filter_by(id=physical_activity_id).first()
+        physical_activity = UserPhysicalActivity.query.filter_by(user_id=id_user).first()
     except DataError:
         return {"error": "Appointment id is not valid"},HTTPStatus.BAD_REQUEST
 
     if not physical_activity:
-        return {"error": "data not found"}, HTTPStatus.NOT_FOUND
+        return "", HTTPStatus.NO_CONTENT
 
 
     if not check_data_id(physical_activity,user):

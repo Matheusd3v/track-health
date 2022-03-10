@@ -18,6 +18,14 @@ def verify_values(values: list):
             message = {"Error": "All values must be string."}
             raise BadRequest(description=message)
 
+        value = value.split()
+        value = " ".join(value)
+
+        if not value:
+            message = {"Error": f"Invalid value has been send: {values}"}
+            raise BadRequest(description=message)
+
+
 def verify_user(user):
     if not user:
         message = {"Error": "User not found."}
@@ -90,6 +98,8 @@ def serializing_all_fields(user):
     serializing_disease(user)
     serializing_surgery(user)
     serializing_medications(user)
+    serialize_image(user)
+    serializing_lower_tables(user)
  
     return user
 
@@ -99,7 +109,6 @@ def serializing_exams(user):
 
     for exam in exams:
         exam_deleted = exam.pop("exam")
-        exam.pop("user_id")
         exam["name"] = exam_deleted["name"]
         
 
@@ -109,7 +118,6 @@ def serializing_disease(user):
         name = disease['disease']['name']
         disease['name'] = name
         disease.pop('disease')
-    return diseases
 
 def serializing_surgery(user):
     surgerys = user["surgerys"]
@@ -130,4 +138,15 @@ def serializing_medications(user):
         medication["name"] = medication_details["name"]
         medication["id"] = medication_details["id"]
     
+
+def serialize_image(user):
+    user["image_profile"] and user["image_profile"].pop("id")
+
+def serializing_lower_tables(user):
+    lower_tables = ["alcohol","user_drug", "smoker", "physical_activity"]
+    
+    for table in lower_tables:
+        if not user[f"{table}"]:
+            user[f"{table}"] = {}
+
 

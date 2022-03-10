@@ -1,4 +1,7 @@
-def get_invalid_data(data):
+from app.models.doctor_model import DoctorModel
+from sqlalchemy.exc import DataError
+
+def get_invalid_data_type(data):
 
     valid_types ={ 
         'name': str,
@@ -25,5 +28,12 @@ def check_data_keys(data):
     return all(key in valid_keys for key in data)
 
 def check_not_nullable_keys(data):
-    not_nullable_keys = ['name','date']
+    not_nullable_keys = ['name','date','doctor_id']
     return all(key in data for key in not_nullable_keys)
+
+def check_doctor(doctor_id):
+    try:
+        doctor = DoctorModel.query.filter_by(id = doctor_id).first()
+    except DataError:
+        doctor = None
+    return doctor

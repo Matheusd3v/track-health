@@ -1,3 +1,4 @@
+from curses.ascii import HT
 from flask import request, jsonify, current_app
 from app.exceptions.missing_keys import MissingKeysError
 from app.models.user_drug_model import UserDrugs
@@ -5,23 +6,23 @@ from http import HTTPStatus
 from sqlalchemy.orm import Session
 from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from sqlalchemy.exc import DataError, IntegrityError
-from psycopg2.errors import InvalidTextRepresentation, UniqueViolation
-from app.services.user_drugs_services import data_standardized, drug_data_updated, verify_data_and_id, verify_keys_and_values
-from app.services.user_services import verify_values
+from sqlalchemy.exc import IntegrityError
+from psycopg2.errors import UniqueViolation
+from app.services.user_drugs_services import data_standardized, drug_data_updated, verify_keys_and_values, verify_values
 
 @jwt_required()
 def get_user_drug():
-    try:
-        session: Session = current_app.db.session
-        id = get_jwt_identity()["id"]
 
-        drug_data = session.query(UserDrugs).filter_by(user_id = id).first()
+    session: Session = current_app.db.session
+    id = get_jwt_identity()["id"]
 
-        return jsonify(drug_data), HTTPStatus.OK
+    drug_data = session.query(UserDrugs).filter_by(user_id = id).first()
 
-    except NotFound as e:
-        return {"Error": f"Not fount id "}, e.code
+    if not drug_data:
+        return {}, HTTPStatus.OK
+
+    return jsonify(drug_data), HTTPStatus.OK
+
 
 @jwt_required()
 def create_drug_data():
@@ -64,7 +65,8 @@ def update_user_drug_data():
 
         old_data = session.query(UserDrugs).filter_by(user_id = user_id).first()
 
-        verify_data_and_id(old_data, user_id)
+        if not old_data:
+            return {}, HTTPStatus.OK
 
         new_data =  drug_data_updated(data, old_data)
 
@@ -75,10 +77,6 @@ def update_user_drug_data():
     
     except BadRequest as e:
         return e.description, e.code
-    
-    except DataError as e:
-        if isinstance(e.orig, InvalidTextRepresentation):
-            return {"Error": f"Not found id {drug_id}."}, HTTPStatus.NOT_FOUND
 
     except NotFound as e:
         return e.description, e.code
@@ -88,25 +86,15 @@ def update_user_drug_data():
 
 @jwt_required()
 def delete_drug_data():
-    try:
-        session: Session = current_app.db.session
-        id = get_jwt_identity()["id"]
-        drug_data = session.query(UserDrugs).filter_by(user_id = id).first()
+    session: Session = current_app.db.session
+    id = get_jwt_identity()["id"]
+    drug_data = session.query(UserDrugs).filter_by(user_id = id).first()
 
-        verify_data_and_id(drug_data, id)
-
-        session.delete(drug_data)
-        session.commit()
-
+    if not drug_data:
         return "", HTTPStatus.NO_CONTENT
 
-    except DataError as e:
-        if isinstance(e.orig, InvalidTextRepresentation):
-            return {"Error": f"Not found id {drug_id}."}, HTTPStatus.NOT_FOUND
+    session.delete(drug_data)
+    session.commit()
 
-    except NotFound as e:
-        return {"Error": f"Not fount id {drug_id}"}, e.code
-    
-    except Forbidden as e:
-        return e.description, e.code
+    return "", HTTPStatus.NO_CONTENT
  

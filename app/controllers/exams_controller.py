@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from flask import request, jsonify, current_app
 from sqlalchemy.exc import IntegrityError, ProgrammingError, DataError
+from psycopg2.errors import DatetimeFieldOverflow
 from werkzeug.exceptions import BadRequest, NotFound
 from app.models.user_exam_model import UserExam
 from app.services.exams_services import find_exam, join_user_exams, verify_exam_key, verify_update_types, verify_user_exam_key, normalize_exam_keys
@@ -45,26 +46,31 @@ def create_user_exam():
 
         data["user_id"] = user_id
 
-        exam_datails = ExamDetails(date=data.get("date"), user_id=data.get(
-            "user_id"), upload_img=data.get("upload_img"), description=data.get("description"))
+        exam_details = ExamDetails(date=data.get("date"), upload_img=data.get(
+            "upload_img"), description=data.get("description"))
 
-        session.add(exam_datails)
+        session.add(exam_details)
         session.commit()
 
         user_exam = UserExam(user_id=user_id, exam_id=exam.id,
-                             exam_details_id=exam_datails.id)
+                             exam_details_id=exam_details.id)
 
         session.add(user_exam)
         session.commit()
         return jsonify({
-            "id":exam_datails.id,
-            "name":exam.name,
-            "date":exam_datails.date,
-            "description":exam_datails.description,
-            "upload_img":exam_datails.upload_img
+            "id": exam.id,
+            "name": exam.name,
+            "date": exam_details.date,
+            "description": exam_details.description,
+            "upload_img": exam_details.upload_img
         }), HTTPStatus.CREATED
     except BadRequest:
         return jsonify({"Error": "The keyword 'name' or 'date' does not exit"}), HTTPStatus.BAD_REQUEST
+    
+    except DataError as e:
+        if isinstance(e.orig, DatetimeFieldOverflow):
+            message = {"Error": "Date must be format: mm/dd/yy"}
+            return message, HTTPStatus.BAD_REQUEST
 
 
 @jwt_required()
@@ -72,7 +78,7 @@ def update_exam(exam_id):
     try:
         session: Session = current_app.db.session
         data = request.get_json()
-
+        exam = session.query(Exam).filter_by(id=exam_id).first()
         exam_details_id = UserExam.query.filter_by(exam_id=exam_id).first()
         exam_details = ExamDetails.query.filter_by(
             id=exam_details_id.exam_details_id).first()
@@ -83,13 +89,26 @@ def update_exam(exam_id):
         session.add(exam_details)
         session.commit()
 
-        return jsonify(exam_details), HTTPStatus.OK
+        return jsonify({
+            "id": exam.id,
+            "name": exam.name,
+            "date": exam_details.date,
+            "description": exam_details.description,
+            "upload_img": exam_details.upload_img
+        }), HTTPStatus.OK
+
     except ProgrammingError:
         data = request.get_json()
         msg = verify_update_types(data)
         return jsonify({"Error": msg}), HTTPStatus.BAD_REQUEST
-    except (DataError, AttributeError):
-        return {"Error": f"exam_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
+
+    except DataError as e:
+        if isinstance(e.orig, AttributeError):
+            return {"Error": f"exam_id {exam_id} is not valid"}, HTTPStatus.NOT_FOUND
+        
+        if isinstance(e.orig, DatetimeFieldOverflow):
+            message = {"Error": "Date must be format: m/d/y"}
+            return message, HTTPStatus.BAD_REQUEST
 
 
 @jwt_required()

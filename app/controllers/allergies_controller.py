@@ -28,6 +28,7 @@ def create_allergies():
 
         allergies = AllergyModel.query.all()
 
+
         allergies_name = []
         for allergy in allergies:
             allergies_name.append(allergy.name)
@@ -39,6 +40,11 @@ def create_allergies():
 
         new_allergy = AllergyModel.query.filter_by(name = data['name']).first()
 
+        my_allergies = session.query(UserAllergyModel).filter_by(user_id = data['user_id']).all()
+        my_allergies_name = [allergy.allergy.name for allergy in my_allergies]
+        if data['name'] in my_allergies_name:
+            return {"error": "allergy already added"}, HTTPStatus.CONFLICT
+
         data['allergy_id'] = new_allergy.id
 
         data.pop('name')
@@ -47,6 +53,11 @@ def create_allergies():
 
         session.add(allergy)
         session.commit()
+
+        allergy = allergy.asdict()
+        name = allergy['allergy']['name']
+        allergy['name'] = name
+        allergy.pop('allergy')
 
         return jsonify(allergy), HTTPStatus.CREATED
 
@@ -67,7 +78,15 @@ def get_allergies():
 
     my_allergies = session.query(UserAllergyModel).filter_by(user_id = user_jwt["id"]).all()
 
-    return jsonify(my_allergies), HTTPStatus.OK
+    output = []
+    for allergy in my_allergies:
+        allergy = allergy.asdict()
+        name = allergy['allergy']['name']
+        allergy['name'] = name
+        allergy.pop('allergy')
+        output.append(allergy)
+
+    return jsonify(output), HTTPStatus.OK
 
 
 @jwt_required()
@@ -106,6 +125,12 @@ def update_allergy(allergy_id):
 
         session.add(the_allergy)
         session.commit()
+
+        
+        the_allergy = the_allergy.asdict()
+        name = the_allergy['allergy']['name']
+        the_allergy['name'] = name
+        the_allergy.pop('allergy')
 
         return jsonify(the_allergy), HTTPStatus.OK
     
