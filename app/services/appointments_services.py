@@ -4,7 +4,6 @@ from sqlalchemy.exc import DataError
 def get_invalid_data_type(data):
 
     valid_types ={ 
-        'name': str,
         "date": str,
         "description": str,
         "doctor_id":str
@@ -24,11 +23,11 @@ def check_appointment_id(appointment, user):
     return  appointment_id == user_id
 
 def check_data_keys(data):
-    valid_keys = ['name', 'date', 'description','doctor_id']
+    valid_keys = ['date', 'description','doctor_id']
     return all(key in valid_keys for key in data)
 
 def check_not_nullable_keys(data):
-    not_nullable_keys = ['name','date','doctor_id']
+    not_nullable_keys = ['date','doctor_id']
     return all(key in data for key in not_nullable_keys)
 
 def check_doctor(doctor_id):
