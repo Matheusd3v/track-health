@@ -1,4 +1,6 @@
+from email import message
 from flask import request, jsonify, current_app
+from app.models.address_model import AddressModel
 from app.models.doctor_model import DoctorModel
 from http import HTTPStatus
 from sqlalchemy.orm import Session
@@ -29,6 +31,12 @@ def create_doctor():
 
         data['user_id'] = user_jwt['id']
 
+        address = session.query(AddressModel).get(data["address_id"])
+
+        if not address:
+            message = {"Error": f"address_id: {data['address_id']} not found."}
+            raise NotFound(description=message)
+
         verify_fields_and_values(data)
 
         doctor = DoctorModel(**data)
@@ -42,6 +50,9 @@ def create_doctor():
         return e.message(), e.status_code
     
     except BadRequest as e:
+        return e.description, e.code
+    
+    except NotFound as e:
         return e.description, e.code
 
     except DataError as e:
