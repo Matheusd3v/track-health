@@ -4,6 +4,12 @@
 
 Esse projeto é uma API Rest feita em flask. Seu principal objetivo é ser uma aplicação onde o usuário possa cadastrar seu histório médico de doenças, cirurgias, exames e consultas e fazer upload de arquivos. Ela pode ser utilizada na UrlBase: https://track-health-caps.herokuapp.com/
 
+## Desenvolvedores
+[Eric Martins](https://www.linkedin.com/in/ericestevesmartins/) | [Gustavo Oliveira](https://www.linkedin.com/in/gustavo-oliveira01011/) | 
+[Vinicius Prohman](https://www.linkedin.com/in/viniciusprohmann/) | [Guilhermino Lucas](https://www.linkedin.com/in/guilherminolucas/) | 
+[Matheus Gomes](https://www.linkedin.com/in/matheus-gomes-de-almeida96/) | [Jonatan Pinheiro](https://www.linkedin.com/in/jonatan-pinheiro-da-silva-4a707b225/)
+
+
 ## Dependências
 
 - [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
@@ -31,8 +37,8 @@ Esse projeto é uma API Rest feita em flask. Seu principal objetivo é ser uma a
 | DELETE  | [/user/exam/file/<exam_id>](#delete---userexamfileexam_id)                | Deleta um arquivo de um exame.                    |
 | POST    | [/user/allergy](#post---userallergy)                                      | Cadastra uma nova alergia para o usuário.         |
 | GET     | [/user/allergy](#get---userallergy)                                       | Visualiza alergias cadastradas pelo usuário.      |
-| PATCH   | [/user/allergy/<allergy_id>](#patch---userallergyintallergy_id)           | Atualiza informações de alergias do usuario.      |
-| DELETE  | [/user/allergy/<allergy_id>](#delete---userallergyintallergy_id)          | Deleta uma alergia do usuário.                    |
+| PATCH   | [/user/allergy/<allergy_id>](#patch---userallergyallergy_id)           | Atualiza informações de alergias do usuario.      |
+| DELETE  | [/user/allergy/<allergy_id>](#delete---userallergyallergy_id)          | Deleta uma alergia do usuário.                    |
 | POST    | [/user/medication](#post---usermedication)                                | Criar uma medicação do usuário.                   |
 | GET     | [/user/medication](#get---usermedication)                                 | Visualizar uma medicação do usuário.              |
 | PATCH   | [/user/medication/<medication_id>](#patch---usermedicationmedication_id)  | Alterar uma medicação do usuário.                 |
@@ -75,10 +81,10 @@ Esse projeto é uma API Rest feita em flask. Seu principal objetivo é ser uma a
 | GET     | [/address ]()                                                             | Pegar todos os endereços médicos                  |
 | PATCH   | [/address ](#patch---address)                                             | Alterar um endereço médico.                       |
 | POST    | [/allergy ](#post---allergy)                                              | Criação de uma alergia.                           |
-| POST    | /appointments                                                             | Criação de um agendamento.                        |
-| GET     | /appointments                                                             | Vizualação dos agendamentos.                      |
-| PATCH   | /appointments/<string:appointment_id>                                     | Atualização de um agendamento.                    |
-| DELETE  | /appointments/<string:appointment_id>                                     | Deletar um agendamento.                           |
+| POST    | [/appointments](#post---appointments)                                     | Criação de um agendamento.                        |
+| GET     | [/appointments](#get---appointments)                                      | Vizualação dos agendamentos.                      |
+| PATCH   | [/appointments/<appointment_id>](#patch---appointmentsstringappointment_id)                                     | Atualização de um agendamento.                    |
+| DELETE  | [/appointments/<appointment_id>](#delete---appointmentsstringappointment_id)                                     | Deletar um agendamento.                           |
 | POST    | [/doctor ](#post---doctor)                                                | Criação de um médico relacionado ao usuário.      |
 | GET     | [/doctor ](#get---doctor)                                                 | Ver todos os médicos relacionao ao usuário.       |
 | DELETE  | [/doctor/<doctor_id>](#delete---userdoctorintdoctor_id)                   | Deletar um médico relacionado ao usuário.         |
